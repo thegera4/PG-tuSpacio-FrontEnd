@@ -16,13 +16,13 @@ const SearchBar = () => {
     .then((json) => setJasonResults(json.data))
   }, [])
 
-  return <Stack sx={{ width:500 }}>
+  return <Stack sx={{ width:800 }}   > 
 
       <Autocomplete 
       id="players_demo"
       getOptionLabel={(jsonResults) =>`${jsonResults.first_name} ${jsonResults.last_name}`}
       options={jsonResults}
-      sx={{width:500}}
+      sx={{ mx: "auto", width: 450 }}
       isOptionEqualToValue={(option, value)=> 
         option.first_name === value.first_name
       }
@@ -32,7 +32,7 @@ const SearchBar = () => {
           {jsonResults.first_name} {jsonResults.last_name}
         </Box>
       )}
-      renderInput= {(params) => <TextField {...params} label={<SearchIcon />} size='small' margin='dense'  />}
+      renderInput= {(params) => <TextField {...params} label={<SearchIcon />} size='small' margin='normal' />}
       />
     </Stack>
   
