@@ -1,9 +1,7 @@
 import  React, {useEffect, useState} from 'react';
-import './SearchBar.css'
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack'
-import Autocomplete from '@mui/material/Autocomplete';
-import { Box }  from '@mui/system'
+import { TextField, Box } from '@material-ui/core';
+// import Stack from '@mui/material/Stack'
+import { Autocomplete } from '@material-ui/lab';
 import SearchIcon from '@material-ui/icons/Search'
 
 const SearchBar = () => {
@@ -16,7 +14,9 @@ const SearchBar = () => {
     .then((json) => setJasonResults(json.data))
   }, [])
 
-  return <Stack sx={{ width:500 }}>
+  return (
+  
+  <Box sx={{ width:500 }}>
 
       <Autocomplete 
       id="players_demo"
@@ -34,8 +34,8 @@ const SearchBar = () => {
       )}
       renderInput= {(params) => <TextField {...params} label={<SearchIcon />} size='small' margin='dense'  />}
       />
-    </Stack>
+    </Box>
   
-}
+  )}
 
 export default SearchBar

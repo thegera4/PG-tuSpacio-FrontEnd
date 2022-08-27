@@ -1,11 +1,12 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import { ThemeProvider } from '@mui/system';
-import theme from '../themeConfig';
+import Box from '@material-ui/core/Box';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import IconButton from '@material-ui/core/IconButton'
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../../ThemeConfig';
 
 export default function Footer() {
   return (
@@ -21,6 +22,18 @@ export default function Footer() {
             </Box>
             <Box>
                 SEGUINOS
+                <IconButton aria-label="TwitterIcon">
+                    <TwitterIcon />
+                </IconButton>
+                <IconButton aria-label="FacebookIcon">
+                    <FacebookIcon />
+                </IconButton>
+                <IconButton aria-label="InstagramIcon">
+                    <InstagramIcon />
+                </IconButton>
+                <IconButton aria-label="GitHubIcon">
+                    <GitHubIcon />
+                </IconButton>
             </Box>
             <Box>
                 Suscribite Ahora!
