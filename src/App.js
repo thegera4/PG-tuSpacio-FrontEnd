@@ -1,29 +1,20 @@
 import './App.css';
+import {Container} from '@material-ui/core'
 import Navbar from './Components/Navbar/Navbar.jsx';
 import Footer from './Components/Footer/Footer.jsx';
 import SearchBar from './Components/SearchBar/SearchBar';
+// import ContainerCards from './Components/ContainerCards/ContainerCards.jsx'
 
 function App() {
   return (
-    <div className="App">
+    <Container maxWidth='xl' disableGutters='true' style={{backgroundColor:'#c8e6c9'}} >
+      
       <Navbar />
       <SearchBar />
       <Footer />
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-    </div>
+
+      </Container>
+   
   );
 }
 
