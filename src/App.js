@@ -3,6 +3,7 @@ import {Container} from '@material-ui/core'
 import Navbar from './Components/Navbar/Navbar.jsx';
 import Footer from './Components/Footer/Footer.jsx';
 import SearchBar from './Components/SearchBar/SearchBar';
+import Detail from './Components/Detail/Detail';
 // import ContainerCards from './Components/ContainerCards/ContainerCards.jsx'
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Navbar />
       <SearchBar />
       <Footer />
+      <Detail />
 
       </Container>
    
