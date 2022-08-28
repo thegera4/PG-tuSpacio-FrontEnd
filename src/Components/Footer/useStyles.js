@@ -3,11 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   boxContainer : {
-    paddingBotton: 40,
-    paddingTop: 4,
+    // paddingTop: 4,
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-evenly',
     position: 'absolute',
     width: '100%',
     bottom: 0,
@@ -32,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
     height: '30px',
     paddingLeft: 12
   },
+  h2Style: {
+    fontWeight: 500
+  }
   
 }));
 
