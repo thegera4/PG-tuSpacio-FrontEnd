@@ -1,37 +1,84 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import { ThemeProvider } from '@mui/system';
-import theme from '../themeConfig';
+import Box from '@material-ui/core/Box';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import IconButton from '@material-ui/core/IconButton'
+import { ThemeProvider } from '@material-ui/core/styles';
+import {Grid, Typography} from '@material-ui/core'
+import theme from '../../ThemeConfig';
 
 export default function Footer() {
   return (
     <ThemeProvider theme={theme}>
+        <Typography component="div" variant='subtitle1' >
         <Box
             bgcolor="secondary.main"
+            color='secondary.contrastText'
+            py={4}
         >
-            <Box>
-                PRODUCTOS
-            </Box>
+        <Grid container
+        spacing={3}
+        direction='row'
+        >
+            <Grid item 
+            xs={3}
+            >
+                <Box >
+                    PRODUCTOS
+                </Box>
+            </Grid>
+            <Grid item xs={3}>
             <Box>
                 INFORMACIÓN
             </Box>
+            </Grid>
+            <Grid item xs={3}>
             <Box>
-                SEGUINOS
+                    
+                    SEGUINOS
+                    <Box>
+                    <IconButton aria-label="TwitterIcon">
+                        <TwitterIcon />
+                    </IconButton>
+                    <IconButton aria-label="FacebookIcon">
+                        <FacebookIcon />
+                    </IconButton>
+                    <IconButton aria-label="InstagramIcon">
+                        <InstagramIcon />
+                    </IconButton>
+                    <IconButton aria-label="GitHubIcon">
+                        <GitHubIcon />
+                    </IconButton>
+                    </Box>
             </Box>
+            </Grid>
+            <Grid item xs={3}>
             <Box>
-                Suscribite Ahora!
+                ¡SUSCRIBITE AHORA!
             </Box>
+            </Grid>
+            <Grid item xs={12}>
             <Box>
                 ACEPTAMOS
+                <Box>
+                    faltan imágenes de tarjetas
+                </Box>
             </Box>
-            <Box>
-                2022 TODOS LOS DERECHOS RESEVADOS
+            <Box
+            pt={3}
+            
+            >
+            <Typography variant='caption'>
+                2022 - TODOS LOS DERECHOS RESEVADOS
+            </Typography>
             </Box>
-        </Box>
+            </Grid>
+        
+            </Grid>
+            </Box>
+        </Typography>
     </ThemeProvider>
     );
 }
