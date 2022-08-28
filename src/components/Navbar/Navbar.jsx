@@ -55,7 +55,7 @@ export default function Navbar() {
             <IconButton
               edge="start"
               className={classes.menuButton}
-              color="inherit"
+              color="primary.contrastText"
               aria-label="open drawer">
                 <MenuIcon />
             </IconButton>
@@ -68,7 +68,8 @@ export default function Navbar() {
               <img 
                 className={classes.logoFont} 
                 src={LogoFONT} 
-                alt="logo font"/>
+                alt="logo font" 
+                />
             </Box>
             {/* Searchbar */}
             <div className={classes.search}>
