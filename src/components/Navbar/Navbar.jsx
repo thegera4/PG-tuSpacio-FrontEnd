@@ -78,8 +78,8 @@ export default function Navbar() {
               <SearchBar />
               {/* <div className={classes.searchIcon}>
                 <SearchIcon />
-              </div> */}
-              {/* <InputBase
+              </div>
+              <InputBase
                 placeholder="Search…"
                 classes={{
                   root: classes.inputRoot,

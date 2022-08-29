@@ -2,11 +2,9 @@ import { GET_ALL_PRODUCTS, SET_CURRENT_HOME_PAGE} from "../actions";
 
 const initialState = {
     products : [],
-
     currentPageHome: 1, 
-     productDetail: {}
-
-  }
+    productDetail: {}
+}
   
 
 function rootReducer(state = initialState, action) {
@@ -21,18 +19,14 @@ function rootReducer(state = initialState, action) {
         ...state,
         currentPageHome: action.payload,
       };
-       case "GET_DETAIL":
-           return {
-            ...state,
-             productDetail: action.payload
-                }
-      
+    case "GET_DETAIL":
+      return {
+         ...state,
+         productDetail: action.payload
+      };
     default:
-      return state;
-  
+        return state;
   }
 } 
 
-  
-  export default rootReducer;
-
+export default rootReducer;

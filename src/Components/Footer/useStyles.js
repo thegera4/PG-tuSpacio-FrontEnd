@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     // paddingTop: 4,
     display: 'flex',
     flexWrap: 'wrap',
-    position: 'absolute',
+    position: 'relative',
     width: '100%',
     bottom: 0,
     // fontFamily: 'roboto' 
@@ -30,10 +30,7 @@ const useStyles = makeStyles((theme) => ({
     height: '30px',
     paddingLeft: 12
   },
-  h2Style: {
-    fontWeight: 500
-  }
-  
+    
 }));
 
 export default useStyles;
