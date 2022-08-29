@@ -1,5 +1,9 @@
 import axios from "axios";
 
+
+
+ 
+
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const SET_CURRENT_HOME_PAGE = "SET_CURRENT_HOME_PAGE";
 
@@ -24,3 +28,17 @@ export function setCurrentHomePage(page) {
         payload: page
     }
 }
+export function getDetail(id){
+        return async function(dispatch){
+            try {
+            var json = await axios.get('http://localhost:3001/api/product/'+id);
+            return dispatch({
+                type: "GET_DETAIL",
+                payload: json.data
+            });
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
