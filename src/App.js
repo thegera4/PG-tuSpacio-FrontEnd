@@ -17,8 +17,8 @@ function App() {
       <Navbar />
       {/* <SearchBar /> */}
       <ContainerCards />
-      <Footer />
-      <Detail />
+      {/*<Footer />*/}
+      {/*<Detail />*/}
 
       </Container>
    
