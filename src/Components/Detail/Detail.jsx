@@ -37,7 +37,7 @@ const Detail = () => {
     <Typography paragraph>Quantity</Typography>
     <div className={classes.root}> 
     <Button variant="contained">Add to Cart</Button>
-    <Button variant="outlined">Default</Button>
+    <Button variant="outlined">Add to favorites</Button>
     </div>
     </div>
 
