@@ -1,9 +1,9 @@
 //defino mis estados globales
 const initialState = {
     products : [],
+    productDetail: {}
     
   }
-  
   
   
   function rootReducer(state = initialState, action) {
@@ -14,6 +14,13 @@ const initialState = {
                 ...state,
                 products: action.payload,
               }
+              case "GET_DETAIL":
+                return {
+                  ...state,
+                  productDetail: action.payload
+                }
+
+
   
                 default:
                 return state;
