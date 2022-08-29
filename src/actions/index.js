@@ -1,20 +1,40 @@
 import axios from "axios";
 
-export const GET_PRODUCTS = "GET_PRODUCTS"
+export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
+export const SET_CURRENT_HOME_PAGE = "SET_CURRENT_HOME_PAGE";
 
-const api = "http://localhost:3001/api";
-
-export function getProducts() {
-    return function(dispatch) {
-        return axios.get(`${api}/products`)
-        .then(products => {
-            dispatch({
-                type: GET_PRODUCTS,
-                payload: products.data 
-            })
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+export function getAllProducts() {
+    return async function(dispatch) {
+    try {
+        var json = 
+        await axios.get('http://localhost:3001/api/products');
+        return dispatch({
+            type: GET_ALL_PRODUCTS,
+            payload: json.data
+        });
+    }catch(error){
+        console.error(error);
+    }
     }
 }
+
+export function setCurrentHomePage(page) {
+    return {
+        type: SET_CURRENT_HOME_PAGE,
+        payload: page
+    }
+}
+
+export function getDetail(id){
+        return async function(dispatch){
+            try {
+            var json = await axios.get('http://localhost:3001/api/product/'+id);
+            return dispatch({
+                type: "GET_DETAIL",
+                payload: json.data
+            });
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
