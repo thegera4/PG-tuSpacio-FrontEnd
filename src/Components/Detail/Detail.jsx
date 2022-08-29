@@ -102,14 +102,15 @@ export default function RecipeReviewCard() {
   const dispatch = useDispatch()
      const myProduct = useSelector((state) => state.productDetail)
     
-
+  // console.log(props)
+  const id = 974
 
  useEffect(() => {
  
-   dispatch(getDetail(props.match.params.id))   
+   dispatch(getDetail(id))   
 
  }
- , [dispatch, props.match.params.id])
+ , [dispatch, id])
 
 
 
