@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
-// import itemData from './itemData';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +51,7 @@ const classes = useStyles();
     
     return(
         <div className={classes.root}>
-      <ImageList rowHeight={160} className={classes.imageList} cols={3}>
+          <ImageList rowHeight={160} className={classes.imageList} cols={3}>
         {itemData.map((item) => (
           <ImageListItem key={item.img} cols={item.cols || 1}>
             <img src={item.img} alt={item.title} />

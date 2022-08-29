@@ -12,12 +12,11 @@ function App() {
   return (
     <Container maxWidth='xl' disableGutters='true' style={{ backgroundColor: '#c8e6c9' }} >
         <Navbar />
-        {/* <ContainerCards /> */}
       <Routes>
         <Route path="/" exact element={ <ContainerCards /> } /> 
-        {/* <Route path="/:id" element={ <Detail /> } /> */}
+        <Route path="/:id" element={ <Detail /> } />
       </Routes>  
-        {/* <Footer />   */}
+        <Footer />  
     </Container>
   );
 }

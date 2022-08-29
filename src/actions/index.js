@@ -1,20 +1,20 @@
 import axios from "axios";
 
+export const GET_PRODUCTS = "GET_PRODUCTS"
 
-    //Aca tendriamos las action creators
+const api = "http://localhost:3001/api";
 
-    //Ejemplo :
-
-    // export function getProducts() {
-    //     return async function(dispatch) {
-    //         try {
-    //                 var json = await axios.get('http://localhost:3001/products);
-    //                 return dispatch({
-    //                 type: "GET_PRODUCTS",
-    //                 payload: json.data
-    //                 });
-    //             }catch(error){
-    //             console.log(error);
-    //             }
-    //     }
-    // }
+export function getProducts() {
+    return function(dispatch) {
+        return axios.get(`${api}/products`)
+        .then(products => {
+            dispatch({
+                type: GET_PRODUCTS,
+                payload: products.data 
+            })
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+}

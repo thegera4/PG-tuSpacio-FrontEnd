@@ -30,7 +30,6 @@ export default function Footer() {
                         direction="row"
                         justifyContent="space-evenly"
                         alignItems="flex-start"
-                        spacing={2}
                     >
                         <Grid item xs={3}>
                             <Box>
