@@ -18,6 +18,8 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../ThemeConfig';
 import useStyles from './useStyles';
 
+import SearchBar from '../SearchBar/SearchBar';
+
 export default function Navbar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -72,17 +74,18 @@ export default function Navbar() {
             </Box>
             {/* Searchbar */}
             <div className={classes.search}>
-              <div className={classes.searchIcon}>
+              <SearchBar />
+              {/* <div className={classes.searchIcon}>
                 <SearchIcon />
-              </div>
-              <InputBase
+              </div> */}
+              {/* <InputBase
                 placeholder="Search…"
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
                 inputProps={{ 'aria-label': 'search' }}
-              />
+              /> */}
             </div>
             {/* Iconos de carrito y perfil */}
             <div className={classes.sectionDesktop}>
