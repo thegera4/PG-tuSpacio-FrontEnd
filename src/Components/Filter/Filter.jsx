@@ -83,8 +83,8 @@ export default function Filter({setOrder}) {
                         onChange={(e) => handleOrderByAbc(e)}
                     >
                         <option aria-label="None" value="" />
-                        <option value="asc">A to Z</option>
-                        <option value="desc">Z to A</option>
+                        <option value="a-to-z">A to Z</option>
+                        <option value="z-to-a">Z to A</option>
                     </Select>
                 </FormControl>
 
