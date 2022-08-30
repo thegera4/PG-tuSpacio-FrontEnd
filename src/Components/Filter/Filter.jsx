@@ -75,13 +75,13 @@ export default function Filter({setOrder}) {
                 justifyContent="center"
                 alignItems="center"
             >
-                <Grid item xs={1}>
+                <Grid item xs={2}>
                     <Link to="/create">
                             <Button variant="contained" color="primary">Create Product</Button>
                     </Link>
                 </Grid>
 
-                <Grid item xs={11}>
+                <Grid item xs={7}>
                     {/* Orden alfabetico */}
                     <FormControl variant="filled" className={classes.formControl}>
                         <InputLabel htmlFor="filled-age-native-simple">Sort by Name</InputLabel>
