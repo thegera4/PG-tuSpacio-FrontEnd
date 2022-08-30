@@ -40,7 +40,7 @@ export default function SpacingGrid() {
     setSpacing(Number(event.target.value));
   };
 
-  console.log(products)
+  // console.log(products)
   return (
     <>
       <BasicPagination 

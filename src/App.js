@@ -15,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" exact element={ <ContainerCards /> } /> 
         <Route path="/:id" element={ <Detail /> } />
+        {/* <Route path="/create" element={ <CreateProduct /> } /> */}
       </Routes>  
         <Footer />  
     </Container>
