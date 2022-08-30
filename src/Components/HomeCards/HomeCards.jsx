@@ -13,7 +13,7 @@ import Placeholder from '../../assets/images/placeholder_home.png';
 export default function HomeCards(props) {
   const classes = useStyles();
 
-  console.log(props)
+  // console.log(props)
   return (
     <Card className={classes.root}>
       <CardActionArea>
