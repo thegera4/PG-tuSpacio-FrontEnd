@@ -6,8 +6,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 // import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { Grid } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import { filterByBrand, filterByCategory, getAllBrands, getCategories, orderByAbc, orderByPrice, setCurrentHomePage } from '../../actions';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -74,62 +75,69 @@ export default function Filter({setOrder}) {
                 justifyContent="center"
                 alignItems="center"
             >
+                <Grid item xs={1}>
+                    <Link to="/create">
+                            <Button variant="contained" color="primary">Create Product</Button>
+                    </Link>
+                </Grid>
 
-                {/* Orden alfabetico */}
-                <FormControl variant="filled" className={classes.formControl}>
-                    <InputLabel htmlFor="filled-age-native-simple">Sort by Name</InputLabel>
-                    <Select
-                        native
-                        onChange={(e) => handleOrderByAbc(e)}
-                    >
-                        <option aria-label="None" value="" />
-                        <option value="asc">A to Z</option>
-                        <option value="desc">Z to A</option>
-                    </Select>
-                </FormControl>
+                <Grid item xs={11}>
+                    {/* Orden alfabetico */}
+                    <FormControl variant="filled" className={classes.formControl}>
+                        <InputLabel htmlFor="filled-age-native-simple">Sort by Name</InputLabel>
+                        <Select
+                            native
+                            onChange={(e) => handleOrderByAbc(e)}
+                        >
+                            <option aria-label="None" value="" />
+                            <option value="asc">A to Z</option>
+                            <option value="desc">Z to A</option>
+                        </Select>
+                    </FormControl>
 
-                {/* Orden por Precio */}
-                <FormControl variant="filled" className={classes.formControl}>
-                    <InputLabel htmlFor="filled-age-native-simple">Order by Price</InputLabel>
-                    <Select
-                        native
-                        onChange={(e) => handleOrderByPrice(e)}
-                    >
-                        <option aria-label="None" value="" />
-                        <option value='min-max'>Low to High</option>
-                        <option value='max-min'>High to Low</option>
-                    </Select>
-                </FormControl>
+                    {/* Orden por Precio */}
+                    <FormControl variant="filled" className={classes.formControl}>
+                        <InputLabel htmlFor="filled-age-native-simple">Order by Price</InputLabel>
+                        <Select
+                            native
+                            onChange={(e) => handleOrderByPrice(e)}
+                        >
+                            <option aria-label="None" value="" />
+                            <option value='min-max'>Low to High</option>
+                            <option value='max-min'>High to Low</option>
+                        </Select>
+                    </FormControl>
 
-                {/* Filter by Categories */}
-                <FormControl variant="filled" className={classes.formControl}>
-                    <InputLabel htmlFor="filled-age-native-simple">Categories</InputLabel>
-                    <Select
-                        native
-                        onChange={(e) => handlefilterByCategory(e)}
-                    >
-                        <option aria-label="None" value="" />
-                        {
-                            categories.length &&
-                            categories.map( c => <option value={`${c.name}`}>{`${c.name.toLowerCase()}`}</option> )
-                        }
-                    </Select>
-                </FormControl>
-                
-                {/* Filter by Brands */}
-                <FormControl variant="filled" className={classes.formControl}>
-                    <InputLabel htmlFor="filled-age-native-simple">Brands</InputLabel>
-                    <Select
-                        native
-                        onChange={(e) => handlefilterByBrand(e)}
-                    >
-                        <option aria-label="None" value="" />
-                        {
-                            brands.length &&
-                            brands.map( b => <option value={`${b}`}>{`${b.toUpperCase()}`}</option> )
-                        }
-                    </Select>
-                </FormControl>
+                    {/* Filter by Categories */}
+                    <FormControl variant="filled" className={classes.formControl}>
+                        <InputLabel htmlFor="filled-age-native-simple">Categories</InputLabel>
+                        <Select
+                            native
+                            onChange={(e) => handlefilterByCategory(e)}
+                        >
+                            <option aria-label="None" value="" />
+                            {
+                                categories.length &&
+                                categories.map( c => <option value={`${c.name}`}>{`${c.name.toLowerCase()}`}</option> )
+                            }
+                        </Select>
+                    </FormControl>
+                    
+                    {/* Filter by Brands */}
+                    <FormControl variant="filled" className={classes.formControl}>
+                        <InputLabel htmlFor="filled-age-native-simple">Brands</InputLabel>
+                        <Select
+                            native
+                            onChange={(e) => handlefilterByBrand(e)}
+                        >
+                            <option aria-label="None" value="" />
+                            {
+                                brands.length &&
+                                brands.map( b => <option value={`${b}`}>{`${b.toUpperCase()}`}</option> )
+                            }
+                        </Select>
+                    </FormControl>
+                </Grid>
             </Grid>
         </div>
     );
