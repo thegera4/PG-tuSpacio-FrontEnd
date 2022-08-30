@@ -81,19 +81,18 @@ export default function Filter({setOrder}) {
                     </Link>
                 </Grid>
 
-                <Grid item xs={7}>
-                    {/* Orden alfabetico */}
-                    <FormControl variant="filled" className={classes.formControl}>
-                        <InputLabel htmlFor="filled-age-native-simple">Sort by Name</InputLabel>
-                        <Select
-                            native
-                            onChange={(e) => handleOrderByAbc(e)}
-                        >
-                            <option aria-label="None" value="" />
-                            <option value="asc">A to Z</option>
-                            <option value="desc">Z to A</option>
-                        </Select>
-                    </FormControl>
+                {/* Orden alfabetico */}
+                <FormControl variant="filled" className={classes.formControl}>
+                    <InputLabel htmlFor="filled-age-native-simple">Sort by Name</InputLabel>
+                    <Select
+                        native
+                        onChange={(e) => handleOrderByAbc(e)}
+                    >
+                        <option aria-label="None" value="" />
+                        <option value="a-to-z">A to Z</option>
+                        <option value="z-to-a">Z to A</option>
+                    </Select>
+                </FormControl>
 
                     {/* Orden por Precio */}
                     <FormControl variant="filled" className={classes.formControl}>

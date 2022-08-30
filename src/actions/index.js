@@ -40,15 +40,20 @@ export function getAllBrands() {
     }
 }
 
-export function orderByAbc() {
+export function orderByAbc(order) {
     return async function(dispatch) {
-    try {
-        return dispatch({
-            type: ORDER_BY_NAME,
-        });
-    } catch(error){
-        console.error(error);
-    }
+        try {
+            let jsonAZ
+            if (order) jsonAZ = await axios.get(`${API}/products/ordername/?orderby=${order}`); 
+            // http://localhost:3001/api/products/ordername/?orderby=a-to-z
+            else jsonAZ = await axios.get(`${API}/products`);
+            return dispatch({
+                type: ORDER_BY_NAME,
+                payload: jsonAZ.data
+            });
+        } catch(error){
+            console.error(error);
+        }
     }
 }
 
