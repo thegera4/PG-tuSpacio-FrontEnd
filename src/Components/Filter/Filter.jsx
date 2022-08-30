@@ -7,7 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { Grid } from '@material-ui/core';
-import { filterByCategory, getCategories, setCurrentHomePage } from '../../actions';
+import { filterByBrand, filterByCategory, getAllBrands, getCategories, orderByAbc, orderByPrice, setCurrentHomePage } from '../../actions';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -19,24 +19,21 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const brands = [{name: "Nike"}, {name: "Adidas"}, {name: "Puma"}]
-// const categories = [{name: "Shoes"}, {name: "Pants"}, {name: "T-shirt"}]
-
 export default function Filter({setOrder}) {
     const categories = useSelector((state) => state.categories)
+    const brands = useSelector((state) => state.brands)
     const classes = useStyles();
     const dispatch = useDispatch();
 
     useEffect ( () => {
         dispatch(getCategories())
-        // dispatch(getBrands())
+        dispatch(getAllBrands())
     }, [dispatch] )
-
     
     function handleOrderByAbc(e) {
         e.preventDefault();
         console.log(e.target.value);
-        // dispatch(orderByAbc(e.target.value));
+        dispatch(orderByAbc(e.target.value));
         dispatch(setCurrentHomePage(1))
         if (e.target.value) setOrder(`Order by ${e.target.value}`)
         else setOrder("")
@@ -45,7 +42,7 @@ export default function Filter({setOrder}) {
     function handleOrderByPrice(e) {
         e.preventDefault();
         console.log(e.target.value);
-        // dispatch(orderByPrice(e.target.value));
+        dispatch(orderByPrice(e.target.value));
         dispatch(setCurrentHomePage(1))
         if (e.target.value) setOrder(`Order by ${e.target.value}`)
         else setOrder("")
@@ -54,7 +51,7 @@ export default function Filter({setOrder}) {
     function handlefilterByBrand(e) {
         e.preventDefault();
         console.log(e.target.value);
-        // dispatch(filterByBrand(e.target.value))
+        dispatch(filterByBrand(e.target.value))
         dispatch(setCurrentHomePage(1))
         if (e.target.value) setOrder(`Filter by ${e.target.value}`)
         else setOrder("")
@@ -99,8 +96,8 @@ export default function Filter({setOrder}) {
                         onChange={(e) => handleOrderByPrice(e)}
                     >
                         <option aria-label="None" value="" />
-                        <option value='max'>Low to High</option>
-                        <option value='min'>High to Low</option>
+                        <option value='min-max'>Low to High</option>
+                        <option value='max-min'>High to Low</option>
                     </Select>
                 </FormControl>
 
@@ -129,7 +126,7 @@ export default function Filter({setOrder}) {
                         <option aria-label="None" value="" />
                         {
                             brands.length &&
-                            brands.map( b => <option value={`${b.name}`}>{`${b.name.toUpperCase()}`}</option> )
+                            brands.map( b => <option value={`${b}`}>{`${b.toUpperCase()}`}</option> )
                         }
                     </Select>
                 </FormControl>

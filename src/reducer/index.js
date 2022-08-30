@@ -1,12 +1,14 @@
-import { GET_CATEGORIES, GET_ALL_PRODUCTS, SET_CURRENT_HOME_PAGE, GET_DETAIL, SEARCH_BY_CATEGORIE} from "../actions";
+import { GET_CATEGORIES, GET_ALL_PRODUCTS, SET_CURRENT_HOME_PAGE, GET_DETAIL, SEARCH_BY_CATEGORIE, 
+  GET_ALL_BRANDS, SEARCH_BY_BRAND, ORDER_BY_PRICE, ORDER_BY_NAME } from "../actions";
 
 const initialState = {
-    products : [],
-    currentPageHome: 1, 
-    productDetail: {},
-    categories: []
+  products: [],
+  currentPageHome: 1,
+  productDetail: {},
+  categories: [],
+  brands: []
 }
-  
+
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -15,10 +17,59 @@ function rootReducer(state = initialState, action) {
         ...state,
         categories: action.payload
       }
+    case GET_ALL_BRANDS:
+      // const allBrands = state.products.map((p) => p.brand);  // mapea todos las brands
+      // const brands = [...new Set(allBrands)]; // elimina las repetidas
+      const brands = ['dior', 'moov', 'anna sui', "l'oreal", 'misa', 'salon perfect', 'orly', 'wet n wild',
+        'maybelline', 'pacifica', 'china glaze', 'essie', 'revlon', 'sante', 'pure anada', 'butter london',
+        'suncoat', 'sinful colours', 'mineral fusion', 'covergirl', 'piggy paint', 'nyx', 'benefit', 'smashbox',
+        'zorah', 'physicians formula', 'almay', 'marcelle', 'e.l.f.', 'dr. hauschka', 'fenty', 'clinique',
+        'cargo cosmetics', 'dalish', "burt's bees", 'milani', 'colourpop', 'annabelle', 'deciem', 'stila',
+        'mistura'];
+      return {
+        ...state,
+        brands: brands
+      }
     case SEARCH_BY_CATEGORIE:
       return {
         ...state,
         products: action.payload
+      }
+    case SEARCH_BY_BRAND:
+      return {
+        ...state,
+        products: action.payload
+      }
+    case ORDER_BY_PRICE:
+      return {
+        ...state,
+        products: action.payload
+      }
+    case ORDER_BY_NAME:
+      let orderProdAbc = action.payload === "asc"
+        ? state.products.sort(function (a, b) {
+          if (a.name > b.name) {
+            return 1
+          }
+          if (b.name > a.name) {
+            return -1
+          }
+          return 0
+        })
+        : action.payload === "desc"
+          ? state.products.sort(function (a, b) {
+            if (a.name > b.name) {
+              return -1
+            }
+            if (b.name > a.name) {
+              return 1
+            }
+            return 0
+            })
+          : state.products
+      return {
+        ...state,
+        products: orderProdAbc
       }
     case GET_ALL_PRODUCTS:
       return {
@@ -32,12 +83,12 @@ function rootReducer(state = initialState, action) {
       };
     case GET_DETAIL:
       return {
-         ...state,
-         productDetail: action.payload
+        ...state,
+        productDetail: action.payload
       };
     default:
-        return state;
+      return state;
   }
-} 
+}
 
 export default rootReducer;

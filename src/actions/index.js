@@ -5,6 +5,10 @@ export const SET_CURRENT_HOME_PAGE = "SET_CURRENT_HOME_PAGE";
 export const GET_DETAIL = 'GET_DETAIL';
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const SEARCH_BY_CATEGORIE = 'SEARCH_BY_CATEGORIE';
+export const GET_ALL_BRANDS = 'GET_ALL_BRANDS';
+export const SEARCH_BY_BRAND = 'SEARCH_BY_BRAND';
+export const ORDER_BY_PRICE = 'ORDER_BY_PRICE';
+export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 
 const API = 'http://localhost:3001/api';
 
@@ -16,6 +20,30 @@ export function getAllProducts() {
         return dispatch({
             type: GET_ALL_PRODUCTS,
             payload: json.data
+        });
+    } catch(error){
+        console.error(error);
+    }
+    }
+}
+
+export function getAllBrands() {
+    return async function(dispatch) {
+    try {
+        return dispatch({
+            type: GET_ALL_BRANDS,
+        });
+    } catch(error){
+        console.error(error);
+    }
+    }
+}
+
+export function orderByAbc() {
+    return async function(dispatch) {
+    try {
+        return dispatch({
+            type: ORDER_BY_NAME,
         });
     } catch(error){
         console.error(error);
@@ -38,14 +66,47 @@ export function getCategories() {
     }
 }
 
+export function filterByBrand(brand) {
+    return async function(dispatch) {
+    try {
+        var jsonB;
+        if (brand) jsonB = await axios.get(`${API}/products/brand/?brand=${brand}`); 
+        else jsonB = await axios.get(`${API}/products`);
+        return dispatch({
+            type: SEARCH_BY_BRAND,
+            payload: jsonB.data
+        });
+    } catch(error){
+        console.error(error);
+    }
+    }
+}
+
 export function filterByCategory(categorie) {
     return async function(dispatch) {
     try {
-        var json = 
-        await axios.get(`${API}/products/search/?categorie=${categorie}`);
+        let jsonC
+        if (categorie) jsonC = await axios.get(`${API}/categorie/?categorie=${categorie}`); 
+        else jsonC = await axios.get(`${API}/products`);
         return dispatch({
             type: SEARCH_BY_CATEGORIE,
-            payload: json.data
+            payload: jsonC.data
+        });
+    } catch(error){
+        console.error(error);
+    }
+    }
+}
+
+export function orderByPrice(order) {
+    return async function(dispatch) {
+    try {
+        let jsonOP
+        if (order) jsonOP = await axios.get(`${API}/products/price/?orderby=${order}`); 
+        else jsonOP = await axios.get(`${API}/products`);
+        return dispatch({
+            type: ORDER_BY_PRICE,
+            payload: jsonOP.data
         });
     } catch(error){
         console.error(error);
