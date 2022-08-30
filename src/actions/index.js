@@ -139,10 +139,10 @@ export function getDetail(id){
             console.log(error);
         }
     }
+}
 
 
-
-export function getName(name){
+export function getName(name) {
     return async function(dispatch){
         try {
         var json = await axios.get('http://localhost:3001/api/products/search/?name=' + name);
