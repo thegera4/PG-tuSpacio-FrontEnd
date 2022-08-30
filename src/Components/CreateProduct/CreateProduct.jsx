@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getCategories } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { FormControlLabel, Radio, RadioGroup, TextField } from '@material-ui/core';
+import { FormControlLabel, FormHelperText, Radio, RadioGroup, TextField } from '@material-ui/core';
 
 export default function CreateProduct() {
     const dispatch = useDispatch();
@@ -94,8 +94,6 @@ export default function CreateProduct() {
         })
         navigate('/')
     }
-    
-    let caracteristics = ['Price','Rating']
 
     return (
         <div className='createPage' key='createPage'>
@@ -119,75 +117,110 @@ export default function CreateProduct() {
                             id="outlined-name"
                             label="Name"
                             value={input.name}
-                            onChange={handleChange}
+                            onChange={(e) => handleChange(e)}
                             variant="outlined"
                             />
-                        <RadioGroup aria-label="quiz" name="quiz" value={value} onChange={handleChange}>
-                            <FormControlLabel value="ready" control={<Radio />} label="Ok" />
-                            <FormControlLabel value="not ready" control={<Radio />} label={errors.name} />
-                        </RadioGroup>
-                        <div className='errorBox' key='errordivName'>
-                            {
-                                errors.name && (
-                                    <p className='errors' key='errorName'>{errors.name}</p>
-                                )
-                            }
-                        </div>
+                        {
+                            errors.name && (
+                                <FormHelperText>{errors.name}</FormHelperText>
+                            )
+                        }
                     </div>
 
                     <div key='divImg'>
-                        <label className='textCreate' key='textImg'>Image</label> <br />
-                        <input  type="url" 
-                                value={input.image}
-                                name="image"
-                                placeholder='Image URL...'
-                                onChange={(e) => handleChange(e)} 
-                                key='inputImg'/> <br />
-                        <div className='errorBox' key='errordivImg'>
-                            {
-                                errors.image && (
-                                    <span className='errors' key='errorImg'>{errors.image}</span>
-                                )
-                            }
-                        </div>
-                        <br />
-                        <div className='divImg' key='divImgDemo'>
-                            <img    className='imgDemo' 
-                                    src={input.image?input.image:"https://img.freepik.com/foto-gratis/arreglo-vista-superior-pinceles-maquillaje-sombras-ojos_23-2148301855.jpg"} 
-                                    alt="PokePic" 
-                                    width="150px" 
-                                    height="150px" 
-                                    key='imgDemo' />
-                        </div>
+                        <TextField
+                            id="outlined-name"
+                            label="Image"
+                            value={input.image}
+                            onChange={(e) => handleChange(e)}
+                            variant="outlined"
+                            />
+                        {
+                            errors.image && (
+                                <FormHelperText>{errors.image}</FormHelperText>
+                            )
+                        }
+                    </div>
+
+                    <div key='divDesc'>
+                        <TextField
+                            id="outlined-name"
+                            label="Description"
+                            value={input.description}
+                            onChange={(e) => handleChange(e)}
+                            variant="outlined"
+                            />
+                        {
+                            errors.description && (
+                                <FormHelperText>{errors.description}</FormHelperText>
+                            )
+                        }
+                    </div>
+                    
+                    <div key='divCurr'>
+                        <TextField
+                            id="outlined-name"
+                            label="Currency"
+                            value={input.currency}
+                            onChange={(e) => handleChange(e)}
+                            variant="outlined"
+                            />
+                        {
+                            errors.currency && (
+                                <FormHelperText>{errors.currency}</FormHelperText>
+                            )
+                        }
                     </div>
                 </div>
+                        
                 
                 <div className='center' key='divCenter'>
-                    {
-                        caracteristics.map(c => 
-                            <div className='range' key={`div${c}`}>
-                                <br />
-                                <label className='textCreate' key={`text${c}`}>{`${c}`}</label>
-                                <input  className='rangeInput' 
-                                        type="range"
-                                        min="0"
-                                        max="100"
-                                        value={parseInt(input[`${c.toLocaleLowerCase()}`])}
-                                        name={`${c.toLocaleLowerCase()}`}
-                                        onChange={(e) => handleChange(e)}
-                                        key={`input${c}`} />
-                                <br />
-                                <h5 className='valueCreate' key={`value${c}`}>{input[`${c.toLocaleLowerCase()}`]}</h5>
-                            </div>
-                        )
-                    }
+                    <div className='range' key={`divPrice`}>
+                        <Typography id="non-linear-slider" gutterBottom>
+                            Price
+                        </Typography>
+                        <Slider
+                            value={parseInt(input.price)}
+                            min={0}
+                            step={0.1}
+                            max={100}
+                            scale={(x) => x}
+                            getAriaValueText={valueLabelFormat}
+                            onChange={(e) => handleChange(e)}
+                            valueLabelDisplay="auto"
+                            aria-labelledby="non-linear-slider"
+                        />
+                        {
+                            errors.price && (
+                                <FormHelperText>{errors.price}</FormHelperText>
+                            )
+                        }
+                    </div>
+
+                    <div className='range' key={`divRating`}>
+                        <Typography id="non-linear-slider" gutterBottom>
+                            Rating
+                        </Typography>
+                        <Slider
+                            value={parseInt(input.rating)}
+                            min={0}
+                            step={1}
+                            max={5}
+                            scale={(x) => x}
+                            getAriaValueText={valueLabelFormat}
+                            onChange={(e) => handleChange(e)}
+                            valueLabelDisplay="auto"
+                            aria-labelledby="non-linear-slider"
+                        />
+                    </div>
+                        
                 </div>
                     
                 <div className='rightCreate' key='rightCreate'>
-                    <label className='textCreate' key='textCreate'>Select Types</label> <br />
+                    <label className='textCreate' key='textCreate'>Select Categories</label> <br />
                     <div className='typeBox' key='typeBox'>
                         {
-                                allTypes.map( type =>
+                                allCategories.map( type =>
                                         <input
                                             className={ types.includes(type.name)
                                                 ? 'inputIn'
@@ -201,13 +234,11 @@ export default function CreateProduct() {
                                 )
                         }
                     </div>
-                    <div className='errorBox' key='errorTypesBox'>
-                        {
-                            errors.types && (
-                                <span className='errors' key='errorTypes'>{errors.types}</span>
-                                )
-                        }
-                    </div>
+                    {
+                        errors.price && (
+                            <FormHelperText>{errors.price}</FormHelperText>
+                        )
+                    }
                 </div>
             </form>
         </div>
