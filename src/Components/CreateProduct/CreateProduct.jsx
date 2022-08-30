@@ -126,6 +126,9 @@ export default function CreateProduct() {
         if(errors.name || errors.categories || errors.description || errors.currency || errors.image || errors.price) {
             return alert("Can't create a product. Missing data")}
         input.categories = categories;
+        input["brand"] = "Avon";
+        input["product_type"] = "prueba";
+        input["product_colors"] = ["blue"];
         dispatch(postNewProduct(input))
         alert("Product created successfully!!");
         setInput({
