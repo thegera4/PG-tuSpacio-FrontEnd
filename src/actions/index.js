@@ -124,7 +124,7 @@ export function setCurrentHomePage(page) {
 export function getDetail(id){
         return async function(dispatch){
             try {
-            var json = await axios.get(`${API}/products/${id}`);
+            var json = await axios.get(`${API}/product/${id}`);
             return dispatch({
                 type: GET_DETAIL,
                 payload: json.data
