@@ -1,0 +1,21 @@
+.loupe {
+    background-color: transparent;
+    border:none;
+    padding-top: 10px;
+    
+}
+
+.ic {
+    filter: invert(100%);
+    cursor: pointer;
+}
+
+.icc {
+    background-color: transparent;
+    border:none;
+    padding-top: 10px;
+    margin-left: 20px;
+    cursor:pointer;
+
+}
+

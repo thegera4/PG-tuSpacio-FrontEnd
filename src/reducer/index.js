@@ -6,7 +6,8 @@ const initialState = {
   currentPageHome: 1,
   productDetail: {},
   categories: [],
-  brands: []
+  brands: [],
+  search: []
 }
 
 
@@ -86,10 +87,19 @@ function rootReducer(state = initialState, action) {
         ...state,
         productDetail: action.payload
       };
+
+
+      case "GET_NAME":
+        return {
+          ...state,
+          products: action.payload
+        }
+
     case POST_PRODUCT:
       return {
           ...state,
       }
+
     default:
       return state;
   }
