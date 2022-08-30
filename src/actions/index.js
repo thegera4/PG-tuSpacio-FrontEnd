@@ -134,3 +134,18 @@ export function getDetail(id){
             }
         }
     }
+
+
+export function getName(name){
+    return async function(dispatch){
+        try {
+        var json = await axios.get('http://localhost:3001/api/products/search/?name=' + name);
+        return dispatch({
+            type: "GET_NAME",
+            payload: json.data
+        });
+        } catch (error) {
+            alert('No se encontro el producto');
+        }
+    }   
+}

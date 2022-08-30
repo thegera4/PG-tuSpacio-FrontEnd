@@ -17,10 +17,13 @@ import LogoFONT from '../../assets/images/font_logo.png';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../ThemeConfig';
 import useStyles from './useStyles';
-
+import {useDispatch} from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar';
+import {getAllProducts} from '../../actions/index'
+import refresh from '../../assets/images/refresh.png'
 
 export default function Navbar() {
+  const dispatch = useDispatch()
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -32,6 +35,12 @@ export default function Navbar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+  function handleClick(e) {
+    e.preventDefault();
+    dispatch(getAllProducts());
+    
+  }
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -78,8 +87,8 @@ export default function Navbar() {
               <SearchBar />
               {/* <div className={classes.searchIcon}>
                 <SearchIcon />
-              </div>
-              <InputBase
+                </div>
+                <InputBase
                 placeholder="Search…"
                 classes={{
                   root: classes.inputRoot,
@@ -88,6 +97,7 @@ export default function Navbar() {
                 inputProps={{ 'aria-label': 'search' }}
               /> */}
             </div>
+              <button onClick={e => handleClick(e)} className='icc'><img className='ic' src={refresh} alt="" width="20px"/></button>
             {/* Iconos de carrito y perfil */}
             <div className={classes.sectionDesktop}>
               <IconButton color="inherit" >

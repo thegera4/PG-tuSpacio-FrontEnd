@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { useSelector } from 'react-redux'
 import useStyles from './useStyles';
 import { Link }from 'react-router-dom'
 //import Favorite from '@material-ui/icons/Favorite';
@@ -13,10 +14,13 @@ import NotFavorite from '@material-ui/icons/FavoriteBorder';
 import Placeholder from '../../assets/images/placeholder_home.png';
 export default function HomeCards(props) {
   const classes = useStyles();
-
+  const products = useSelector(state => state.products)
   // console.log(props)
   return (
-    <Card className={classes.root}>
+    <>
+    { !products? <div>Not product Found</div> :
+
+      <Card className={classes.root}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
@@ -49,5 +53,8 @@ export default function HomeCards(props) {
         </Link>
       </CardActions>
     </Card>
-  );
+            }
+            </>
+  )
+            
 }
