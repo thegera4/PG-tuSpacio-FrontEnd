@@ -7,6 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
+import { Link }from 'react-router-dom'
 //import Favorite from '@material-ui/icons/Favorite';
 import NotFavorite from '@material-ui/icons/FavoriteBorder';
 import Placeholder from '../../assets/images/placeholder_home.png';
@@ -41,9 +42,11 @@ export default function HomeCards(props) {
       </CardActionArea>
       <CardActions>
         <NotFavorite />
+        <Link to={`/${props.products.id}`}>
         <Button size="small" color="primary">
           Learn More
         </Button>
+        </Link>
       </CardActions>
     </Card>
   );

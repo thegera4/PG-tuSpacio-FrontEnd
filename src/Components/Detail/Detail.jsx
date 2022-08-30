@@ -1,8 +1,10 @@
  import React from 'react'
  import {useDispatch, useSelector} from 'react-redux'
+ import {useParams} from "react-router-dom"
  import {getDetail} from '../../actions/index'
  import { useEffect } from 'react'
  import defaultImage from "../../assets/images/not_found.png"
+ 
 
 
 
@@ -91,7 +93,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard(props) {
+  const { id } = useParams()
+ 
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -102,18 +106,18 @@ export default function RecipeReviewCard() {
   const dispatch = useDispatch()
      const myProduct = useSelector((state) => state.productDetail)
     
-  // console.log(props)
-  const id = 974
-
- useEffect(() => {
+  
  
-   dispatch(getDetail(id))   
 
- }
- , [dispatch, id])
+  useEffect(() => {
+ 
+    dispatch(getDetail(id))   
+
+  }
+  , [dispatch])
 
 
-
+ console.log(myProduct)
 
   return (
     <Card className={classes.root} >
