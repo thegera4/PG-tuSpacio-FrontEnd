@@ -67,16 +67,18 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import {Box, Grid, Paper} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 500,
     margin: 'auto',
-    marginTop: 100
+    marginBlock: 20,
   },
   media: {
-    height: 0,
+    height: 20,
     paddingTop: '56.25%', // 16:9
+   
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -120,48 +122,156 @@ export default function RecipeReviewCard(props) {
  console.log(myProduct)
 
   return (
-    <Card className={classes.root} >
-      <CardHeader
-        
-        title={myProduct.name}
-        subheader={myProduct.brand}
-      />
-      <CardMedia
-        className={classes.media}
-        image={myProduct.image_link || defaultImage}
-        title={myProduct.name}
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-        {myProduct.description}
+    <div className={classes.root}>
+       <Grid container spacing={3}>
+         <Grid item xs={6}>
+          <Card className={classes.root} >
+        <CardHeader
+          title={myProduct.name}
+          subheader={myProduct.brand}
+        />
+          <CardMedia
+            className={classes.media}
+            image={myProduct.image_link || defaultImage}
+            title={myProduct.name}
+          />
+            <CardContent>
+              <Typography variant="body2" color="textSecondary" component="p">
+              {myProduct.description}
+              </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+            <IconButton aria-label="add to favorites">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="sadd to cart">
+            <ShoppingCartIcon />
+          </IconButton>
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography paragraph>Rating: {myProduct.rating || 0 }</Typography>
+            <Typography paragraph>Type: {myProduct.product_type}</Typography>
+            <Typography paragraph>Category: {myProduct.product_category}</Typography>
+          
+          </CardContent>
+        </Collapse>
+      </Card>
+      </Grid> 
+      <Grid item xs={6}>
+      <Box
+       
+        sx={{
+          boxShadow: 3,
+          width: '12 rem',
+          height: '2rem',
+          bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
+          color: (theme) =>
+            theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+          p: 1,
+          m: 1,
+          borderRadius: 2,
+          textAlign: 'center',
+          fontSize: '0.875rem',
+          fontWeight: '700',
+        }}
+      >
+        <Typography variant='subtitle1'>
+          <Paper>Nombre del Producto</Paper>
         </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="sadd to cart">
-          <ShoppingCartIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Rating: {myProduct.rating || 0 }</Typography>
-          <Typography paragraph>Type: {myProduct.product_type}</Typography>
-          <Typography paragraph>Category: {myProduct.product_category}</Typography>
-         
-        </CardContent>
-      </Collapse>
-    </Card>
-  );
-}
+      </Box>
+      
+      <Box
+        sx={{
+          boxShadow: 3,
+          width: '12 rem',
+          // height: '5rem',
+          bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
+          color: (theme) =>
+            theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+          p: 1,
+          m: 1,
+          borderRadius: 2,
+          textAlign: 'center',
+          fontSize: '0.875rem',
+          fontWeight: '700',
+        }}
+      >
+        
+        <Typography variant='body'>
+        $00.00 
+        </Typography>
+        
+      </Box>
+
+      <Box
+        sx={{
+          boxShadow: 3,
+          width: '12 rem',
+          // height: '5rem',
+          bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
+          color: (theme) =>
+            theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+          p: 1,
+          m: 1,
+          borderRadius: 2,
+          textAlign: 'center',
+          fontSize: '0.875rem',
+          fontWeight: '700',
+        }}
+      >
+        
+        <Typography variant='subtitle2'>
+        DESCRIPCIÓN: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non sit adipiscing at habitasse lorem volutpat id. Ipsum urna tortor tempus hendrerit mauris, diam, ante. Sit ultricies sed mauris, consequat. Urna, eu tortor, feugiat id in. Pulvinar sit quis nibh mauris non cursus blandit. 
+        </Typography>
+        
+      </Box>
+      
+      </Grid>
+    </Grid>
+    </div>
+    );
+    }
+
+
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     flexGrow: 1,
+//   },
+//   paper: {
+//     padding: theme.spacing(2),
+//     textAlign: 'center',
+//     color: theme.palette.text.secondary,
+//   },
+// }));
+
+// export default function CenteredGrid() {
+//   const classes = useStyles();
+
+//   return (
+//     <div className={classes.root}>
+//       <Grid container spacing={3}>
+//         <Grid item xs={12}>
+//           <Paper className={classes.paper}>xs=12</Paper>
+//         </Grid>
+//         <Grid item xs={6}>
+//           <Paper className={classes.paper}>xs=6</Paper>
+//         </Grid>
+//         <Grid item xs={6}>
+//           <Paper className={classes.paper}>xs=6</Paper>
+//         </Grid>
+      // </Grid>
+      // </div>
+      // );
+      // }
+    
