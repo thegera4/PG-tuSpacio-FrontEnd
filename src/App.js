@@ -5,6 +5,7 @@ import Footer from './Components/Footer/Footer.jsx';
 import Detail from './Components/Detail/Detail';
 import ContainerCards from './Components/ContainerCards/ContainerCards.jsx'
 import { Routes, Route } from 'react-router-dom';
+import CreateProduct from './Components/CreateProduct/CreateProduct';
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/" exact element={ <ContainerCards /> } /> 
         <Route path="/:id" element={ <Detail /> } />
-        {/* <Route path="/create" element={ <CreateProduct /> } /> */}
+        <Route path="/create" element={ <CreateProduct /> } />
       </Routes>  
         <Footer />  
     </Container>

@@ -9,6 +9,7 @@ export const GET_ALL_BRANDS = 'GET_ALL_BRANDS';
 export const SEARCH_BY_BRAND = 'SEARCH_BY_BRAND';
 export const ORDER_BY_PRICE = 'ORDER_BY_PRICE';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
+export const POST_PRODUCT = 'POST_PRODUCT';
 
 const API = 'http://localhost:3001/api';
 
@@ -127,15 +128,43 @@ export function setCurrentHomePage(page) {
 }
 
 export function getDetail(id){
-        return async function(dispatch){
-            try {
-            var json = await axios.get(`${API}/product/${id}`);
-            return dispatch({
-                type: GET_DETAIL,
-                payload: json.data
-            });
-            } catch (error) {
-                console.log(error);
-            }
+    return async function(dispatch){
+        try {
+        var json = await axios.get(`${API}/products/${id}`);
+        return dispatch({
+            type: GET_DETAIL,
+            payload: json.data
+        });
+        } catch (error) {
+            console.log(error);
         }
     }
+
+
+
+export function getName(name){
+    return async function(dispatch){
+        try {
+        var json = await axios.get('http://localhost:3001/api/products/search/?name=' + name);
+        return dispatch({
+            type: "GET_NAME",
+            payload: json.data
+        });
+        } catch (error) {
+            alert('No se encontro el producto');
+        }
+    }   
+
+}
+
+export function postNewProduct(payload) {
+    return function(dispatch) {
+        const newProdResult = axios.post(`${API}/products`,payload)
+        dispatch({
+            type: POST_PRODUCT,
+            payload
+        }) 
+        return newProdResult;
+    }
+
+}
