@@ -10,9 +10,11 @@ import { useSelector } from 'react-redux'
 import useStyles from './useStyles';
 import { Link }from 'react-router-dom'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import Payment from '@material-ui/icons/Payment';
 //import Favorite from '@material-ui/icons/Favorite';
 import NotFavorite from '@material-ui/icons/FavoriteBorder';
 import Placeholder from '../../assets/images/placeholder_home.png';
+import Box from '@material-ui/core/Box';
 export default function HomeCards(props) {
   const classes = useStyles();
   const products = useSelector(state => state.products)
@@ -22,11 +24,18 @@ export default function HomeCards(props) {
     { !products? <div>Not product Found</div> :
 
       <Card className={classes.root}>
-      <CardActionArea >
-      <CardActions>
+        <CardActionArea  >
+        <Box
+      display="flex"
+      justifyContent="end"
+      alignItems="end"
+      minHeight="5vh"
+      >
+      <CardActions >
             <NotFavorite />
             <ShoppingCartIcon />
       </CardActions>   
+      </Box>
 
         <Link to={`/${props.products.id}`}>
         <CardMedia
@@ -35,12 +44,8 @@ export default function HomeCards(props) {
             props.products.image_link:
             Placeholder} />
               </Link>
-          <Typography 
-            gutterBottom variant="h7" 
-            component="h2">
-              {props.products.name}
-          </Typography>
-        <CardContent>
+
+          <CardContent className={classes.content}>
           {/* <Typography 
             variant="body2" 
             color="textSecondary" 
@@ -49,12 +54,25 @@ export default function HomeCards(props) {
               props.products.description.substring(0, 100) 
               + '...' :
               'No description available'}
-          </Typography> */}
-            <Typography 
-            gutterBottom variant="h6" 
-            component="h2">
-              {props.products.price}
-          </Typography>
+            </Typography> */}
+            <Typography component="div">
+              <Box textAlign="left"  fontWeight="fontWeightBold" fontSize={15} >
+              {props.products.name}
+              </Box>
+            </Typography>
+            <Typography component="div" >
+            <Box
+            display="flex"
+            alignItems="center"
+            fontWeight="fontWeightBold" 
+            fontSize={15}
+            > 
+            
+            <Payment fontSize="small"  />  USD {props.products.price}  
+            </Box>
+             
+            </Typography>
+            
         </CardContent>
       </CardActionArea>
 
