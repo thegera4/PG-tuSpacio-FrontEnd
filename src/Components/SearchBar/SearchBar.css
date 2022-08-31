@@ -1,19 +1,17 @@
 .loupe {
     background-color: transparent;
     border:none;
-    padding-top: 10px;
-    
+    margin-top: 7px;
+    padding-left: 15px;
 }
 
 .ic {
-    filter: invert(100%);
     cursor: pointer;
 }
 
 .icc {
     background-color: transparent;
     border:none;
-    padding-top: 10px;
     margin-left: 20px;
     cursor:pointer;
 
