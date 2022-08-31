@@ -22,11 +22,13 @@ export default function HomeCards(props) {
 
       <Card className={classes.root}>
       <CardActionArea>
+        <Link to={`/${props.products.id}`}>
         <CardMedia
           className={classes.media}
           image={props.products.image_link?
             props.products.image_link:
             Placeholder}/>
+              </Link>
         <CardContent>
           <Typography 
             gutterBottom variant="h6" 
@@ -52,6 +54,7 @@ export default function HomeCards(props) {
         </Button>
         </Link>
       </CardActions>
+    
     </Card>
             }
             </>

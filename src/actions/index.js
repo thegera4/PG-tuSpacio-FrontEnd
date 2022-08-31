@@ -10,6 +10,7 @@ export const SEARCH_BY_BRAND = 'SEARCH_BY_BRAND';
 export const ORDER_BY_PRICE = 'ORDER_BY_PRICE';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const POST_PRODUCT = 'POST_PRODUCT';
+export const GET_NAME = 'GET NAME';
 
 const API = 'http://localhost:3001/api';
 
@@ -130,7 +131,7 @@ export function setCurrentHomePage(page) {
 export function getDetail(id){
     return async function(dispatch){
         try {
-        var json = await axios.get(`${API}/products/${id}`);
+        var json = await axios.get(`${API}/product/${id}`);
         return dispatch({
             type: GET_DETAIL,
             payload: json.data
@@ -147,7 +148,7 @@ export function getName(name) {
         try {
         var json = await axios.get('http://localhost:3001/api/products/search/?name=' + name);
         return dispatch({
-            type: "GET_NAME",
+            type: GET_NAME,
             payload: json.data
         });
         } catch (error) {
