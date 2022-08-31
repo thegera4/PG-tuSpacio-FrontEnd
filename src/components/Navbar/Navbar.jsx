@@ -60,7 +60,7 @@ export default function Navbar() {
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.grow}>
-        <AppBar position="static" >
+        <AppBar position="static" color='white'>
           <Toolbar>
             {/* Hamburguesa */}
             <IconButton

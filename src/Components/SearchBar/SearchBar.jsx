@@ -167,10 +167,9 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    
-    marginRight: theme.spacing(2),
     marginLeft: 0,
     width: '100%',
+    border: '1px solid black',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(3),
       width: 'auto',
@@ -223,8 +222,8 @@ export default function SearchBar() {
   return (
   
     <div className={classes.search}>
-    {/* <button onClick={()=> dispatch(getName(suggested))} ></button> */}
     <button className='loupe' onClick={()=> suggested ? dispatch(getName(suggested)): alert('Ingrese el nombre del producto')}> <img className='ic' src={loupe} alt="" width="20px"/> </button>
+    {/* <button onClick={()=> dispatch(getName(suggested))} ></button> */}
               {/* <div className={classes.searchIcon} >
                 <SearchIcon 
                 
@@ -234,13 +233,14 @@ export default function SearchBar() {
                 // value={suggested}
                 onChange={(event) => {setSuggested(event.target.value)
                   }}
-                placeholder="Search…"
+                placeholder="Search Product..."
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
                 inputProps={{ 'aria-label': 'search' }}
                 autoComplete={search.name}
+                
               />
 
             </div>

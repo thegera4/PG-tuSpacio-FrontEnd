@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { useSelector } from 'react-redux'
 import useStyles from './useStyles';
 import { Link }from 'react-router-dom'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 //import Favorite from '@material-ui/icons/Favorite';
 import NotFavorite from '@material-ui/icons/FavoriteBorder';
 import Placeholder from '../../assets/images/placeholder_home.png';
@@ -21,21 +22,26 @@ export default function HomeCards(props) {
     { !products? <div>Not product Found</div> :
 
       <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea >
+      <CardActions>
+            <NotFavorite />
+            <ShoppingCartIcon />
+      </CardActions>   
+
         <Link to={`/${props.products.id}`}>
         <CardMedia
           className={classes.media}
           image={props.products.image_link?
             props.products.image_link:
-            Placeholder}/>
+            Placeholder} />
               </Link>
-        <CardContent>
           <Typography 
-            gutterBottom variant="h6" 
+            gutterBottom variant="h7" 
             component="h2">
               {props.products.name}
           </Typography>
-          <Typography 
+        <CardContent>
+          {/* <Typography 
             variant="body2" 
             color="textSecondary" 
             component="p">
@@ -43,17 +49,15 @@ export default function HomeCards(props) {
               props.products.description.substring(0, 100) 
               + '...' :
               'No description available'}
+          </Typography> */}
+            <Typography 
+            gutterBottom variant="h6" 
+            component="h2">
+              {props.products.price}
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <NotFavorite />
-        <Link to={`/${props.products.id}`}>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-        </Link>
-      </CardActions>
+
     
     </Card>
             }

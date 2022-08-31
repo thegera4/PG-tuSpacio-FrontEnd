@@ -3,6 +3,7 @@ import { alpha, makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
+    
   },
   menuButton: {
     display: 'flex',
@@ -29,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     width: '120px',
-    height: '30px', 
+    height: '27px', 
+    marginLeft: '10px'
   },
   search: {
     marginLeft: 'auto',
