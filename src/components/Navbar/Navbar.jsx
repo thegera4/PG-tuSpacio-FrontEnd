@@ -15,10 +15,8 @@ import LogoFONT from '../../assets/images/font_logo.png';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../ThemeConfig';
 import useStyles from './useStyles';
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar';
-import {getAllProducts} from '../../actions/index'
-import refresh from '../../assets/images/refresh.png'
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Link } from 'react-router-dom';
 
@@ -27,6 +25,7 @@ export default function Navbar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
+  const data = useSelector(state => state.products)
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -36,11 +35,6 @@ export default function Navbar() {
     setAnchorEl(null);
   };
 
-  function handleClick(e) {
-    e.preventDefault();
-    dispatch(getAllProducts());
-    
-  }
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -86,17 +80,8 @@ export default function Navbar() {
             </Link>
             {/* Searchbar */}
             <div className={classes.search}>
-              <SearchBar />
+              <SearchBar placeholder="Search product..." data={data}/>
             </div>
-              <button 
-              onClick={e => handleClick(e)} 
-              className='icc'>
-                <img 
-                className='ic' 
-                src={refresh} 
-                alt="" 
-                width="20px"/>
-              </button>
             {/* Iconos de carrito y perfil */}
             <div className={classes.sectionDesktop}>
             <Link to='/wishlist'>

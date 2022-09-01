@@ -16,9 +16,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,7 +58,7 @@ export default function RecipeReviewCard() {
   const dispatch = useDispatch()
   const myProduct = useSelector((state) => state.productDetail)
     
-  console.log(myProduct)
+
  
 
   useEffect(() => {
@@ -69,7 +69,7 @@ export default function RecipeReviewCard() {
   , [dispatch])
 
 
- console.log(myProduct)
+
 
   return (
     <Card className={classes.root} >
