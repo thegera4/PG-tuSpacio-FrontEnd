@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux'
 import useStyles from './useStyles';
 import { Link }from 'react-router-dom'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import NotFavorite from '@material-ui/icons/FavoriteBorder';
 import Placeholder from '../../assets/images/placeholder_home.png';
 import Box from '@material-ui/core/Box';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
