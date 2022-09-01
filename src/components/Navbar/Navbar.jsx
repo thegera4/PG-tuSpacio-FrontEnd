@@ -71,17 +71,19 @@ export default function Navbar() {
                 <MenuIcon />
             </IconButton>
             {/* Logo */}
-            <Box className={classes.logoBox}>
-              <img 
-                className={classes.logoImg} 
-                src={LogoIMG} 
-                alt="logo img"/>
-              <img 
-                className={classes.logoFont} 
-                src={LogoFONT} 
-                alt="logo font" 
-                />
-            </Box>
+            <Link to='/'>
+              <Box className={classes.logoBox}>
+                <img 
+                  className={classes.logoImg} 
+                  src={LogoIMG} 
+                  alt="logo img"/>
+                <img 
+                  className={classes.logoFont} 
+                  src={LogoFONT} 
+                  alt="logo font" 
+                  />
+              </Box>
+            </Link>
             {/* Searchbar */}
             <div className={classes.search}>
               <SearchBar />
