@@ -1,8 +1,12 @@
 import React from 'react'
+import WishlistCards from '../../Components/WishlistCards/WishlistCards';
 
 function Wishlist() {
   return (
-    <div>Wishlist</div>
+    <div>
+    Aqui van las WishlistCards
+      <WishlistCards />
+    </div>
   )
 }
 

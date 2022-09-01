@@ -10,54 +10,39 @@ import { useSelector } from 'react-redux'
 import useStyles from './useStyles';
 import { Link }from 'react-router-dom'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import Payment from '@material-ui/icons/Payment';
-//import Favorite from '@material-ui/icons/Favorite';
 import NotFavorite from '@material-ui/icons/FavoriteBorder';
 import Placeholder from '../../assets/images/placeholder_home.png';
 import Box from '@material-ui/core/Box';
-export default function HomeCards(props) {
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+
+export default function WishlistCards() {
   const classes = useStyles();
-  const products = useSelector(state => state.products)
- 
+
   return (
-    <>
-    { !products? <div>Not product Found</div> :
-
-      <Card className={classes.root}>
-        <CardActionArea  >
+    <Card className={classes.root}>
+      <CardActionArea  >
         <Box
-      display="flex"
-      justifyContent="end"
-      alignItems="end"
-      minHeight="5vh"
-      >
-      <CardActions >
-            <NotFavorite />
+          display="flex"
+          justifyContent="end"
+          alignItems="end"
+          minHeight="5vh">
+          <CardActions >
             <ShoppingCartIcon />
-      </CardActions>   
-      </Box>
-
-        <Link to={`/${props.products.id}`}>
+            <DeleteForeverIcon />
+          </CardActions>   
+        </Box>
+        {/*<Link to={`/${props.products.id}`}>*/}
         <CardMedia
           className={classes.media}
-          image={props.products.image_link?
+          image={Placeholder}/*{props.products.image_link?
             props.products.image_link:
-            Placeholder} />
-              </Link>
-
+            /*Placeholder}*/ />
+        {/*</Link>*/}
           <CardContent className={classes.content}>
-          {/* <Typography 
-            variant="body2" 
-            color="textSecondary" 
-            component="p">
-            {props.products.description ?
-              props.products.description.substring(0, 100) 
-              + '...' :
-              'No description available'}
-            </Typography> */}
             <Typography component="div">
               <Box textAlign="left"  fontWeight="fontWeightBold" fontSize={15} >
-              {props.products.name}
+              {/*props.products.name*/}Nombre del producto
               </Box>
             </Typography>
             <Typography component="div" >
@@ -65,21 +50,12 @@ export default function HomeCards(props) {
             display="flex"
             alignItems="center"
             fontWeight="fontWeightBold" 
-            fontSize={15}
-            > 
-            
-            <Payment fontSize="small"  />  USD {props.products.price}  
+            fontSize={15}> 
+            <AttachMoneyIcon fontSize="small"  />  USD 25.00{/*props.products.price*/}  
             </Box>
-             
             </Typography>
-            
         </CardContent>
       </CardActionArea>
-
-    
     </Card>
-            }
-            </>
-  )
-            
+  )          
 }

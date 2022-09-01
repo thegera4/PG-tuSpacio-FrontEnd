@@ -41,15 +41,18 @@ export default function SpacingGrid() {
     setSpacing(Number(event.target.value));
   };
 
-  // console.log(products)
   return (
     <>
-        <Typography component="div">
-      
-      <Box textAlign="left" marginLeft="60px" marginBottom="20px" fontWeight="fontWeightBold" fontSize={20}>
-        All Products 
-      </Box>
-    </Typography>
+      <Typography component="div">
+        <Box 
+        textAlign="left" 
+        marginLeft="60px" 
+        marginBottom="20px" 
+        fontWeight="fontWeightBold" 
+        fontSize={20}>
+          All Products 
+        </Box>
+      </Typography>
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
           <Grid 
