@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { Box, Button, Grid } from '@material-ui/core';
-import { filterByBrand, filterByCategory, getAllBrands, getCategories, orderByAbc, orderByPrice, setCurrentHomePage } from '../../actions';
+import { Box, Button, Checkbox, Grid, Input, ListItemText, MenuItem } from '@material-ui/core';
+import { filterByBrand, filterByCategory, getAllBrands, getCategories, orderByAbc, 
+    orderByPrice, setCurrentHomePage, OrderByRating } from '../../actions';
 import { useNavigate } from "react-router-dom";
-import theme2 from '../../ThemeConfig';
+import theme from '../../ThemeConfig';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -16,12 +17,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+};
+
 export default function Filter({setOrder}) {
     const navigate = useNavigate();
     const categories = useSelector((state) => state.categories)
     const brands = useSelector((state) => state.brands)
     const classes = useStyles();
     const dispatch = useDispatch();
+    const [stars, setStars] = useState([]);
 
     useEffect ( () => {
         dispatch(getCategories())
@@ -64,8 +77,18 @@ export default function Filter({setOrder}) {
         else setOrder("")
     }
 
+    function handleOrderByRating(e) {
+        e.preventDefault();
+        // setStars(e.target.value);
+        if (stars.length < 2) setStars(e.target.value);
+        // dispatch(OrderByRating(e.target.value));
+        // dispatch(setCurrentHomePage(1))
+        // if (e.target.value) setOrder(`Order by ${e.target.value}`)
+        // else setOrder("")
+    }
+
     return (
-        <ThemeProvider theme={theme2}>
+        <ThemeProvider theme={theme}>
             <Box
                 bgcolor='white'
                 boxShadow= '0px 10px 8px 0px rgba(0,0,0,0.18)'
@@ -76,7 +99,7 @@ export default function Filter({setOrder}) {
                     justifyContent="space-between"
                     alignItems="center"
                 >
-                    <Grid item xs={4}>
+                    <Grid item xs={4.5}>
                         {/* Filter by Categories */}
                         <FormControl className={classes.formControl}>
                             <InputLabel>Categories</InputLabel>
@@ -106,13 +129,35 @@ export default function Filter({setOrder}) {
                                 }
                             </Select>
                         </FormControl>
+
+                        {/* Filter por Rating */}
+                        <FormControl className={classes.formControl}>
+                            <InputLabel id="demo-mutiple-checkbox-label">Rating</InputLabel>
+                            <Select
+                            labelId="demo-mutiple-checkbox-label"
+                            id="demo-mutiple-checkbox"
+                            multiple
+                            value={stars}
+                            onChange={(e) => handleOrderByRating(e)}
+                            input={<Input />}
+                            renderValue={(selected) => selected.join(', ')}
+                            MenuProps={MenuProps}
+                            >
+                            {[1,2,3,4,5].map((n) => (
+                                <MenuItem key={n} value={n}>
+                                    <Checkbox checked={stars.indexOf(n) > -1} />
+                                    <ListItemText primary={n} />
+                                </MenuItem>
+                            ))}
+                            </Select>
+                        </FormControl>
                     </Grid>
                     
                     <Grid item xs={2}>
                         <Button onClick={() => navigate('/create')} variant="contained">Create Product</Button>
                     </Grid>
 
-                    <Grid item xs={3}>
+                    <Grid item xs={4.5}>
                         {/* Orden alfabetico */}
                         <FormControl className={classes.formControl}>
                             <InputLabel>Sort by Name</InputLabel>

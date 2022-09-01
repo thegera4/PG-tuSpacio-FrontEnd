@@ -11,6 +11,7 @@ export const ORDER_BY_PRICE = 'ORDER_BY_PRICE';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const POST_PRODUCT = 'POST_PRODUCT';
 export const GET_NAME = 'GET NAME';
+export const ORDER_BY_RATING = 'ORDER_BY_RATING';
 
 const API = 'http://localhost:3001/api';
 
@@ -168,4 +169,20 @@ export function postNewProduct(payload) {
         return newProdResult;
     }
 
+}
+
+export function OrderByRating(order) {
+    return async function(dispatch) {
+    try {
+        let jsonOP
+        if (order) jsonOP = await axios.get(`${API}/products/rating/?orderby=${order}`); 
+        else jsonOP = await axios.get(`${API}/products`);
+        return dispatch({
+            type: ORDER_BY_RATING,
+            payload: jsonOP.data
+        });
+    } catch(error){
+        console.error(error);
+    }
+    }
 }
