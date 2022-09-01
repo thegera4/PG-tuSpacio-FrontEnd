@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import {Grid, Box} from '@material-ui/core';
 import HomeCards from '../../Components/HomeCards/HomeCards';
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts } from '../../actions';
 import BasicPagination from '../BasicPagination/Pagination';
+import LandingPage from '../Landing/Landing';
+import LogoIMG from '../../assets/images/img_logo.png';
+// import { flexbox, justifyContent } from '@material-ui/system';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +46,24 @@ export default function SpacingGrid() {
   // console.log(products)
   return (
     <>
+    <Grid container direction='row' >
+      <Grid item xs={8}>
+        <LandingPage />
+      </Grid>
+       
+      <Grid item xs={4}>
+        <Box
+        display="flex" 
+        justifyContent="center" 
+        m={1} 
+        pt={6}
+        >
+      <img 
+        src={LogoIMG} 
+        alt="logo img"/>
+        </Box>
+      </Grid>
+      </Grid>
       <BasicPagination 
         className={classes.centering} 
         currentPage={currentPage}
