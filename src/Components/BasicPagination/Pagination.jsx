@@ -3,11 +3,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Pagination from '@material-ui/lab/Pagination';
 import { setCurrentHomePage } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(4),
+      marginLeft: "auto",
+      marginBottom: theme.spacing(4)
     },
   },
 }));
@@ -31,12 +34,24 @@ export default function BasicPagination(
   console.log(currentPage)
   return (
     <div className={classes.root}>
+      <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="10vh"
+      >
+  
       <Pagination 
-        count={pages.length} 
-        color="secondary"
+        count={pages.length}
+        shape="rounded" 
+        variant="outlined"
+        size="large" 
+        color="default"
         onChange = {(event,page)=>handlePageClick(page)}
         hideNextButton={true}
         hidePrevButton={true} />
+        </Box>
     </div>
+
   );
 }
