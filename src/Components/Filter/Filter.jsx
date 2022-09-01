@@ -1,25 +1,23 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { Button, Grid } from '@material-ui/core';
+import { Box, Button, Grid } from '@material-ui/core';
 import { filterByBrand, filterByCategory, getAllBrands, getCategories, orderByAbc, orderByPrice, setCurrentHomePage } from '../../actions';
-import { Link } from "react-router-dom";
-import Container from '@material-ui/core/Container';
+import { useNavigate } from "react-router-dom";
+import theme2 from '../../ThemeConfig';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
         minWidth: 150,
     },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
 }));
 
 export default function Filter({setOrder}) {
+    const navigate = useNavigate();
     const categories = useSelector((state) => state.categories)
     const brands = useSelector((state) => state.brands)
     const classes = useStyles();
@@ -67,77 +65,82 @@ export default function Filter({setOrder}) {
     }
 
     return (
-        <div>
-            <Container fixed>
+        <ThemeProvider theme={theme2}>
+            <Box
+                bgcolor='white'
+                boxShadow= '0px 10px 8px 0px rgba(0,0,0,0.18)'
+            >
                 <Grid
                     container
                     direction="row"
-                    justifyContent="center"
+                    justifyContent="space-between"
                     alignItems="center"
                 >
+                    <Grid item xs={4}>
+                        {/* Filter by Categories */}
+                        <FormControl className={classes.formControl}>
+                            <InputLabel>Categories</InputLabel>
+                            <Select
+                                native
+                                onChange={(e) => handlefilterByCategory(e)}
+                            >
+                                <option aria-label="None" value="" />
+                                {
+                                    categories.length &&
+                                    categories.map( c => <option value={`${c.name}`}>{`${c.name.toUpperCase()}`}</option> )
+                                }
+                            </Select>
+                        </FormControl>
+                        
+                        {/* Filter by Brands */}
+                        <FormControl className={classes.formControl}>
+                            <InputLabel>Brands</InputLabel>
+                            <Select
+                                native
+                                onChange={(e) => handlefilterByBrand(e)}
+                            >
+                                <option aria-label="None" value="" />
+                                {
+                                    brands.length &&
+                                    brands.map( b => <option value={`${b}`}>{`${b.toUpperCase()}`}</option> )    
+                                }
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    
                     <Grid item xs={2}>
-                        <Link to="/create">
-                                <Button variant="contained" color="primary">Create Product</Button>
-                        </Link>
+                        <Button onClick={() => navigate('/create')} variant="contained">Create Product</Button>
                     </Grid>
 
-                    {/* Orden alfabetico */}
-                    <FormControl variant="filled" className={classes.formControl}>
-                        <InputLabel htmlFor="filled-age-native-simple">Sort by Name</InputLabel>
-                        <Select
-                            native
-                            onChange={(e) => handleOrderByAbc(e)}
-                        >
-                            <option aria-label="None" value="" />
-                            <option value="a-to-z">A to Z</option>
-                            <option value="z-to-a">Z to A</option>
-                        </Select>
-                    </FormControl>
+                    <Grid item xs={3}>
+                        {/* Orden alfabetico */}
+                        <FormControl className={classes.formControl}>
+                            <InputLabel>Sort by Name</InputLabel>
+                            <Select
+                                native
+                                onChange={(e) => handleOrderByAbc(e)}
+                            >
+                                <option aria-label="None" value="" />
+                                <option value="a-to-z">A to Z</option>
+                                <option value="z-to-a">Z to A</option>
+                            </Select>
+                        </FormControl>
 
-                    {/* Orden por Precio */}
-                    <FormControl variant="filled" className={classes.formControl}>
-                        <InputLabel htmlFor="filled-age-native-simple">Order by Price</InputLabel>
-                        <Select
-                            native
-                            onChange={(e) => handleOrderByPrice(e)}
-                        >
-                            <option aria-label="None" value="" />
-                            <option value='min-max'>Low to High</option>
-                            <option value='max-min'>High to Low</option>
-                        </Select>
-                    </FormControl>
-
-                    {/* Filter by Categories */}
-                    <FormControl variant="filled" className={classes.formControl}>
-                        <InputLabel htmlFor="filled-age-native-simple">Categories</InputLabel>
-                        <Select
-                            native
-                            onChange={(e) => handlefilterByCategory(e)}
-                        >
-                            <option aria-label="None" value="" />
-                            {
-                                categories.length &&
-                                categories.map( c => <option value={`${c.name}`}>{`${c.name.toLowerCase()}`}</option> )
-                            }
-                        </Select>
-                    </FormControl>
-                    
-                    {/* Filter by Brands */}
-                    <FormControl variant="filled" className={classes.formControl}>
-                        <InputLabel htmlFor="filled-age-native-simple">Brands</InputLabel>
-                        <Select
-                            native
-                            onChange={(e) => handlefilterByBrand(e)}
-                        >
-                            <option aria-label="None" value="" />
-                            {
-                                brands.length &&
-                                brands.map( b => <option value={`${b}`}>{`${b.toUpperCase()}`}</option> )
-                            }
-                        </Select>
-                    </FormControl>
+                        {/* Orden por Precio */}
+                        <FormControl className={classes.formControl}>
+                            <InputLabel>Order by Price</InputLabel>
+                            <Select
+                                native
+                                onChange={(e) => handleOrderByPrice(e)}
+                            >
+                                <option aria-label="None" value="" />
+                                <option value='min-max'>Low to High</option>
+                                <option value='max-min'>High to Low</option>
+                            </Select>
+                        </FormControl>
+                    </Grid>
                 </Grid>
-            </Container>
-        </div>
+            </Box>
+        </ThemeProvider>
     );
 }
