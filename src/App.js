@@ -6,19 +6,20 @@ import Detail from './Components/Detail/Detail';
 import ContainerCards from './Components/ContainerCards/ContainerCards.jsx'
 import { Routes, Route } from 'react-router-dom';
 import CreateProduct from './Components/CreateProduct/CreateProduct';
-
+import Wishlist from './Components/Wishlist/Wishlist'
 
 function App() {
 
   return (
     <Container maxWidth='xl' disableGutters='true' style={{ backgroundColor: '#c8e6c9' }} >
-        <Navbar />
+      <Navbar />
       <Routes>
         <Route path="/" exact element={ <ContainerCards /> } /> 
         <Route path="/:id" element={ <Detail /> } />
         <Route path="/create" element={ <CreateProduct /> } />
+        <Route path="/wishlist" element={ <Wishlist /> } />
       </Routes>  
-        <Footer />  
+      <Footer />  
     </Container>
   );
 }

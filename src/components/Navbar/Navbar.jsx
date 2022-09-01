@@ -3,12 +3,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -21,6 +19,8 @@ import {useDispatch} from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar';
 import {getAllProducts} from '../../actions/index'
 import refresh from '../../assets/images/refresh.png'
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const dispatch = useDispatch()
@@ -85,21 +85,25 @@ export default function Navbar() {
             {/* Searchbar */}
             <div className={classes.search}>
               <SearchBar />
-              {/* <div className={classes.searchIcon}>
-                <SearchIcon />
-                </div>
-                <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-              /> */}
             </div>
-              <button onClick={e => handleClick(e)} className='icc'><img className='ic' src={refresh} alt="" width="20px"/></button>
+              <button 
+              onClick={e => handleClick(e)} 
+              className='icc'>
+                <img 
+                className='ic' 
+                src={refresh} 
+                alt="" 
+                width="20px"/>
+              </button>
             {/* Iconos de carrito y perfil */}
             <div className={classes.sectionDesktop}>
+            <Link to='/wishlist'>
+              <IconButton color="inherit" >
+                <Badge color="secondary">
+                  <FavoriteIcon />
+                </Badge>
+              </IconButton>
+            </Link>
               <IconButton color="inherit" >
                 <Badge color="secondary">
                   <ShoppingCartIcon />
@@ -111,8 +115,7 @@ export default function Navbar() {
                 aria-controls={menuId}
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
+                color="inherit">
                 <AccountCircle />
               </IconButton>
             </div>
@@ -121,8 +124,7 @@ export default function Navbar() {
               <IconButton
                 aria-label="show more"
                 aria-haspopup="true"
-                color="inherit"
-              >
+                color="inherit" >
                 <MoreIcon />
               </IconButton>
             </div>
