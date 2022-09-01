@@ -25,7 +25,7 @@ export default function CreateProduct() {
     const navigate = useNavigate();
     const classes = useStyles();
     const allCategories = useSelector((state) => state.categories);
-    const allProducts = useSelector((state) => state.products)
+    // const allProducts = useSelector((state) => state.products)
     const [errors, setErrors] = useState({});
     const [categories, setCategories] = useState([]);
 
