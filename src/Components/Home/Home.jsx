@@ -33,6 +33,7 @@ export default function SpacingGrid() {
   const LAST_PRODUCT = currentPage * productsPerPage;
   const FIRST_PRODUCT = LAST_PRODUCT - productsPerPage;
   const RENDERED_PRODUCTS = products.slice(FIRST_PRODUCT, LAST_PRODUCT);
+  const favorites = useSelector(state => state.favorites)
 
   useEffect(() => {
     dispatch(getAllProducts())
@@ -40,6 +41,10 @@ export default function SpacingGrid() {
   const handleChange = (event) => {
     setSpacing(Number(event.target.value));
   };
+
+  function productIsFavorite(product) {
+    return favorites.includes(product)
+  }
 
   return (
     <>
@@ -59,10 +64,12 @@ export default function SpacingGrid() {
             container justifyContent="center" 
             spacing={spacing}>
             {RENDERED_PRODUCTS?.map((product, index) => (
+              
               <Grid key={index} item>
                 <HomeCards 
                 className={classes.paper} 
                 products = {product}
+                favicon = {productIsFavorite(product)}
                 />
               </Grid>
             ))}
