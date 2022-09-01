@@ -13,16 +13,16 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 800,
+    maxWidth: 1200,
     flexGrow: 1,
     margin: 30,
   },
   header: {
     display: 'flex',
     alignItems: 'center',
-    height: 50,
+    height: 30,
     textPrimary:'#ffffff',
-    paddingLeft: theme.spacing(10),
+    paddingLeft: theme.spacing(5),
     backgroundColor: '#57a485',
   }, 
   colors:{
@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
   img: {
     display: 'flex',
     alignItems: 'center',
-    height: 300,
-    maxWidth: 800,
+    height: 400,
+    maxWidth: 1200,
     overflow: 'hidden',
     display: 'block',
     width: '100%',

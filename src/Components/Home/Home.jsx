@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts } from '../../actions';
 import BasicPagination from '../BasicPagination/Pagination';
 import LandingPage from '../Landing/Landing';
-import LogoIMG from '../../assets/images/img_logo.png';
+import mision from '../../assets/images/mision_empresa.png';
 // import { flexbox, justifyContent } from '@material-ui/system';
 
 const useStyles = makeStyles((theme) => ({
@@ -47,22 +47,29 @@ export default function SpacingGrid() {
   return (
     <>
     <Grid container direction='row' >
-      <Grid item xs={8}>
+      <Grid item xs={12}>
+      
         <LandingPage />
+      
       </Grid>
        
-      <Grid item xs={4}>
+      {/* <Grid item xs={4}>
         <Box
         display="flex" 
-        justifyContent="center" 
+        justifyContent="left" 
+       
         m={1} 
-        pt={6}
+        pt={10}
+        pl={5}
         >
       <img 
-        src={LogoIMG} 
-        alt="logo img"/>
+        src={mision} 
+        alt="mision"
+        height='250'
+        width='300'
+        />
         </Box>
-      </Grid>
+      </Grid> */}
       </Grid>
       <BasicPagination 
         className={classes.centering} 
