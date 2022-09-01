@@ -7,8 +7,7 @@ import { getAllProducts } from '../../actions';
 import BasicPagination from '../BasicPagination/Pagination';
 import LandingPage from '../Landing/Landing';
 import mision from '../../assets/images/mision_empresa.png';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+// import { flexbox, justifyContent } from '@material-ui/system';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +35,6 @@ export default function SpacingGrid() {
   const LAST_PRODUCT = currentPage * productsPerPage;
   const FIRST_PRODUCT = LAST_PRODUCT - productsPerPage;
   const RENDERED_PRODUCTS = products.slice(FIRST_PRODUCT, LAST_PRODUCT);
-  const favorites = useSelector(state => state.favorites)
 
   useEffect(() => {
     dispatch(getAllProducts())
@@ -45,48 +43,16 @@ export default function SpacingGrid() {
     setSpacing(Number(event.target.value));
   };
 
-  function productIsFavorite(product) {
-    return favorites.includes(product)
-  }
-
+  // console.log(products)
   return (
     <>
-
     <Grid container direction='row' >
       <Grid item xs={12}>
       
         <LandingPage />
       
       </Grid>
-     
-      <Typography component="div">
-        <Box 
-        textAlign="left" 
-        marginLeft="60px" 
-        marginBottom="20px" 
-        fontWeight="fontWeightBold" 
-        fontSize={20}>
-          All Products 
-        </Box>
-      </Typography>
-
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12}>
-          <Grid 
-            container justifyContent="center" 
-            spacing={spacing}>
-            {RENDERED_PRODUCTS?.map((product, index) => (
-              
-              <Grid key={index} item>
-                <HomeCards 
-                className={classes.paper} 
-                products = {product}
-                favicon = {productIsFavorite(product)}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </Grid>
+      
       </Grid>
       <BasicPagination 
         className={classes.centering} 
@@ -95,6 +61,22 @@ export default function SpacingGrid() {
         totalProducts={products.length}
         onChange={handleChange}
         />
+      <Grid container className={classes.root} spacing={2}>
+        <Grid item xs={12}>
+          <Grid 
+            container justifyContent="center" 
+            spacing={spacing}>
+            {RENDERED_PRODUCTS?.map((product, index) => (
+              <Grid key={index} item>
+                <HomeCards 
+                className={classes.paper} 
+                products = {product}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
+      </Grid>
     </>
   );
-}
+} 
