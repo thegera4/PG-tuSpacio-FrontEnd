@@ -4,16 +4,16 @@ import { createTheme } from "@material-ui/core";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#257558",
+      main: "#257558", // #257558
       light: "#57a485",
       dark: "#00492f",
-      contrastText: "#fff",
+      contrastText: "#ffffff",
     },
     secondary: {
       main: "#606060",
       light: "#8d8d8d",
-      dark: "##363636",
-      contrastText: "#fff",
+      dark: "#363636",
+      contrastText: "#ffffff",
     },
   },
 });
