@@ -23,6 +23,7 @@ import Login from '../Login/Login';
 import Logout from '../Logout/Logout';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Avatar } from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/Home';
 
 
 export default function Navbar() {
@@ -101,6 +102,13 @@ export default function Navbar() {
             </div>
             {/* Iconos de carrito y perfil */}
             <div className={classes.sectionDesktop}>
+            <Link to='/'>
+              <IconButton color="inherit" >
+                <Badge color="secondary">
+                  <HomeIcon />
+                </Badge>
+              </IconButton>
+            </Link>
             <Link to='/wishlist'>
               <IconButton color="inherit" >
                 <Badge color="secondary">

@@ -15,6 +15,7 @@ export const ORDER_BY_RATING = 'ORDER_BY_RATING';
 export const ADD_TO_WISHLIST = 'ADD_TO_WISHLIST';
 export const REMOVE_FROM_WISHLIST = 'REMOVE_FROM_WISHLIST';
 export const ADD_TO_CART = 'ADD_TO_CART';
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 
 const API = 'http://localhost:3001/api';
 
@@ -199,5 +200,9 @@ export function removeFromWishlist(product) {
 
 export function addToCart(product) {
     return { type: ADD_TO_CART, payload: product}
+}
+
+export function removeFromCart(product) {
+    return { type: REMOVE_FROM_CART, payload: product}
 }
 
