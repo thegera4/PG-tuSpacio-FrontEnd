@@ -1,29 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import {Grid, Box} from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import HomeCards from '../../Components/HomeCards/HomeCards';
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts } from '../../actions';
 import BasicPagination from '../BasicPagination/Pagination';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import useStyles from './useStyles';
 import LandingPage from '../Landing/Landing';
 import mision from '../../assets/images/mision_empresa.png';
-// import { flexbox, justifyContent } from '@material-ui/system';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    height: 140,
-    width: 100,
-  },
-  control: {
-    padding: theme.spacing(2),
-  },
-  centering: {
-   
-  }
-}));
 
 export default function SpacingGrid() {
   const [spacing, setSpacing] = React.useState(2);
@@ -39,20 +24,21 @@ export default function SpacingGrid() {
   useEffect(() => {
     dispatch(getAllProducts())
   }, [dispatch])
+  
   const handleChange = (event) => {
     setSpacing(Number(event.target.value));
   };
 
-  // console.log(products)
+  function productIsFavorite(productID) {
+    return favorites.some(favorite => favorite.id === productID)
+  }
+
   return (
     <>
     <Grid container direction='row' >
       <Grid item xs={12}>
-      
         <LandingPage />
-      
       </Grid>
-      
       </Grid>
       <BasicPagination 
         className={classes.centering} 
@@ -71,6 +57,7 @@ export default function SpacingGrid() {
                 <HomeCards 
                 className={classes.paper} 
                 products = {product}
+                favorite = {productIsFavorite(product.id)}
                 />
               </Grid>
             ))}
