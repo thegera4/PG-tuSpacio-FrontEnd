@@ -17,17 +17,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-};
-
 export default function Filter({setOrder}) {
     const navigate = useNavigate();
     const categories = useSelector((state) => state.categories)
@@ -79,12 +68,11 @@ export default function Filter({setOrder}) {
 
     function handleOrderByRating(e) {
         e.preventDefault();
-        // setStars(e.target.value);
-        if (stars.length < 2) setStars(e.target.value);
-        // dispatch(OrderByRating(e.target.value));
-        // dispatch(setCurrentHomePage(1))
-        // if (e.target.value) setOrder(`Order by ${e.target.value}`)
-        // else setOrder("")
+        console.log(e.target.value);
+        dispatch(OrderByRating(e.target.value));
+        dispatch(setCurrentHomePage(1))
+        if (e.target.value) setOrder(`Order by ${e.target.value}`)
+        else setOrder("")
     }
 
     return (
@@ -99,22 +87,7 @@ export default function Filter({setOrder}) {
                     justifyContent="space-between"
                     alignItems="center"
                 >
-                    <Grid item xs={4.5}>
-                        {/* Filter by Categories */}
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>Categories</InputLabel>
-                            <Select
-                                native
-                                onChange={(e) => handlefilterByCategory(e)}
-                            >
-                                <option aria-label="None" value="" />
-                                {
-                                    categories.length &&
-                                    categories.map( c => <option value={`${c.name}`}>{`${c.name.toUpperCase()}`}</option> )
-                                }
-                            </Select>
-                        </FormControl>
-                        
+                    <Grid item xs={5}>
                         {/* Filter by Brands */}
                         <FormControl className={classes.formControl}>
                             <InputLabel>Brands</InputLabel>
@@ -130,32 +103,25 @@ export default function Filter({setOrder}) {
                             </Select>
                         </FormControl>
 
-                        {/* Filter por Rating */}
+                        {/* Filter by Categories */}
                         <FormControl className={classes.formControl}>
-                            <InputLabel id="demo-mutiple-checkbox-label">Rating</InputLabel>
+                            <InputLabel>Categories</InputLabel>
                             <Select
-                            labelId="demo-mutiple-checkbox-label"
-                            id="demo-mutiple-checkbox"
-                            multiple
-                            value={stars}
-                            onChange={(e) => handleOrderByRating(e)}
-                            input={<Input />}
-                            renderValue={(selected) => selected.join(', ')}
-                            MenuProps={MenuProps}
+                                native
+                                onChange={(e) => handlefilterByCategory(e)}
                             >
-                            {[1,2,3,4,5].map((n) => (
-                                <MenuItem key={n} value={n}>
-                                    <Checkbox checked={stars.indexOf(n) > -1} />
-                                    <ListItemText primary={n} />
-                                </MenuItem>
-                            ))}
+                                <option aria-label="None" value="" />
+                                {
+                                    categories.length &&
+                                    categories.map( c => <option value={`${c.name}`}>{`${c.name.toUpperCase()}`}</option> )
+                                }
                             </Select>
                         </FormControl>
                     </Grid>
                     
-                    <Grid item xs={2}>
+                    {/* <Grid item xs={2}>
                         <Button onClick={() => navigate('/create')} variant="contained">Create Product</Button>
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item xs={4.5}>
                         {/* Orden alfabetico */}
@@ -181,6 +147,19 @@ export default function Filter({setOrder}) {
                                 <option aria-label="None" value="" />
                                 <option value='min-max'>Low to High</option>
                                 <option value='max-min'>High to Low</option>
+                            </Select>
+                        </FormControl>
+
+                        {/* Order por Rating */}
+                        <FormControl className={classes.formControl}>
+                            <InputLabel>Order by Rating</InputLabel>
+                            <Select
+                                native
+                                onChange={(e) => handleOrderByRating(e)}
+                            >
+                                <option aria-label="None" value="" />
+                                <option value='max-min'>5...1</option>
+                                <option value='min-max'>1...5</option>
                             </Select>
                         </FormControl>
                     </Grid>

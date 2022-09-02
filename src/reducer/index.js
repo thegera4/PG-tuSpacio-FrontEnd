@@ -1,5 +1,5 @@
 import { GET_CATEGORIES, GET_ALL_PRODUCTS, SET_CURRENT_HOME_PAGE, GET_DETAIL, SEARCH_BY_CATEGORIE, 
-  GET_ALL_BRANDS, SEARCH_BY_BRAND, ORDER_BY_PRICE, ORDER_BY_NAME, POST_PRODUCT, GET_NAME } from "../actions";
+  GET_ALL_BRANDS, SEARCH_BY_BRAND, ORDER_BY_PRICE, ORDER_BY_NAME, POST_PRODUCT, GET_NAME, ORDER_BY_RATING } from "../actions";
 
 const initialState = {
   products: [],
@@ -42,6 +42,11 @@ function rootReducer(state = initialState, action) {
         products: action.payload
       }
     case ORDER_BY_PRICE:
+      return {
+        ...state,
+        products: action.payload
+      }
+    case ORDER_BY_RATING:
       return {
         ...state,
         products: action.payload

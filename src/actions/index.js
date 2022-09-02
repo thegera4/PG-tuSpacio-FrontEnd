@@ -173,16 +173,16 @@ export function postNewProduct(payload) {
 
 export function OrderByRating(order) {
     return async function(dispatch) {
-    try {
-        let jsonOP
-        if (order) jsonOP = await axios.get(`${API}/products/rating/?orderby=${order}`); 
-        else jsonOP = await axios.get(`${API}/products`);
-        return dispatch({
-            type: ORDER_BY_RATING,
-            payload: jsonOP.data
-        });
-    } catch(error){
-        console.error(error);
-    }
+        try {
+            let jsonR
+            if (order) jsonR = await axios.get(`${API}/products/rating/?ratingby=${order}`); 
+            else jsonR = await axios.get(`${API}/products`);
+            return dispatch({
+                type: ORDER_BY_RATING,
+                payload: jsonR.data
+            });
+        } catch(error) {
+            console.error(error);
+        }
     }
 }
