@@ -14,7 +14,7 @@ import Favorite from '@material-ui/icons/Favorite';
 import NotFavorite from '@material-ui/icons/FavoriteBorder';
 import Placeholder from '../../assets/images/placeholder_home.png';
 import Box from '@material-ui/core/Box';
-import { addToWishlist, removeFromWishlist } from '../../actions';
+import { addToWishlist, removeFromWishlist, addToCart } from '../../actions';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 export default function HomeCards(props) {
@@ -27,6 +27,10 @@ export default function HomeCards(props) {
     !props.favorite ?
     dispatch(addToWishlist(props.products)) :
     dispatch(removeFromWishlist(props.products.id))
+  }
+  function handleCart(e) {
+    e.preventDefault()
+    dispatch(addToCart(props.products))
   }
 
   return (
@@ -49,7 +53,8 @@ export default function HomeCards(props) {
             </Button>
             <Button 
               size="small" 
-              color="primary">
+              color="primary"
+              onClick={(e) => handleCart(e)}>
               <ShoppingCartIcon />
             </Button>
           </CardActions>   

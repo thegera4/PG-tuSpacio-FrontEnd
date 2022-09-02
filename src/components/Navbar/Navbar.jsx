@@ -108,11 +108,13 @@ export default function Navbar() {
                 </Badge>
               </IconButton>
             </Link>
+            <Link to='/cart'>
               <IconButton color="inherit" >
                 <Badge color="secondary">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
+              </Link>
               { isAuthenticated && <h3>{user.name}</h3>}
               <IconButton
                 edge="end"

@@ -18,6 +18,9 @@ import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { Link } from 'react-router-dom';
+import notFound from '../../assets/images/not_found.png'
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -56,7 +59,7 @@ export default function RecipeReviewCard() {
   };
 
   const dispatch = useDispatch()
-  const myProduct = useSelector((state) => state.productDetail)
+  const item = useSelector((state) => state.productDetail)
     
 
  
@@ -72,48 +75,99 @@ export default function RecipeReviewCard() {
 
 
   return (
-    <Card className={classes.root} >
-      <CardHeader
+    // <Card className={classes.root} >
+    //   <CardHeader
         
-        title={myProduct.name}
-        subheader={myProduct.brand}
-      />
-      <CardMedia
-        className={classes.media}
-        image={myProduct.image_link || defaultImage}
-        title={myProduct.name}
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-        {myProduct.description}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="sadd to cart">
-          <ShoppingCartIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Rating: {myProduct.rating || 0 }</Typography>
-          <Typography paragraph>Type: {myProduct.product_type}</Typography>
-          <Typography paragraph>Category: {myProduct.product_category}</Typography>
-         
-        </CardContent>
-      </Collapse>
-    </Card>
+    //     title={myProduct.name}
+    //     subheader={myProduct.brand}
+    //   />
+    //   <CardMedia
+    //     className={classes.media}
+    //     image={myProduct.image_link || defaultImage}
+    //     title={myProduct.name}
+    //   />
+    //   <CardContent>
+    //     <Typography variant="body2" color="textSecondary" component="p">
+    //     {myProduct.description}
+    //     </Typography>
+    //   </CardContent>
+    //   <CardActions disableSpacing>
+    //     <IconButton aria-label="add to favorites">
+    //       <FavoriteIcon />
+    //     </IconButton>
+    //     <IconButton aria-label="sadd to cart">
+    //       <ShoppingCartIcon />
+    //     </IconButton>
+    //     <IconButton
+    //       className={clsx(classes.expand, {
+    //         [classes.expandOpen]: expanded,
+    //       })}
+    //       onClick={handleExpandClick}
+    //       aria-expanded={expanded}
+    //       aria-label="show more"
+    //     >
+    //       <ExpandMoreIcon />
+    //     </IconButton>
+    //   </CardActions>
+    //   <Collapse in={expanded} timeout="auto" unmountOnExit>
+    //     <CardContent>
+    //       <Typography paragraph>Rating: {myProduct.rating || 0 }</Typography>
+    //       <Typography paragraph>Type: {myProduct.product_type}</Typography>
+    //       <Typography paragraph>Category: {myProduct.product_category}</Typography>
+    //       <Typography paragraph>Colors: </Typography>
+    //      <div className='colors'>
+    //       {myProduct.product_colors?.slice(0, 6).map((color, index) => (
+    //           <button key={index} style={{background: color.hex_value}}></button>
+    //       ))
+    //       }
+    //      </div>
+    //     </CardContent>
+    //   </Collapse>
+    // </Card>
+    <div className='detail' key={item.id}>
+                <div>
+                <img src={item.image_link} className='detail-img'/>
+                <div className='image-list'>
+                <img src={item.image_link} className='detail-img-small'/>   
+                <img src={notFound} className='detail-img-small'/> 
+                <img src={notFound} className='detail-img-small'/> 
+                </div>
+                </div>
+                <div className='box'>
+                    <div className='row'>
+                        <h1>{item.name}</h1>
+                        <h4>${item.price}</h4>
+                        <StarBorderIcon />
+                        <StarBorderIcon />
+                        <StarBorderIcon />
+                        <StarBorderIcon />
+                        <StarBorderIcon />
+                        <p>{item.description}</p>
+                        <div className='colors'>
+                            <h3>Colors : </h3>
+                        {item.product_colors?.slice(0, 6).map((color, index) => (
+                        <button key={index} style={{background: color.hex_value}}></button>
+                        ))}
+                        </div>
+                        <div className='select'>
+                        <h3>Quantity : </h3>
+                        <select name="" id="">
+                            <option value="">1</option>
+                            <option value="">2</option>
+                            <option value="">3</option>
+                            <option value="">4</option>
+                        </select>
+                        </div>
+                        
+                        <Link to='/cart' className='cart'>
+                            Add to Cart
+                        </Link>
+                        <Link to='/cart' className='fav'>
+                            Add to Favorites
+                        </Link>
+                    </div>
+                    
+                </div>
+            </div>
   );
 }
