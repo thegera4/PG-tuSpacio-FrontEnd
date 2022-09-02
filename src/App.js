@@ -7,6 +7,7 @@ import ContainerCards from './Components/ContainerCards/ContainerCards.jsx'
 import { Routes, Route } from 'react-router-dom';
 import CreateProduct from './Components/CreateProduct/CreateProduct';
 import Wishlist from './Components/Wishlist/Wishlist'
+import Profile from './Components/Profile/Profile';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/:id" element={ <Detail /> } />
         <Route path="/create" element={ <CreateProduct /> } />
         <Route path="/wishlist" element={ <Wishlist /> } />
+        <Route path="/profile" element={ <Profile /> } />
       </Routes>  
       <Footer />  
     </Container>

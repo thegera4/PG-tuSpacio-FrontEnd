@@ -18,14 +18,24 @@ import useStyles from './useStyles';
 import {useDispatch, useSelector} from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Login from '../Login/Login';
+import Logout from '../Logout/Logout';
+import { useAuth0 } from '@auth0/auth0-react';
+import { Avatar } from '@material-ui/core';
+
 
 export default function Navbar() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const data = useSelector(state => state.products)
+
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+  if (isAuthenticated) console.log(user);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -47,7 +57,14 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {
+        isAuthenticated
+          ? <>
+              <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
+              <MenuItem onClick={Logout()}>Sing out</MenuItem>
+            </>
+          : <MenuItem onClick={Login()}>Sing in</MenuItem>
+      }
     </Menu>
   );
 
@@ -96,6 +113,7 @@ export default function Navbar() {
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
+              { isAuthenticated && <h3>{user.name}</h3>}
               <IconButton
                 edge="end"
                 aria-label="account of current user"
@@ -103,7 +121,11 @@ export default function Navbar() {
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
                 color="inherit">
-                <AccountCircle />
+                {
+                  isAuthenticated   
+                    ? <Avatar alt={user.name} src={`${user.picture}`} />
+                    : <AccountCircle />
+                }
               </IconButton>
             </div>
             {/* Icono de tres puntos para mobile */}
