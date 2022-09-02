@@ -4,17 +4,15 @@ import HomeCards from '../../Components/HomeCards/HomeCards';
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts } from '../../actions';
 import BasicPagination from '../BasicPagination/Pagination';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import useStyles from './useStyles';
 import LandingPage from '../Landing/Landing';
-import mision from '../../assets/images/mision_empresa.png';
 
 export default function SpacingGrid() {
   const [spacing, setSpacing] = React.useState(2);
   const classes = useStyles();
   const dispatch = useDispatch()
   const products = useSelector(state => state.products)
+  const favorites = useSelector(state => state.favorites)
   const currentPage = useSelector(state => state.currentPageHome)
   const [productsPerPage] = useState(9);
   const LAST_PRODUCT = currentPage * productsPerPage;
