@@ -5,6 +5,7 @@ import HomeCards from '../../Components/HomeCards/HomeCards';
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts } from '../../actions';
 import BasicPagination from '../BasicPagination/Pagination';
+import LandingPage from '../Landing/Landing';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +44,11 @@ export default function SpacingGrid() {
   // console.log(products)
   return (
     <>
+      <Grid container direction='row' >
+        <Grid item xs={12}>
+          <LandingPage />
+        </Grid>
+      </Grid>
       <BasicPagination 
         className={classes.centering} 
         currentPage={currentPage}
