@@ -8,6 +8,8 @@ import { Routes, Route } from 'react-router-dom';
 import CreateProduct from './Components/CreateProduct/CreateProduct';
 import Wishlist from './Components/Wishlist/Wishlist'
 import Cart from './Components/Cart/Cart'
+import Profile from './Components/Profile/Profile';
+
 
 function App() {
 
@@ -20,6 +22,7 @@ function App() {
         <Route path="/create" element={ <CreateProduct /> } />
         <Route path="/wishlist" element={ <Wishlist /> } />
         <Route path="/cart" element={ <Cart /> } />
+        <Route path="/profile" element={ <Profile /> } />
       </Routes>  
       <Footer />  
     </Container>
