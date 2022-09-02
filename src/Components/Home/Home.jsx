@@ -13,6 +13,8 @@ export default function SpacingGrid() {
   const dispatch = useDispatch()
   const products = useSelector(state => state.products)
   const favorites = useSelector(state => state.favorites)
+  const cart = useSelector(state => state.cart)
+
   const currentPage = useSelector(state => state.currentPageHome)
   const [productsPerPage] = useState(9);
   const LAST_PRODUCT = currentPage * productsPerPage;
@@ -29,6 +31,9 @@ export default function SpacingGrid() {
 
   function productIsFavorite(productID) {
     return favorites.some(favorite => favorite.id === productID)
+  }
+  function productInCart(productID) {
+    return cart.some(product => product.id === productID)
   }
 
   return (
@@ -56,6 +61,7 @@ export default function SpacingGrid() {
                 className={classes.paper} 
                 products = {product}
                 favorite = {productIsFavorite(product.id)}
+                cart = {productInCart(product.id)}
                 />
               </Grid>
             ))}

@@ -30,7 +30,12 @@ export default function HomeCards(props) {
   }
   function handleCart(e) {
     e.preventDefault()
-    dispatch(addToCart(props.products))
+    if(!props.cart) {
+      dispatch(addToCart(props.products))
+      alert('Product has been added to Cart')
+    }else {
+      alert('The product is already added to the cart')
+    }
   }
 
   return (

@@ -1,7 +1,7 @@
  import React from 'react'
  import {useDispatch, useSelector} from 'react-redux'
  import {useParams} from "react-router-dom"
- import {getDetail} from '../../actions/index'
+ import {getDetail, addToCart, addToWishlist, removeFromWishlist} from '../../actions/index'
  import { useEffect } from 'react'
  import defaultImage from "../../assets/images/not_found.png"
 import { makeStyles } from '@material-ui/core/styles';
@@ -60,7 +60,8 @@ export default function RecipeReviewCard() {
 
   const dispatch = useDispatch()
   const item = useSelector((state) => state.productDetail)
-    
+  const cart = useSelector((state) => state.cart)
+  const fav = useSelector((state) => state.favorites)
 
  
 
@@ -70,6 +71,23 @@ export default function RecipeReviewCard() {
 
   }
   , [dispatch])
+
+  
+
+  function handleCart(e) {
+      if(!cart.includes(e)) {
+        dispatch(addToCart(e))
+        alert('Product has been added to Cart')
+      }
+      else {
+        alert('The product is already added to the cart')
+      }
+  }
+  function handleFavorite(e) {
+    !fav.includes(e)?
+    dispatch(addToWishlist(e)) :
+    dispatch(removeFromWishlist(e.id))
+  }
 
 
 
@@ -149,22 +167,20 @@ export default function RecipeReviewCard() {
                         <button key={index} style={{background: color.hex_value}}></button>
                         ))}
                         </div>
-                        <div className='select'>
+                        <div className='amount'>
                         <h3>Quantity : </h3>
-                        <select name="" id="">
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                            <option value="">4</option>
-                        </select>
+                          <button className='count'>-</button>
+                          <span>0</span>
+                          <button className='count'>+</button>
                         </div>
                         
-                        <Link to='/cart' className='cart'>
+                        <button className='cart' onClick={(e) => handleCart(item)}>
                             Add to Cart
-                        </Link>
-                        <Link to='/cart' className='fav'>
+                        </button>
+                        
+                        <button className='fav' onClick={(e) => handleFavorite(item)}>
                             Add to Favorites
-                        </Link>
+                        </button>
                     </div>
                     
                 </div>
