@@ -1,7 +1,7 @@
  import React from 'react'
  import {useDispatch, useSelector} from 'react-redux'
  import {useParams} from "react-router-dom"
- import {getDetail} from '../../actions/index'
+ import {getDetail, addToCart, addToWishlist, removeFromWishlist} from '../../actions/index'
  import { useEffect } from 'react'
  import defaultImage from "../../assets/images/not_found.png"
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,9 +16,12 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { Link } from 'react-router-dom';
+import notFound from '../../assets/images/not_found.png'
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,9 +59,10 @@ export default function RecipeReviewCard() {
   };
 
   const dispatch = useDispatch()
-  const myProduct = useSelector((state) => state.productDetail)
-    
-  console.log(myProduct)
+  const item = useSelector((state) => state.productDetail)
+  const cart = useSelector((state) => state.cart)
+  const fav = useSelector((state) => state.favorites)
+
  
 
   useEffect(() => {
@@ -68,52 +72,118 @@ export default function RecipeReviewCard() {
   }
   , [dispatch])
 
+  
 
- console.log(myProduct)
+  function handleCart(e) {
+      if(!cart.includes(e)) {
+        dispatch(addToCart(e))
+        alert('Product has been added to Cart')
+      }
+      else {
+        alert('The product is already added to the cart')
+      }
+  }
+  function handleFavorite(e) {
+    !fav.includes(e)?
+    dispatch(addToWishlist(e)) :
+    dispatch(removeFromWishlist(e.id))
+  }
+
+
+
 
   return (
-    <Card className={classes.root} >
-      <CardHeader
+    // <Card className={classes.root} >
+    //   <CardHeader
         
-        title={myProduct.name}
-        subheader={myProduct.brand}
-      />
-      <CardMedia
-        className={classes.media}
-        image={myProduct.image_link || defaultImage}
-        title={myProduct.name}
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-        {myProduct.description}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="sadd to cart">
-          <ShoppingCartIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Rating: {myProduct.rating || 0 }</Typography>
-          <Typography paragraph>Type: {myProduct.product_type}</Typography>
-          <Typography paragraph>Category: {myProduct.product_category}</Typography>
-         
-        </CardContent>
-      </Collapse>
-    </Card>
+    //     title={myProduct.name}
+    //     subheader={myProduct.brand}
+    //   />
+    //   <CardMedia
+    //     className={classes.media}
+    //     image={myProduct.image_link || defaultImage}
+    //     title={myProduct.name}
+    //   />
+    //   <CardContent>
+    //     <Typography variant="body2" color="textSecondary" component="p">
+    //     {myProduct.description}
+    //     </Typography>
+    //   </CardContent>
+    //   <CardActions disableSpacing>
+    //     <IconButton aria-label="add to favorites">
+    //       <FavoriteIcon />
+    //     </IconButton>
+    //     <IconButton aria-label="sadd to cart">
+    //       <ShoppingCartIcon />
+    //     </IconButton>
+    //     <IconButton
+    //       className={clsx(classes.expand, {
+    //         [classes.expandOpen]: expanded,
+    //       })}
+    //       onClick={handleExpandClick}
+    //       aria-expanded={expanded}
+    //       aria-label="show more"
+    //     >
+    //       <ExpandMoreIcon />
+    //     </IconButton>
+    //   </CardActions>
+    //   <Collapse in={expanded} timeout="auto" unmountOnExit>
+    //     <CardContent>
+    //       <Typography paragraph>Rating: {myProduct.rating || 0 }</Typography>
+    //       <Typography paragraph>Type: {myProduct.product_type}</Typography>
+    //       <Typography paragraph>Category: {myProduct.product_category}</Typography>
+    //       <Typography paragraph>Colors: </Typography>
+    //      <div className='colors'>
+    //       {myProduct.product_colors?.slice(0, 6).map((color, index) => (
+    //           <button key={index} style={{background: color.hex_value}}></button>
+    //       ))
+    //       }
+    //      </div>
+    //     </CardContent>
+    //   </Collapse>
+    // </Card>
+    <div className='detail' key={item.id}>
+                <div>
+                <img src={item.image_link} className='detail-img'/>
+                <div className='image-list'>
+                <img src={item.image_link} className='detail-img-small'/>   
+                <img src={notFound} className='detail-img-small'/> 
+                <img src={notFound} className='detail-img-small'/> 
+                </div>
+                </div>
+                <div className='box'>
+                    <div className='row'>
+                        <h1>{item.name}</h1>
+                        <h4>${item.price}</h4>
+                        <StarBorderIcon />
+                        <StarBorderIcon />
+                        <StarBorderIcon />
+                        <StarBorderIcon />
+                        <StarBorderIcon />
+                        <p>{item.description}</p>
+                        <div className='colors'>
+                            <h3>Colors : </h3>
+                        {item.product_colors?.slice(0, 6).map((color, index) => (
+                        <button key={index} style={{background: color.hex_value}}></button>
+                        ))}
+                        </div>
+                        <div className='amount'>
+                        <h3>Quantity : </h3>
+                          <button className='count'>-</button>
+                          <span>0</span>
+                          <button className='count'>+</button>
+                        </div>
+                        
+                        <button className='cart' onClick={(e) => handleCart(item)}>
+                            Add to Cart
+                        </button>
+                        
+                        <button className='fav' onClick={(e) => handleFavorite(item)}>
+                            Add to Favorites
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
   );
 }

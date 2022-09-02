@@ -11,6 +11,11 @@ export const ORDER_BY_PRICE = 'ORDER_BY_PRICE';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const POST_PRODUCT = 'POST_PRODUCT';
 export const GET_NAME = 'GET NAME';
+export const ORDER_BY_RATING = 'ORDER_BY_RATING';
+export const ADD_TO_WISHLIST = 'ADD_TO_WISHLIST';
+export const REMOVE_FROM_WISHLIST = 'REMOVE_FROM_WISHLIST';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 
 const API = 'http://localhost:3001/api';
 
@@ -142,7 +147,6 @@ export function getDetail(id){
     }
 }
 
-
 export function getName(name) {
     return async function(dispatch){
         try {
@@ -169,3 +173,36 @@ export function postNewProduct(payload) {
     }
 
 }
+
+export function OrderByRating(order) {
+    return async function(dispatch) {
+        try {
+            let jsonR
+            if (order) jsonR = await axios.get(`${API}/products/rating/?ratingBy=${order}`); 
+            else jsonR = await axios.get(`${API}/products`);
+            return dispatch({
+                type: ORDER_BY_RATING,
+                payload: jsonR.data
+            });
+        } catch(error) {
+            console.error(error);
+        }
+    }
+}
+
+export function addToWishlist(product) {
+    return { type: ADD_TO_WISHLIST, payload: product}
+}
+
+export function removeFromWishlist(product) {
+    return { type: REMOVE_FROM_WISHLIST, payload: product}
+}
+
+export function addToCart(product) {
+    return { type: ADD_TO_CART, payload: product}
+}
+
+export function removeFromCart(product) {
+    return { type: REMOVE_FROM_CART, payload: product}
+}
+

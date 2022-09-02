@@ -1,5 +1,6 @@
 import { GET_CATEGORIES, GET_ALL_PRODUCTS, SET_CURRENT_HOME_PAGE, GET_DETAIL, SEARCH_BY_CATEGORIE, 
-  GET_ALL_BRANDS, SEARCH_BY_BRAND, ORDER_BY_PRICE, ORDER_BY_NAME, POST_PRODUCT, GET_NAME } from "../actions";
+  GET_ALL_BRANDS, SEARCH_BY_BRAND, ORDER_BY_PRICE, ORDER_BY_NAME, POST_PRODUCT, GET_NAME, ORDER_BY_RATING, 
+  ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST, ADD_TO_CART, REMOVE_FROM_CART} from "../actions";
 
 const initialState = {
   products: [],
@@ -7,9 +8,10 @@ const initialState = {
   productDetail: {},
   categories: [],
   brands: [],
-  search: []
+  search: [],
+  favorites: [],
+  cart: [],
 }
-
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -46,6 +48,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         products: action.payload
       }
+    case ORDER_BY_RATING:
+      return {
+        ...state,
+        products: action.payload
+      }
     case ORDER_BY_NAME:
       return {
         ...state,
@@ -66,19 +73,37 @@ function rootReducer(state = initialState, action) {
         ...state,
         productDetail: action.payload
       };
-
-
       case GET_NAME:
         return {
           ...state,
           products: action.payload
         }
-
     case POST_PRODUCT:
       return {
           ...state,
       }
-
+    case ADD_TO_WISHLIST:
+      return {
+        ...state,
+        favorites: [...state.favorites, action.payload]
+      }
+    case REMOVE_FROM_WISHLIST:
+      return {
+        ...state,
+        favorites: state.favorites.filter(
+          (el) => el.id !== action.payload)
+      }
+      case ADD_TO_CART:
+        return {
+          ...state,
+          cart: [...state.cart, action.payload]
+        }
+        case REMOVE_FROM_CART:
+          return {
+            ...state,
+            cart: state.cart.filter(
+              (el) => el.id !== action.payload)
+          }
     default:
       return state;
   }

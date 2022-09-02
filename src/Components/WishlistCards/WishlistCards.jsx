@@ -6,43 +6,28 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import useStyles from './useStyles';
 import { Link }from 'react-router-dom'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import Favorite from '@material-ui/icons/Favorite';
-import NotFavorite from '@material-ui/icons/FavoriteBorder';
 import Placeholder from '../../assets/images/placeholder_home.png';
 import Box from '@material-ui/core/Box';
-import { addToWishlist, removeFromWishlist, addToCart } from '../../actions';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import { removeFromWishlist } from '../../actions'
 
-export default function HomeCards(props) {
+export default function WishlistCards({props}) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const products = useSelector(state => state.products)
- 
-  function handleFavorite(e) {
-    e.preventDefault()
-    !props.favorite ?
-    dispatch(addToWishlist(props.products)) :
-    dispatch(removeFromWishlist(props.products.id))
-  }
-  function handleCart(e) {
-    e.preventDefault()
-    if(!props.cart) {
-      dispatch(addToCart(props.products))
-      alert('Product has been added to Cart')
-    }else {
-      alert('The product is already added to the cart')
-    }
+
+  function handleDelete(e){
+    e.preventDefault();
+    dispatch(removeFromWishlist(props.id))
   }
 
   return (
-    <>
-    { !products? <div>Not product Found</div> :
-      <Card className={classes.root}>
-        <CardActionArea  >
+    <Card className={classes.root}>
+      <CardActionArea  >
         <Box
           display="flex"
           justifyContent="end"
@@ -51,33 +36,32 @@ export default function HomeCards(props) {
           <CardActions >
             <Button 
               size="small" 
-              color="primary" 
-              onClick={(e) => handleFavorite(e)}>
-              {props.favorite ? 
-                <Favorite /> : <NotFavorite />} 
+              color="primary" >
+              <ShoppingCartIcon />
             </Button>
             <Button 
               size="small" 
               color="primary"
-              onClick={(e) => handleCart(e)}>
-              <ShoppingCartIcon />
+              onClick={(e) => handleDelete(e)} >
+              <DeleteForeverIcon />
             </Button>
           </CardActions>   
         </Box>
-        <Link to={`/${props.products.id}`}>
-          <CardMedia
-            className={classes.media}
-            image={props.products.image_link?
-              props.products.image_link:
-              Placeholder} />
+        <Link to={`/${props.id}`}>
+        <CardMedia
+          className={classes.media}
+          image={props.image_link?
+            props.image_link:
+            Placeholder} />
         </Link>
-          <CardContent className={classes.content}>
+          <CardContent 
+            className={classes.content}>
             <Typography component="div">
               <Box 
                 textAlign="left"  
                 fontWeight="fontWeightBold" 
                 fontSize={15} >
-              {props.products.name}
+              {props.name}
               </Box>
             </Typography>
             <Typography component="div" >
@@ -86,15 +70,12 @@ export default function HomeCards(props) {
             alignItems="center"
             fontWeight="fontWeightBold" 
             fontSize={15}> 
-              <AttachMoneyIcon 
-                fontSize="small"  />  
-                USD {props.products.price}  
+            <AttachMoneyIcon fontSize="small"  />  
+              USD {props.price}
             </Box>
-            </Typography>  
+            </Typography>
         </CardContent>
       </CardActionArea>
     </Card>
-    }
-  </>
-  )           
+  )          
 }

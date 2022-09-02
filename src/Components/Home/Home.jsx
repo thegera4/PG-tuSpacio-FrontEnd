@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import HomeCards from '../../Components/HomeCards/HomeCards';
 import { useDispatch, useSelector } from 'react-redux'
@@ -28,6 +27,9 @@ export default function SpacingGrid() {
   const classes = useStyles();
   const dispatch = useDispatch()
   const products = useSelector(state => state.products)
+  const favorites = useSelector(state => state.favorites)
+  const cart = useSelector(state => state.cart)
+
   const currentPage = useSelector(state => state.currentPageHome)
   const [productsPerPage] = useState(9);
   const LAST_PRODUCT = currentPage * productsPerPage;
@@ -37,17 +39,24 @@ export default function SpacingGrid() {
   useEffect(() => {
     dispatch(getAllProducts())
   }, [dispatch])
+  
   const handleChange = (event) => {
     setSpacing(Number(event.target.value));
   };
 
-  // console.log(products)
+  function productIsFavorite(productID) {
+    return favorites.some(favorite => favorite.id === productID)
+  }
+  function productInCart(productID) {
+    return cart.some(product => product.id === productID)
+  }
+
   return (
     <>
-      <Grid container direction='row' >
-        <Grid item xs={12}>
-          <LandingPage />
-        </Grid>
+    <Grid container direction='row' >
+      <Grid item xs={12}>
+        <LandingPage />
+      </Grid>
       </Grid>
       <BasicPagination 
         className={classes.centering} 
@@ -66,6 +75,8 @@ export default function SpacingGrid() {
                 <HomeCards 
                 className={classes.paper} 
                 products = {product}
+                favorite = {productIsFavorite(product.id)}
+                cart = {productInCart(product.id)}
                 />
               </Grid>
             ))}
@@ -74,4 +85,4 @@ export default function SpacingGrid() {
       </Grid>
     </>
   );
-}
+} 

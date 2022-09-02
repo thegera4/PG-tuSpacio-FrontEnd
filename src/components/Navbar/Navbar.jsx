@@ -3,12 +3,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -17,16 +15,28 @@ import LogoFONT from '../../assets/images/font_logo.png';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../ThemeConfig';
 import useStyles from './useStyles';
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar';
-import {getAllProducts} from '../../actions/index'
-import refresh from '../../assets/images/refresh.png'
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { Link, useNavigate } from 'react-router-dom';
+import Login from '../Login/Login';
+import Logout from '../Logout/Logout';
+import { useAuth0 } from '@auth0/auth0-react';
+import { Avatar } from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/Home';
+
 
 export default function Navbar() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
+  const data = useSelector(state => state.products)
+
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+  if (isAuthenticated) console.log(user);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -36,11 +46,6 @@ export default function Navbar() {
     setAnchorEl(null);
   };
 
-  function handleClick(e) {
-    e.preventDefault();
-    dispatch(getAllProducts());
-    
-  }
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -53,7 +58,14 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {
+        isAuthenticated
+          ? <>
+              <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
+              <MenuItem onClick={Logout()}>Sing out</MenuItem>
+            </>
+          : <MenuItem onClick={Login()}>Sing in</MenuItem>
+      }
     </Menu>
   );
 
@@ -71,49 +83,59 @@ export default function Navbar() {
                 <MenuIcon />
             </IconButton>
             {/* Logo */}
-            <Box className={classes.logoBox}>
-              <img 
-                className={classes.logoImg} 
-                src={LogoIMG} 
-                alt="logo img"/>
-              <img 
-                className={classes.logoFont} 
-                src={LogoFONT} 
-                alt="logo font" 
-                />
-            </Box>
+            <Link to='/'>
+              <Box className={classes.logoBox}>
+                <img 
+                  className={classes.logoImg} 
+                  src={LogoIMG} 
+                  alt="logo img"/>
+                <img 
+                  className={classes.logoFont} 
+                  src={LogoFONT} 
+                  alt="logo font" 
+                  />
+              </Box>
+            </Link>
             {/* Searchbar */}
             <div className={classes.search}>
-              <SearchBar />
-              {/* <div className={classes.searchIcon}>
-                <SearchIcon />
-                </div>
-                <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-              /> */}
+              <SearchBar placeholder="Search product..." data={data}/>
             </div>
-              <button onClick={e => handleClick(e)} className='icc'><img className='ic' src={refresh} alt="" width="20px"/></button>
             {/* Iconos de carrito y perfil */}
             <div className={classes.sectionDesktop}>
+            <Link to='/'>
+              <IconButton color="inherit" >
+                <Badge color="secondary">
+                  <HomeIcon />
+                </Badge>
+              </IconButton>
+            </Link>
+            <Link to='/wishlist'>
+              <IconButton color="inherit" >
+                <Badge color="secondary">
+                  <FavoriteIcon />
+                </Badge>
+              </IconButton>
+            </Link>
+            <Link to='/cart'>
               <IconButton color="inherit" >
                 <Badge color="secondary">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
+              </Link>
+              { isAuthenticated && <h3>{user.name}</h3>}
               <IconButton
                 edge="end"
                 aria-label="account of current user"
                 aria-controls={menuId}
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
+                color="inherit">
+                {
+                  isAuthenticated   
+                    ? <Avatar alt={user.name} src={`${user.picture}`} />
+                    : <AccountCircle />
+                }
               </IconButton>
             </div>
             {/* Icono de tres puntos para mobile */}
@@ -121,8 +143,7 @@ export default function Navbar() {
               <IconButton
                 aria-label="show more"
                 aria-haspopup="true"
-                color="inherit"
-              >
+                color="inherit" >
                 <MoreIcon />
               </IconButton>
             </div>
