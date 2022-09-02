@@ -1,4 +1,4 @@
- import React from 'react'
+ import React, {useState} from 'react'
  import {useDispatch, useSelector} from 'react-redux'
  import {useParams} from "react-router-dom"
  import {getDetail, addToCart, addToWishlist, removeFromWishlist} from '../../actions/index'
@@ -21,6 +21,10 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { Link } from 'react-router-dom';
 import notFound from '../../assets/images/not_found.png'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,6 +50,21 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  button: {
+    margin: theme.spacing(0),
+    borderColor: '#257558',
+    color: '#257558',
+    width: '100%',
+    marginTop: 10
+  },
+  button2: {
+      margin: theme.spacing(0),
+      backgroundColor: '#257558',
+      color: '#fff',
+      width: '100%',
+      marginTop: 10
+  }
+
 }));
 
 export default function RecipeReviewCard() {
@@ -154,12 +173,17 @@ export default function RecipeReviewCard() {
                 <div className='box'>
                     <div className='row'>
                         <h1>{item.name}</h1>
+                        <ul className='tag'>
+                        {item.tag_list?.map((ele, index) => (
+                        <p key={index} >{ele}</p>
+                        ))}
+                        </ul>
                         <h4>${item.price}</h4>
-                        <StarBorderIcon />
-                        <StarBorderIcon />
-                        <StarBorderIcon />
-                        <StarBorderIcon />
-                        <StarBorderIcon />
+                        
+                        <Box component="fieldset" borderColor="transparent" m={0} p={0}>
+                        <Rating name="read-only" value={item.rating} readOnly precision={0.1} size="large"/>
+                        </Box>
+
                         <p>{item.description}</p>
                         <div className='colors'>
                             <h3>Colors : </h3>
@@ -173,14 +197,31 @@ export default function RecipeReviewCard() {
                           <span>0</span>
                           <button className='count'>+</button>
                         </div>
+                        <Button
+                          variant="contained"
+                          className={classes.button2}
+                          startIcon={<ShoppingCartIcon />}
+                          onClick={(e) => handleCart(item)}
+                          >
+                          ADD TO CART
+                          </Button>
                         
-                        <button className='cart' onClick={(e) => handleCart(item)}>
+                        {/* <button className='cart' onClick={(e) => handleCart(item)}>
                             Add to Cart
-                        </button>
+                        </button> */}
                         
-                        <button className='fav' onClick={(e) => handleFavorite(item)}>
+                        {/* <button className='fav' onClick={(e) => handleFavorite(item)}>
                             Add to Favorites
-                        </button>
+                        </button> */}
+                        <Button
+                                variant="outlined"
+                                className={classes.button}
+                                startIcon={<FavoriteIcon />}
+                                onClick={(e) => handleFavorite(item)}
+                            >
+                            ADD TO FAVORITES
+                            </Button>
+                        
                     </div>
                     
                 </div>
