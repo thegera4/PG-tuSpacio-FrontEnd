@@ -9,6 +9,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 
+
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const useStyles = makeStyles((theme) => ({
@@ -47,19 +48,19 @@ const useStyles = makeStyles((theme) => ({
 const itemData = [
   {
       img: "https://img.freepik.com/vector-gratis/banner-entrega-linea-laptop-realista-paquetes-nubes-e-iconos-sociales-estilo-realista_548887-53.jpg?w=996&t=st=1661973848~exp=1661974448~hmac=d3c5aa661e7036d7b70f489d68f4de08c9182be3aea8a39d2ac68e57c5fd5346",
-      title: "Entregamos a todo el pais,"
+      title: "Entregamos a todo el pais,..."
   },
   {
       img: "https://img.freepik.com/foto-gratis/chica-descalza-inspirada-gafas-pie-sobre-pierna-estudio-foto-interior-mujer-joven-entusiasta-camisa-cuadros-posando-sobre-fondo-burdeos_197531-25186.jpg?size=626&ext=jpg&uid=R21970068&ga=GA1.2.1703121374.1661973682",
-      title: "inspiramos Confianza a nuestros clientes"
+      title: "...inspiramos confianza a nuestros clientes,..."
   },
   {
       img: "https://img.freepik.com/foto-gratis/grupo-manos-diversas-multietnicas-levantadas_53876-64967.jpg?size=626&ext=jpg&uid=R21970068&ga=GA1.2.1703121374.1661973682",
-      title: "trabajamos en equipo"
+      title: "...trabajamos en equipo..."
   },
   {
       img: "https://img.freepik.com/foto-gratis/personas-que-trabajan-juntas-proyecto-empresarial_23-2148746319.jpg?w=996&t=st=1661974560~exp=1661975160~hmac=83412d86649f33eb6eb9e6efa53f876d75fb93918c33888cb9ee61a303dcbfdf",
-      title: "para que todo salga como lo esperas..."
+      title: "...para que todo salga como lo esperas."
   },
   {
       img: "https://img.freepik.com/foto-gratis/vista-trasera-hombre-negocios-hablar-telefono-ciudad_53876-129657.jpg?size=626&ext=jpg&uid=R21970068&ga=GA1.2.1703121374.1661973682",
@@ -102,7 +103,7 @@ export default function LandingPage() {
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents
-        animateHeight='true'
+        animateHeight={true}
         // containerStyle={}
       >
        

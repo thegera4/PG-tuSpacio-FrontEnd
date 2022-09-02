@@ -4,7 +4,7 @@ import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { Box, Button, Checkbox, Grid, Input, ListItemText, MenuItem } from '@material-ui/core';
+import { Box, Button, Grid } from '@material-ui/core';
 import { filterByBrand, filterByCategory, getAllBrands, getCategories, orderByAbc, 
     orderByPrice, setCurrentHomePage, OrderByRating } from '../../actions';
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,12 @@ const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
         minWidth: 150,
+    },
+    margin: {
+      margin: theme.spacing(1),
+    },
+    extendedIcon: {
+      marginRight: theme.spacing(1),
     },
 }));
 
@@ -75,6 +81,17 @@ export default function Filter({setOrder}) {
         else setOrder("")
     }
 
+    /*
+    nuevos filtros
+    todos los datos se pasan por query
+    
+    alpha ==> asc o desc
+    category ==> nombre de la categoria
+    price ==> asc o desc
+    brand ==> nombre de la marca
+    rating ==> asc o desc
+    
+    */ 
     return (
         <ThemeProvider theme={theme}>
             <Box
@@ -87,7 +104,7 @@ export default function Filter({setOrder}) {
                     justifyContent="space-between"
                     alignItems="center"
                 >
-                    <Grid item xs={5}>
+                    <Grid item xs='auto'>
                         {/* Filter by Brands */}
                         <FormControl className={classes.formControl}>
                             <InputLabel>Brands</InputLabel>
@@ -117,13 +134,7 @@ export default function Filter({setOrder}) {
                                 }
                             </Select>
                         </FormControl>
-                    </Grid>
-                    
-                    {/* <Grid item xs={2}>
-                        <Button onClick={() => navigate('/create')} variant="contained">Create Product</Button>
-                    </Grid> */}
 
-                    <Grid item xs={4.5}>
                         {/* Orden alfabetico */}
                         <FormControl className={classes.formControl}>
                             <InputLabel>Sort by Name</InputLabel>
@@ -162,6 +173,15 @@ export default function Filter({setOrder}) {
                                 <option value='min-max'>1...5</option>
                             </Select>
                         </FormControl>
+                    </Grid>
+                    
+                    <Grid item xs={2}>
+                        <Button 
+                            onClick={() => console.log("Limpiando filtros")} 
+                            variant="outlined"
+                            size="small"
+                            className={classes.margin}
+                        > Clean Filters</Button>
                     </Grid>
                 </Grid>
             </Box>

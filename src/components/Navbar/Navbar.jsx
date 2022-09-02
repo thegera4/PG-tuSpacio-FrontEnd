@@ -71,13 +71,13 @@ export default function Navbar() {
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.grow}>
-        <AppBar position="static" color='white'>
+        <AppBar position="static" color="inherit">
           <Toolbar>
             {/* Hamburguesa */}
             <IconButton
               edge="start"
               className={classes.menuButton}
-              color="primary.contrastText"
+              color="inherit"
               aria-label="open drawer">
                 <MenuIcon />
             </IconButton>
@@ -103,14 +103,14 @@ export default function Navbar() {
             <div className={classes.sectionDesktop}>
             <Link to='/wishlist'>
               <IconButton color="inherit" >
-                <Badge color="secondary">
+                <Badge color="secondary" overlap="rectangular">
                   <FavoriteIcon />
                 </Badge>
               </IconButton>
             </Link>
             <Link to='/cart'>
               <IconButton color="inherit" >
-                <Badge color="secondary">
+                <Badge color="secondary" overlap="rectangular">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>

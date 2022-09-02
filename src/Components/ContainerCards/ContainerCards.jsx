@@ -14,8 +14,7 @@ export default function ContainerCards() {
             <Filter 
                 setOrder={setOrder}    
             />
-            {/* {!order && <LandingPage />} */}
-            <Home />
+            <Home order={order}/>
         </div>
     )
 };

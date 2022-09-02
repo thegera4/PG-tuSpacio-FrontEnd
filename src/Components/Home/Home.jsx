@@ -7,7 +7,7 @@ import BasicPagination from '../BasicPagination/Pagination';
 import useStyles from './useStyles';
 import LandingPage from '../Landing/Landing';
 
-export default function SpacingGrid() {
+export default function SpacingGrid(order) {
   const [spacing, setSpacing] = React.useState(2);
   const classes = useStyles();
   const dispatch = useDispatch()
@@ -35,7 +35,7 @@ export default function SpacingGrid() {
     <>
     <Grid container direction='row' >
       <Grid item xs={12}>
-        <LandingPage />
+        {order && <LandingPage />}
       </Grid>
       </Grid>
       <BasicPagination 
