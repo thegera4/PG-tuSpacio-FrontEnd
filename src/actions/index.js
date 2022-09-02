@@ -176,7 +176,7 @@ export function OrderByRating(order) {
     return async function(dispatch) {
         try {
             let jsonR
-            if (order) jsonR = await axios.get(`${API}/products/rating/?ratingby=${order}`); 
+            if (order) jsonR = await axios.get(`${API}/products/rating/?ratingBy=${order}`); 
             else jsonR = await axios.get(`${API}/products`);
             return dispatch({
                 type: ORDER_BY_RATING,
