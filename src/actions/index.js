@@ -188,7 +188,6 @@ export function OrderByRating(order) {
     }
 }
 
-
 export function addToWishlist(product) {
     return { type: ADD_TO_WISHLIST, payload: product}
 }
