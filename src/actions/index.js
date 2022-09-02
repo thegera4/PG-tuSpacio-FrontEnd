@@ -12,6 +12,8 @@ export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const POST_PRODUCT = 'POST_PRODUCT';
 export const GET_NAME = 'GET NAME';
 export const ORDER_BY_RATING = 'ORDER_BY_RATING';
+export const ADD_TO_WISHLIST = 'ADD_TO_WISHLIST';
+export const REMOVE_FROM_WISHLIST = 'REMOVE_FROM_WISHLIST';
 
 const API = 'http://localhost:3001/api';
 
@@ -143,7 +145,6 @@ export function getDetail(id){
     }
 }
 
-
 export function getName(name) {
     return async function(dispatch){
         try {
@@ -185,4 +186,11 @@ export function OrderByRating(order) {
             console.error(error);
         }
     }
+
+export function addToWishlist(product) {
+    return { type: ADD_TO_WISHLIST, payload: product}
+}
+
+export function removeFromWishlist(product) {
+    return { type: REMOVE_FROM_WISHLIST, payload: product}
 }

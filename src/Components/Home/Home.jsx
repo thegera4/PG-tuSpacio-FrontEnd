@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import {Grid, Box} from '@material-ui/core';
 import HomeCards from '../../Components/HomeCards/HomeCards';
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts } from '../../actions';
 import BasicPagination from '../BasicPagination/Pagination';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import LandingPage from '../Landing/Landing';
+import mision from '../../assets/images/mision_empresa.png';
+// import { flexbox, justifyContent } from '@material-ui/system';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -44,12 +46,21 @@ export default function SpacingGrid() {
   // console.log(products)
   return (
     <>
-        <Typography component="div">
+    <Grid container direction='row' >
+      <Grid item xs={12}>
       
-      <Box textAlign="left" marginLeft="60px" marginBottom="20px" fontWeight="fontWeightBold" fontSize={20}>
-        All Products 
-      </Box>
-    </Typography>
+        <LandingPage />
+      
+      </Grid>
+      
+      </Grid>
+      <BasicPagination 
+        className={classes.centering} 
+        currentPage={currentPage}
+        productsPerPage={productsPerPage}
+        totalProducts={products.length}
+        onChange={handleChange}
+        />
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
           <Grid 
@@ -66,13 +77,6 @@ export default function SpacingGrid() {
           </Grid>
         </Grid>
       </Grid>
-      <BasicPagination 
-        className={classes.centering} 
-        currentPage={currentPage}
-        productsPerPage={productsPerPage}
-        totalProducts={products.length}
-        onChange={handleChange}
-        />
     </>
   );
-}
+} 
