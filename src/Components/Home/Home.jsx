@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import HomeCards from '../../Components/HomeCards/HomeCards';
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,21 +6,7 @@ import { getAllProducts } from '../../actions';
 import BasicPagination from '../BasicPagination/Pagination';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    height: 140,
-    width: 100,
-  },
-  control: {
-    padding: theme.spacing(2),
-  },
-  centering: {
-   
-  }
-}));
+import useStyles from './useStyles';
 
 export default function SpacingGrid() {
   const [spacing, setSpacing] = React.useState(2);
@@ -38,12 +23,13 @@ export default function SpacingGrid() {
   useEffect(() => {
     dispatch(getAllProducts())
   }, [dispatch])
+  
   const handleChange = (event) => {
     setSpacing(Number(event.target.value));
   };
 
-  function productIsFavorite(product) {
-    return favorites.includes(product)
+  function productIsFavorite(productID) {
+    return favorites.some(favorite => favorite.id === productID)
   }
 
   return (
@@ -64,12 +50,11 @@ export default function SpacingGrid() {
             container justifyContent="center" 
             spacing={spacing}>
             {RENDERED_PRODUCTS?.map((product, index) => (
-              
               <Grid key={index} item>
                 <HomeCards 
                 className={classes.paper} 
                 products = {product}
-                favicon = {productIsFavorite(product)}
+                favorite = {productIsFavorite(product.id)}
                 />
               </Grid>
             ))}
