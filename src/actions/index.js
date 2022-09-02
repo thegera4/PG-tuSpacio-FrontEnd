@@ -14,6 +14,7 @@ export const GET_NAME = 'GET NAME';
 export const ORDER_BY_RATING = 'ORDER_BY_RATING';
 export const ADD_TO_WISHLIST = 'ADD_TO_WISHLIST';
 export const REMOVE_FROM_WISHLIST = 'REMOVE_FROM_WISHLIST';
+export const ADD_TO_CART = 'ADD_TO_CART';
 
 const API = 'http://localhost:3001/api';
 
@@ -186,6 +187,7 @@ export function OrderByRating(order) {
             console.error(error);
         }
     }
+}
 
 export function addToWishlist(product) {
     return { type: ADD_TO_WISHLIST, payload: product}
@@ -194,3 +196,8 @@ export function addToWishlist(product) {
 export function removeFromWishlist(product) {
     return { type: REMOVE_FROM_WISHLIST, payload: product}
 }
+
+export function addToCart(product) {
+    return { type: ADD_TO_CART, payload: product}
+}
+

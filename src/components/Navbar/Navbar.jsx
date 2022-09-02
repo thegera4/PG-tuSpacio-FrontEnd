@@ -91,11 +91,13 @@ export default function Navbar() {
                 </Badge>
               </IconButton>
             </Link>
+            <Link to='/cart'>
               <IconButton color="inherit" >
                 <Badge color="secondary">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
+              </Link>
               <IconButton
                 edge="end"
                 aria-label="account of current user"
