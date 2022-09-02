@@ -7,6 +7,8 @@ import BasicPagination from '../BasicPagination/Pagination';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import useStyles from './useStyles';
+import LandingPage from '../Landing/Landing';
+import mision from '../../assets/images/mision_empresa.png';
 
 export default function SpacingGrid() {
   const [spacing, setSpacing] = React.useState(2);
@@ -18,7 +20,6 @@ export default function SpacingGrid() {
   const LAST_PRODUCT = currentPage * productsPerPage;
   const FIRST_PRODUCT = LAST_PRODUCT - productsPerPage;
   const RENDERED_PRODUCTS = products.slice(FIRST_PRODUCT, LAST_PRODUCT);
-  const favorites = useSelector(state => state.favorites)
 
   useEffect(() => {
     dispatch(getAllProducts())
@@ -34,16 +35,18 @@ export default function SpacingGrid() {
 
   return (
     <>
-      <Typography component="div">
-        <Box 
-        textAlign="left" 
-        marginLeft="60px" 
-        marginBottom="20px" 
-        fontWeight="fontWeightBold" 
-        fontSize={20}>
-          All Products 
-        </Box>
-      </Typography>
+    <Grid container direction='row' >
+      <Grid item xs={12}>
+        <LandingPage />
+      </Grid>
+      </Grid>
+      <BasicPagination 
+        className={classes.centering} 
+        currentPage={currentPage}
+        productsPerPage={productsPerPage}
+        totalProducts={products.length}
+        onChange={handleChange}
+        />
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
           <Grid 
@@ -61,13 +64,6 @@ export default function SpacingGrid() {
           </Grid>
         </Grid>
       </Grid>
-      <BasicPagination 
-        className={classes.centering} 
-        currentPage={currentPage}
-        productsPerPage={productsPerPage}
-        totalProducts={products.length}
-        onChange={handleChange}
-        />
     </>
   );
-}
+} 
