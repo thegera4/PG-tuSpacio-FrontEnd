@@ -4,8 +4,24 @@ import HomeCards from '../../Components/HomeCards/HomeCards';
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts } from '../../actions';
 import BasicPagination from '../BasicPagination/Pagination';
-import useStyles from './useStyles';
 import LandingPage from '../Landing/Landing';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    height: 140,
+    width: 100,
+  },
+  control: {
+    padding: theme.spacing(2),
+  },
+  centering: {
+   
+  }
+}));
 
 export default function SpacingGrid() {
   const [spacing, setSpacing] = React.useState(2);
