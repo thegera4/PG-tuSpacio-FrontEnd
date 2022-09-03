@@ -1,6 +1,6 @@
 import { GET_CATEGORIES, GET_ALL_PRODUCTS, SET_CURRENT_HOME_PAGE, GET_DETAIL, SEARCH_BY_CATEGORIE, 
   GET_ALL_BRANDS, SEARCH_BY_BRAND, ORDER_BY_PRICE, ORDER_BY_NAME, POST_PRODUCT, GET_NAME, ORDER_BY_RATING, 
-  ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST, ADD_TO_CART, REMOVE_FROM_CART} from "../actions";
+  ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST, ADD_TO_CART, REMOVE_FROM_CART, SET_ADMIN_OPTION} from "../actions";
 
 const initialState = {
   products: [],
@@ -11,6 +11,7 @@ const initialState = {
   search: [],
   favorites: [],
   cart: [],
+  adminOption: 0,
 }
 
 function rootReducer(state = initialState, action) {
@@ -103,6 +104,11 @@ function rootReducer(state = initialState, action) {
             ...state,
             cart: state.cart.filter(
               (el) => el.id !== action.payload)
+          }
+          case SET_ADMIN_OPTION:
+            return {
+              ...state,
+              adminOption: action.payload
           }
     default:
       return state;
