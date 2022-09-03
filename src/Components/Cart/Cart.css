@@ -210,3 +210,11 @@ section .cart {
 .price h4 {
     color: crimson;
 }
+
+.breadcrums {
+    width: 100%;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+
