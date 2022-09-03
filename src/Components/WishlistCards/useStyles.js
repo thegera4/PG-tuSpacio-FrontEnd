@@ -14,7 +14,10 @@ const useStyles = makeStyles({
     marginTop: 10,
     height: 100,
     backgroundColor: "#eceeed"
-  }  
+  },
+  iconColors: {
+    color: '#257558',
+  }, 
 });
 
 export default useStyles;
