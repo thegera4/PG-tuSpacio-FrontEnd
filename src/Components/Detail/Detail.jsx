@@ -1,7 +1,7 @@
  import React, {useState} from 'react'
  import {useDispatch, useSelector} from 'react-redux'
  import {useParams} from "react-router-dom"
- import {getDetail, addToCart, addToWishlist, removeFromWishlist} from '../../actions/index'
+ import {getDetail, addToCart, addToWishlist, removeFromWishlist, addNotification} from '../../actions/index'
  import { useEffect } from 'react'
  import defaultImage from "../../assets/images/not_found.png"
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,12 +18,14 @@ import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import notFound from '../../assets/images/not_found.png'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Link from '@material-ui/core/Link';
 
 
 
@@ -77,6 +79,8 @@ export default function RecipeReviewCard() {
     setExpanded(!expanded);
   };
 
+
+
   const dispatch = useDispatch()
   const item = useSelector((state) => state.productDetail)
   const cart = useSelector((state) => state.cart)
@@ -96,7 +100,7 @@ export default function RecipeReviewCard() {
   function handleCart(e) {
       if(!cart.includes(e)) {
         dispatch(addToCart(e))
-        alert('Product has been added to Cart')
+        dispatch(addNotification())
       }
       else {
         alert('The product is already added to the cart')
@@ -162,6 +166,17 @@ export default function RecipeReviewCard() {
     //   </Collapse>
     // </Card>
     <div className='detail' key={item.id}>
+                <div className='breadcrums'>
+                <Breadcrumbs aria-label="breadcrumb">
+                  <Link color="inherit" href="/" >
+                   Products
+                  </Link>
+                  <Link color="inherit"  >
+                    {item.category}
+                  </Link>
+                  <Typography color="textPrimary">{item.name}</Typography>
+                </Breadcrumbs>
+                </div>
                 <div>
                 <img src={item.image_link} className='detail-img'/>
                 <div className='image-list'>
