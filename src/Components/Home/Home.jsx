@@ -6,6 +6,7 @@ import { getAllProducts } from '../../actions';
 import BasicPagination from '../BasicPagination/Pagination';
 import useStyles from './useStyles';
 import LandingPage from '../Landing/Landing';
+import { Box } from '@material-ui/core';
 
 export default function SpacingGrid(order) {
   const [spacing, setSpacing] = React.useState(2);
@@ -38,6 +39,7 @@ export default function SpacingGrid(order) {
           {order && <LandingPage />}
         </Grid>
       </Grid>
+
       <BasicPagination
         className={classes.centering}
         currentPage={currentPage}
@@ -45,28 +47,34 @@ export default function SpacingGrid(order) {
         totalProducts={products.length}
         onChange={handleChange}
       />
+
       <Grid
         container
         direction="row"
         justifyContent="space-around"
         alignItems="center"
+
       >
         <Grid item xs={10}>
-          <Grid
-            container 
-            justifyContent="center"
-            spacing={spacing}
+          <Box
+            mb = {4}
           >
-            {RENDERED_PRODUCTS?.map((product, index) => (
-              <Grid key={index} item>
-                <HomeCards
-                  className={classes.paper}
-                  products={product}
-                  favorite={productIsFavorite(product.id)}
-                />
-              </Grid>
-            ))}
-          </Grid>
+            <Grid
+              container 
+              justifyContent="center"
+              spacing={spacing}
+            >
+                {RENDERED_PRODUCTS?.map((product, index) => (
+                  <Grid key={index} item>
+                    <HomeCards
+                      className={classes.paper}
+                      products={product}
+                      favorite={productIsFavorite(product.id)}
+                    />
+                  </Grid>
+                ))}
+            </Grid>
+          </Box>
         </Grid>
       </Grid>
     </>
