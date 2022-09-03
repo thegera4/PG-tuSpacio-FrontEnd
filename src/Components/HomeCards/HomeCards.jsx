@@ -30,8 +30,8 @@ export default function HomeCards(props) {
   }
   function handleCart(e) {
     e.preventDefault()
-    dispatch(addNotification())
     if(!props.cart) {
+      dispatch(addNotification())
       dispatch(addToCart(props.products))
     }else {
       alert('The product is already added to the cart')
@@ -65,12 +65,8 @@ export default function HomeCards(props) {
           </CardActions>   
         </Box>
         <Link to={`/${props.products.id}`}>
-          <CardMedia
-            className={classes.media}
-            image={props.products.image_link?
-              props.products.image_link:
-              Placeholder} />
-        </Link>
+          <img className='card-image' src={props.products.image_link} alt="" />
+          </Link>
           <CardContent className={classes.content}>
             <Typography component="div">
               <Box 

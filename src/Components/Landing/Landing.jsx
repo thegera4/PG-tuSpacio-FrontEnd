@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     height: 30,
     textPrimary:'#ffffff',
     paddingLeft: theme.spacing(5),
-    backgroundColor: '#57a485',
+    backgroundColor: 'fff',
   }, 
   colors:{
     backgroundColor: '#57a485',
