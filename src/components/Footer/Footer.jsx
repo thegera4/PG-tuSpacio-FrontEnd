@@ -75,28 +75,49 @@ export default function Footer() {
                                     <Typography variant="h6" gutterBottom>
                                         WE ACEPT
                                     </Typography>
-                                    <Box className={classes.logoCardsBox}>
-                                        <img 
-                                            className={classes.logoCardImg} 
-                                            src={visa} 
-                                            alt="logo visa img"
-                                        />
-                                        <img 
-                                            className={classes.logoCardImgMC} 
-                                            src={mastercard} 
-                                            alt="logo mastercard img"
-                                        />
-                                        <img 
-                                            className={classes.logoCardImg} 
-                                            src={amex} 
-                                            alt="logo amex img"
-                                            />
-                                        <img 
-                                            className={classes.logoCardImg} 
-                                            src={paypal} 
-                                            alt="logo paypal img"
-                                            />
-                                    </Box>
+                                    <Grid 
+                                        container
+                                        direction="row"
+                                        justifyContent="flex-start"
+                                        alignItems="flex-start"
+                                    >
+                                        <Grid item xs='auto'>
+                                            <Box className={classes.logoCardsBox}>
+                                                <img 
+                                                    className={classes.logoCardImg} 
+                                                    src={visa} 
+                                                    alt="logo visa img"
+                                                />
+                                            </Box>
+                                        </Grid>
+                                        <Grid item xs='auto'>
+                                            <Box className={classes.logoCardsBox}>
+                                                <img 
+                                                    className={classes.logoCardImgMC} 
+                                                    src={mastercard} 
+                                                    alt="logo mastercard img"
+                                                />
+                                            </Box>
+                                        </Grid>
+                                        <Grid item xs='auto'>
+                                            <Box className={classes.logoCardsBox}>
+                                                <img 
+                                                    className={classes.logoCardImg} 
+                                                    src={amex} 
+                                                    alt="logo amex img"
+                                                    />
+                                            </Box>
+                                        </Grid>
+                                        <Grid item xs='auto'>
+                                            <Box className={classes.logoCardsBox}>
+                                                    <img 
+                                                    className={classes.logoCardImg} 
+                                                    src={paypal} 
+                                                    alt="logo paypal img"
+                                                    />
+                                            </Box>
+                                        </Grid>
+                                    </Grid>
                                 </Box>
                             </Box>
                         </Grid>
