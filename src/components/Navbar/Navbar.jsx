@@ -36,7 +36,7 @@ const StyledBadge = withStyles((theme) => ({
 }))(Badge);
 
 export default function Navbar() {
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const navigate = useNavigate();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -131,7 +131,7 @@ export default function Navbar() {
               </StyledBadge>
               </IconButton>
               </Link>
-              {isAuthenticated && <h3>{user.name}</h3>}
+              {isAuthenticated }
               <IconButton
                 edge="end"
                 aria-label="account of current user"

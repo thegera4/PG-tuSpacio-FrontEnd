@@ -3,10 +3,11 @@ import { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@material-ui/core';
 import PageviewIcon from '@material-ui/icons/Pageview';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { useNavigate } from 'react-router-dom';
 import useStyles from './useStyles';
 
-export default function OrdersGrid() {
+export default function ProductsGrid() {
   const classes = useStyles();
   const columns = [
   { field: 'id', headerName: 'Order No.', width: 90,},
@@ -93,6 +94,13 @@ const rows = [
 
   return (
     <div style={{ height: 535, width: '100%', backgroundColor: '#fff'}}>
+       <Button
+        variant="contained"
+        className={classes.btnAdd}
+        startIcon={<AddShoppingCartIcon />}
+        onClick={() => navigate('/create')}>
+          Add New Product
+      </Button>
       <DataGrid
         rows={data}
         columns={columns}
