@@ -18,7 +18,7 @@ export default function Footer() {
     const classes = useStyles();
     return (
         <ThemeProvider theme={theme}>
-            <Typography component="div" variant='subtitle1' >
+            <Typography component="h1" variant='subtitle1' >
                 <Box
                     className={classes.boxContainer}
                     bgcolor="secondary.dark"
@@ -33,38 +33,28 @@ export default function Footer() {
                     >
                         <Grid item xs={3}>
                             <Box>
-                                <Typography variant="h6" gutterBottom>
-                                    PRODUCTS
-                                </Typography>
-                                <Typography variant="body2" gutterBottom>
-                                    <div>Make Up</div>
-                                    <div>Dermocosmetics</div>
-                                    <div>Manicure</div>
-                                    <div>Barbershop</div>
-                                </Typography>
+                                <Typography variant="h6" gutterBottom> PRODUCTS </Typography>
+                                <Typography variant="body2" gutterBottom> Make Up </Typography>
+                                <Typography variant="body2" gutterBottom> Dermocosmetics </Typography>
+                                <Typography variant="body2" gutterBottom> Manicure </Typography>
+                                <Typography variant="body2" gutterBottom> Barbershop </Typography>
                             </Box>
                         </Grid>
                         
                         <Grid item xs={3}>
                             <Box>
-                                <Typography variant="h6" gutterBottom>
-                                    INFORMATION
-                                </Typography>
-                                <Typography variant="body2" gutterBottom>
-                                    <div>How to buy?</div>
-                                    <div>My count</div>
-                                    <div>Sign in</div>
-                                    <div>About us</div>
-                                </Typography>
+                                <Typography variant="h6" gutterBottom> INFORMATION </Typography>
+                                <Typography variant="body2" gutterBottom> How to buy? </Typography>
+                                <Typography variant="body2" gutterBottom> My count </Typography>
+                                <Typography variant="body2" gutterBottom> Sign in </Typography>
+                                <Typography variant="body2" gutterBottom> About us </Typography>
                             </Box>
                         </Grid>
                         
                         <Grid item xs={3}>
                             <Box>
                                 <Box>
-                                    <Typography variant="h6" gutterBottom>
-                                        FOLLOW US!
-                                    </Typography>
+                                    <Typography variant="h6" gutterBottom> FOLLOW US! </Typography>
                                     <Box>
                                         <IconButton aria-label="TwitterIcon" color='inherit'>
                                             <TwitterIcon />

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react'
 import './SearchBar.css'
 import SearchIcon from '@material-ui/icons/Search';
@@ -7,14 +6,11 @@ import { useDispatch } from 'react-redux'
 import { getDetail } from '../../actions/index'
 import { useNavigate } from "react-router-dom";
 
-
-
 const SearchBar = ({ placeholder, data }) => {
   const [filteredData, setFilteredData] = useState([])
   const [wordEntered, setWordEntered] = useState('')
   const dispatch = useDispatch()
   let navigate = useNavigate();
-
 
   const handleFilter = (event) => {
     const searchWord = event.target.value
@@ -28,11 +24,11 @@ const SearchBar = ({ placeholder, data }) => {
       setFilteredData(newFilter)
     }
   }
+
   const clearInput = () => {
     setFilteredData([])
     setWordEntered('')
   }
-
 
   return (
     <div className='search'>
@@ -47,12 +43,14 @@ const SearchBar = ({ placeholder, data }) => {
         </div>
       </div>
 
-      { filteredData.length != 0 
+      { filteredData.length !== 0 
           ? (
               <div className='dataResult'>
                 { filteredData.slice(0, 6).map((value, key) => {
                   return (
-                    <a className='dataItem' onClick={ () => {
+                    <a 
+                      href='http://localhost:3000' 
+                      className='dataItem' onClick={ () => {
                       dispatch(getDetail(value.id))
                       navigate(`/${value.id}`)
                       clearInput() } } 

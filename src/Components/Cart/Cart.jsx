@@ -1,8 +1,8 @@
 import React from 'react'
 import './Cart.css'
-import {useDispatch, useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import notFound from '../../assets/images/not_found.png'
+// import notFound from '../../assets/images/not_found.png'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 const Cart = () => {
@@ -12,7 +12,7 @@ const Cart = () => {
         {cartProducts?.map(item => (
             <div className='detail' key={item.id}>
                 <div>
-                <img src={item.image_link} className='detail-img'/>
+                <img src={item.image_link} className='detail-img' alt='detail-img'/>
                 </div>
                 <div className='box'>
                     <div className='row'>

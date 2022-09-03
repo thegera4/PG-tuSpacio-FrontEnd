@@ -15,10 +15,10 @@ import LogoFONT from '../../assets/images/font_logo.png';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../ThemeConfig';
 import useStyles from './useStyles';
-import {useDispatch, useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Login from '../Login/Login';
 import Logout from '../Logout/Logout';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -26,16 +26,15 @@ import { Avatar } from '@material-ui/core';
 
 
 export default function Navbar() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const data = useSelector(state => state.products)
 
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
 
-  if (isAuthenticated) console.log(user);
+  // if (isAuthenticated) console.log(user);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -60,9 +59,9 @@ export default function Navbar() {
       {
         isAuthenticated
           ? <>
-              <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
-              <MenuItem onClick={Logout()}>Sing out</MenuItem>
-            </>
+            <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
+            <MenuItem onClick={Logout()}>Sing out</MenuItem>
+          </>
           : <MenuItem onClick={Login()}>Sing in</MenuItem>
       }
     </Menu>
@@ -79,52 +78,48 @@ export default function Navbar() {
               className={classes.menuButton}
               color="inherit"
               aria-label="open drawer">
-                <MenuIcon />
+              <MenuIcon />
             </IconButton>
             {/* Logo */}
-            <Link to='/'>
-              <Box className={classes.logoBox}>
-                <img 
-                  className={classes.logoImg} 
-                  src={LogoIMG} 
-                  alt="logo img"/>
-                <img 
-                  className={classes.logoFont} 
-                  src={LogoFONT} 
-                  alt="logo font" 
+            <IconButton color="primary" onClick={() => navigate('/')} >
+                <Box className={classes.logoBox}>
+                  <img
+                    className={classes.logoImg}
+                    src={LogoIMG}
+                    alt="logo img" />
+                  <img
+                    className={classes.logoFont}
+                    src={LogoFONT}
+                    alt="logo font"
                   />
-              </Box>
-            </Link>
+                </Box>
+            </IconButton>
             {/* Searchbar */}
             <div className={classes.search}>
-              <SearchBar placeholder="Search product..." data={data}/>
+              <SearchBar placeholder="Search product..." data={data} />
             </div>
             {/* Iconos de carrito y perfil */}
             <div className={classes.sectionDesktop}>
-            <Link to='/wishlist'>
-              <IconButton color="inherit" >
+              <IconButton color="primary" onClick={() => navigate('/wishlist')} >
                 <Badge color="secondary" overlap="rectangular">
                   <FavoriteIcon />
                 </Badge>
               </IconButton>
-            </Link>
-            <Link to='/cart'>
-              <IconButton color="inherit" >
+              <IconButton color="primary" onClick={() => navigate('/cart')}>
                 <Badge color="secondary" overlap="rectangular">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
-              </Link>
-              { isAuthenticated && <h3>{user.name}</h3>}
+              {isAuthenticated && <h3>{user.name}</h3>}
               <IconButton
                 edge="end"
                 aria-label="account of current user"
                 aria-controls={menuId}
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
-                color="inherit">
+                color='primary'>
                 {
-                  isAuthenticated   
+                  isAuthenticated
                     ? <Avatar alt={user.name} src={`${user.picture}`} />
                     : <AccountCircle />
                 }

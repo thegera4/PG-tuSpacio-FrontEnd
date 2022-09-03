@@ -5,7 +5,7 @@ const useStyles = makeStyles({
     width: 345,
     height: 435,
     border: '1px solid #eceeed',
-
+    marginBottom: "5px",
   },
   media: {
     height: 300,
@@ -13,7 +13,8 @@ const useStyles = makeStyles({
   content: {
     marginTop: 10,
     height: 100,
-    backgroundColor: "#eceeed"
+    backgroundColor: "#8d8d8d",
+    color: "#ffffff"
   }  
 });
 

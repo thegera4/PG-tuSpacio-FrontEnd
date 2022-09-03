@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
-import {Paper, Box} from '@material-ui/core';
+import {Paper} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
@@ -9,19 +9,18 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 
-
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 1200,
+    maxWidth: "auto",
     flexGrow: 1,
-    margin: 30,
+    margin: 'auto',
   },
   header: {
     display: 'flex',
     alignItems: 'center',
-    height: 30,
+    height: 45,
     textPrimary:'#ffffff',
     paddingLeft: theme.spacing(5),
     backgroundColor: '#57a485',
@@ -34,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     height: 400,
-    maxWidth: 1200,
+    maxWidth: "auto",
     overflow: 'hidden',
-    display: 'block',
+    // display: 'block',
     width: '100%',
   },
   buttons: {
-    colorText: '#57a485',
+    colorText: '#57a485', 
   },
 }));
 
@@ -107,13 +106,16 @@ export default function LandingPage() {
         // containerStyle={}
       >
        
-        {itemData.map((step, index) => (
-          <div key={step.title}>
-            {Math.abs(activeStep - index) <= 2 ? (
-              <img className={classes.img} src={step.img} alt={step.title} />
-            ) : null}
-          </div>
-        ))}
+        {
+          itemData.map((step, index) => (
+            <div key={step.title}>
+              { Math.abs(activeStep - index) <= 2 
+                  ? <img className={classes.img} src={step.img} alt={step.title} />
+                  : null
+              }
+            </div>
+          ))
+        }
         
       </AutoPlaySwipeableViews>
 
@@ -130,11 +132,11 @@ export default function LandingPage() {
           </Button>
         }
         backButton={
-          <Typography variant='subtitle1'color='textPrimary'>
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-            Back
-          </Button>
+          <Typography variant='subtitle1' color='textPrimary'>
+            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+              {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+              Back
+            </Button>
           </Typography>
         }
       />

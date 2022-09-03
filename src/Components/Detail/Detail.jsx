@@ -1,78 +1,69 @@
- import React from 'react'
- import {useDispatch, useSelector} from 'react-redux'
- import {useParams} from "react-router-dom"
- import {getDetail} from '../../actions/index'
- import { useEffect } from 'react'
- import defaultImage from "../../assets/images/not_found.png"
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import React from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {useParams} from "react-router-dom"
+import {getDetail} from '../../actions/index'
+import { useEffect } from 'react'
+// import defaultImage from "../../assets/images/not_found.png"
+// import { makeStyles } from '@material-ui/core/styles';
+// import clsx from 'clsx';
+// import Card from '@material-ui/core/Card';
+// import CardHeader from '@material-ui/core/CardHeader';
+// import CardMedia from '@material-ui/core/CardMedia';
+// import CardContent from '@material-ui/core/CardContent';
+// import CardActions from '@material-ui/core/CardActions';
+// import Collapse from '@material-ui/core/Collapse';
+// import IconButton from '@material-ui/core/IconButton';
+// import Typography from '@material-ui/core/Typography';
+// import { red } from '@material-ui/core/colors';
+// import FavoriteIcon from '@material-ui/icons/Favorite';
+// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { Link } from 'react-router-dom';
 import notFound from '../../assets/images/not_found.png'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 500,
-    margin: 'auto',
-    marginTop: 100
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     maxWidth: 500,
+//     margin: 'auto',
+//     marginTop: 100
+//   },
+//   media: {
+//     height: 0,
+//     paddingTop: '56.25%', // 16:9
+//   },
+//   expand: {
+//     transform: 'rotate(0deg)',
+//     marginLeft: 'auto',
+//     transition: theme.transitions.create('transform', {
+//       duration: theme.transitions.duration.shortest,
+//     }),
+//   },
+//   expandOpen: {
+//     transform: 'rotate(180deg)',
+//   },
+//   avatar: {
+//     backgroundColor: red[500],
+//   },
+// }));
 
 export default function RecipeReviewCard() {
   const { id } = useParams()
  
-  const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  // const classes = useStyles();
+  // const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  // const handleExpandClick = () => {
+  //   setExpanded(!expanded);
+  // };
 
   const dispatch = useDispatch()
   const item = useSelector((state) => state.productDetail)
-    
-
  
-
   useEffect(() => {
- 
     dispatch(getDetail(id))   
-
-  }
-  , [dispatch])
-
-
-
+  } , [dispatch, id])
 
   return (
     // <Card className={classes.root} >
@@ -126,11 +117,11 @@ export default function RecipeReviewCard() {
     // </Card>
     <div className='detail' key={item.id}>
                 <div>
-                <img src={item.image_link} className='detail-img'/>
+                <img src={item.image_link} className='detail-img' alt='detail-img'/>
                 <div className='image-list'>
-                <img src={item.image_link} className='detail-img-small'/>   
-                <img src={notFound} className='detail-img-small'/> 
-                <img src={notFound} className='detail-img-small'/> 
+                <img src={item.image_link} className='detail-img-small' alt='detail-img-small'/>   
+                <img src={notFound} className='detail-img-small' alt='detail-img-small2'/> 
+                <img src={notFound} className='detail-img-small' alt='detail-img-small3'/> 
                 </div>
                 </div>
                 <div className='box'>

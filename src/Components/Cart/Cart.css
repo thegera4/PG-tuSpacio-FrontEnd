@@ -57,7 +57,7 @@
 .colors button{
     width: 30px;
     height: 30px;
-    border:none;
+    border: none;
     margin-left: 3px;
     cursor: pointer;
     border-radius: 20px;
@@ -65,7 +65,7 @@
   
 .colors {
     display: flex;
-    justify-content: start;
+    /* justify-content: start; */
     align-items: center;
 }  
 
@@ -95,7 +95,7 @@
 
 .image-list{
     display: flex;
-    justify-content: start;
+    /* justify-content: start; */
 }
 
 .select {

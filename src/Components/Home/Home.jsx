@@ -22,7 +22,7 @@ export default function SpacingGrid(order) {
   useEffect(() => {
     dispatch(getAllProducts())
   }, [dispatch])
-  
+
   const handleChange = (event) => {
     setSpacing(Number(event.target.value));
   };
@@ -33,29 +33,36 @@ export default function SpacingGrid(order) {
 
   return (
     <>
-    <Grid container direction='row' >
-      <Grid item xs={12}>
-        {order && <LandingPage />}
+      <Grid container direction='row' >
+        <Grid item xs={12}>
+          {order && <LandingPage />}
+        </Grid>
       </Grid>
-      </Grid>
-      <BasicPagination 
-        className={classes.centering} 
+      <BasicPagination
+        className={classes.centering}
         currentPage={currentPage}
         productsPerPage={productsPerPage}
         totalProducts={products.length}
         onChange={handleChange}
-        />
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12}>
-          <Grid 
-            container justifyContent="center" 
-            spacing={spacing}>
+      />
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-around"
+        alignItems="center"
+      >
+        <Grid item xs={10}>
+          <Grid
+            container 
+            justifyContent="center"
+            spacing={spacing}
+          >
             {RENDERED_PRODUCTS?.map((product, index) => (
               <Grid key={index} item>
-                <HomeCards 
-                className={classes.paper} 
-                products = {product}
-                favorite = {productIsFavorite(product.id)}
+                <HomeCards
+                  className={classes.paper}
+                  products={product}
+                  favorite={productIsFavorite(product.id)}
                 />
               </Grid>
             ))}
