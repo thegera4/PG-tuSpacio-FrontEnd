@@ -5,13 +5,16 @@ const useStyles = makeStyles({
     width: 345,
     height: 435,
     border: '1px solid #eceeed',
+    marginRight: 30,
+    marginLeft: 30,
+    marginBottom: 70
 
   },
   media: {
     height: 300,
   },
   content: {
-    marginTop: 10,
+
     height: 100,
     backgroundColor: "#eceeed"
   }  

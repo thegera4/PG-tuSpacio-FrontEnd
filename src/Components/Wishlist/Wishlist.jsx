@@ -14,9 +14,10 @@ function Wishlist() {
       {favorites.length === 0 ? (
         <Box
           textAlign="center"
-          marginTop="100px"
+          marginBottom="20px" 
+          marginTop="20px"
           fontWeight="fontWeightBold"
-          fontSize={20}>
+          fontSize={30}>
             No products in your wishlist
         </Box>) : 
         (
@@ -25,8 +26,9 @@ function Wishlist() {
               textAlign="left" 
               marginLeft="60px" 
               marginBottom="20px" 
+              marginTop="20px"
               fontWeight="fontWeightBold" 
-              fontSize={20}>
+              fontSize={30}>
                 Wishlist 
             </Box>
             <Grid 
