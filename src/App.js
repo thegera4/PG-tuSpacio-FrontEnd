@@ -10,7 +10,7 @@ import Wishlist from './Components/Wishlist/Wishlist'
 import Cart from './Components/Cart/Cart'
 import Profile from './Components/Profile/Profile';
 import Checkout from './Components/Checkout/Checkout';
-
+import OrderDetail from './Components/OrderDetail/OrderDetail.jsx';
 
 function App() {
 
@@ -25,6 +25,7 @@ function App() {
         <Route path="/cart" element={ <Cart /> } />
         <Route path="/profile" element={ <Profile /> } />
         <Route path="/checkout" element={ <Checkout /> } />
+        <Route path="/orders/:id" element={ <OrderDetail /> } />
       </Routes>  
       <Footer />  
     </Container>

@@ -5,6 +5,7 @@ import theme from '../../ThemeConfig';
 import AdminTabs from '../AdminTabs/AdminTabs';
 import {useSelector } from 'react-redux';
 import UsersGrid from '../../Components/UsersGrid/UsersGrid';
+import OrdersGrid from '../../Components/OrdersGrid/OrdersGrid';
 
 export default function Profile() {
   //const navigate = useNavigate()
@@ -27,7 +28,7 @@ export default function Profile() {
                 adminOption === 0 ?
                 <UsersGrid />  :
                 adminOption === 1 ?
-                <h1>Here you'll see the list of Purchase Orders</h1> :
+                <OrdersGrid /> :
                 adminOption === 2 ?
                 <h1>Here you'll see the list of Products</h1> :
                 adminOption === 3 ?

@@ -105,49 +105,31 @@ export default function Navbar() {
               </Box>
             </Link>
             {/* Searchbar */}
-            <div className={classes.search}></div>
-
-            {/* Iconos de carrito y perfil */}
+            <div className={classes.search}>
+              <SearchBar placeholder="Search product..." data={data}/>
+            </div>
+            {/* Iconos de lado derecho */}
             <div className={classes.sectionDesktop}>
-              <Link to="/">
-                <IconButton color="inherit">
-                  <Badge color="primary">
-                    <HomeIcon color="primary" />
-                  </Badge>
-                </IconButton>
-              </Link>
-              <Link to="/wishlist" id="link">
-                <IconButton color="inherit">
-                  <Badge color="secondary">
-                    <FavoriteIcon color="primary" />
-                  </Badge>
-                </IconButton>
-              </Link>
-              <Link to="/cart" id="link">
-                {/* <IconButton color="inherit" >
-                <Badge color="secondary">
-                  <ShoppingCartIcon />
+            <Link to='/'>
+              <IconButton  >
+                <Badge >
+                  <HomeIcon className={classes.iconColors}/>
                 </Badge>
-              </IconButton> */}
-                <IconButton aria-label="cart">
-                  <StyledBadge badgeContent={notification} color="error">
-                    <ShoppingCartIcon color="primary" />
-                  </StyledBadge>
-                </IconButton>
-              </Link>
-              <Link to="/wishlist">
-                <IconButton color="inherit">
-                  <Badge color="secondary">
-                    <FavoriteIcon />
-                  </Badge>
-                </IconButton>
-              </Link>
-              <Link to="/cart">
-                <IconButton color="inherit">
-                  <Badge color="secondary">
-                    <ShoppingCartIcon />
-                  </Badge>
-                </IconButton>
+              </IconButton>
+            </Link>
+            <Link to='/wishlist' id='link'>
+              <IconButton >
+                <Badge >
+                  <FavoriteIcon className={classes.iconColors}/>
+                </Badge>
+              </IconButton>
+            </Link>
+            <Link to='/cart' id='link'>
+               <IconButton aria-label="cart">
+              <StyledBadge badgeContent={notification} color= 'error'>
+              <ShoppingCartIcon className={classes.iconColors}/>
+              </StyledBadge>
+              </IconButton>
               </Link>
               {isAuthenticated && <h3>{user.name}</h3>}
               <IconButton
@@ -156,13 +138,12 @@ export default function Navbar() {
                 aria-controls={menuId}
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                {isAuthenticated ? (
-                  <Avatar alt={user.name} src={`${user.picture}`} />
-                ) : (
-                  <AccountCircle color="primary" />
-                )}
+                color="inherit">
+                {
+                  isAuthenticated   
+                    ? <Avatar alt={user.name} src={`${user.picture}`} />
+                    : <AccountCircle className={classes.iconColors}/>
+                }
               </IconButton>
             </div>
             {/* Icono de tres puntos para mobile */}

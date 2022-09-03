@@ -51,16 +51,15 @@ export default function HomeCards(props) {
           <CardActions >
             <Button 
               size="small" 
-              color="primary" 
               onClick={(e) => handleFavorite(e)}>
               {props.favorite ? 
-                <Favorite /> : <NotFavorite />} 
+                <Favorite className={classes.iconColors}/> : 
+                <NotFavorite className={classes.iconColors}/>} 
             </Button>
             <Button 
               size="small" 
-              color="primary"
               onClick={(e) => handleCart(e)}>
-              <ShoppingCartIcon />
+              <ShoppingCartIcon className={classes.iconColors} />
             </Button>
           </CardActions>   
         </Box>
