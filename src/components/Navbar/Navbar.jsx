@@ -13,6 +13,7 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import LogoIMG from "../../assets/images/img_logo.png";
 import LogoFONT from "../../assets/images/font_logo.png";
 import { ThemeProvider } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import theme from "../../ThemeConfig";
 import useStyles from "./useStyles";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,6 +26,15 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Avatar } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}))(Badge);
+
 export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,6 +42,7 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const data = useSelector((state) => state.products);
+  const notification = useSelector((state) => state.notification);
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   if (isAuthenticated) console.log(user);
@@ -99,9 +110,28 @@ export default function Navbar() {
             <div className={classes.sectionDesktop}>
               <Link to="/">
                 <IconButton color="inherit">
-                  <Badge color="secondary">
-                    <HomeIcon />
+                  <Badge color="primary">
+                    <HomeIcon color="primary" />
                   </Badge>
+                </IconButton>
+              </Link>
+              <Link to="/wishlist" id="link">
+                <IconButton color="inherit">
+                  <Badge color="secondary">
+                    <FavoriteIcon color="primary" />
+                  </Badge>
+                </IconButton>
+              </Link>
+              <Link to="/cart" id="link">
+                {/* <IconButton color="inherit" >
+                <Badge color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton> */}
+                <IconButton aria-label="cart">
+                  <StyledBadge badgeContent={notification} color="error">
+                    <ShoppingCartIcon color="primary" />
+                  </StyledBadge>
                 </IconButton>
               </Link>
               <Link to="/wishlist">
@@ -130,7 +160,7 @@ export default function Navbar() {
                 {isAuthenticated ? (
                   <Avatar alt={user.name} src={`${user.picture}`} />
                 ) : (
-                  <AccountCircle />
+                  <AccountCircle color="primary" />
                 )}
               </IconButton>
             </div>
