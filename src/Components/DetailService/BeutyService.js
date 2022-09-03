@@ -46,7 +46,7 @@ export const ProviderService = [
     {
         name:'Andrada Beuty',
         service: ['Manicure','Peeling','Facial Cleansing','Pedicure'],
-        Price: {
+        price: {
             'Manicure': 1200,
             'Pedicure': 1200,
             'Peeling': 1200,
@@ -56,7 +56,7 @@ export const ProviderService = [
     {
         name:'Spa Dr. Marin',
         service: ['Botox','Peeling','Facial Cleansing','Lifting Tabs'],
-        Price: {
+        price: {
             'Botox': 25000,
             'Lifting Tabs': 2000,
             'Peeling': 5000,
@@ -66,7 +66,7 @@ export const ProviderService = [
     {
         name:'Adriano\'s Barbershop',
         service: ['Barbershop','Hairdressing'],
-        Price: {
+        price: {
             'Barbershop': 950,
             'Hairdressing': 1900,
         }
@@ -74,7 +74,7 @@ export const ProviderService = [
     {
         name:'Madrid HandSpa',
         service: ['Manicure','Pedicure','Lifting Tabs'],
-        Price: {
+        price: {
             'Manicure': 1200,
             'Pedicure': 1200,
             'Lifting Tabs': 2200
@@ -83,7 +83,7 @@ export const ProviderService = [
     {
         name:'Dr. Maceda',
         service: ['Botox','Peeling','Facial Cleansing'],
-        Price: {
+        price: {
             'Botox': 20000,
             'Peeling': 4000,
             'Facial Cleansing': 4500,

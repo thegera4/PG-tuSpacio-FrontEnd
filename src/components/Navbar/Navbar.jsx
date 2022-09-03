@@ -59,6 +59,7 @@ export default function Navbar() {
       {
         isAuthenticated
           ? <>
+            <MenuItem>{user.name}</MenuItem>
             <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
             <MenuItem onClick={Logout()}>Sing out</MenuItem>
           </>
@@ -110,7 +111,6 @@ export default function Navbar() {
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
-              {isAuthenticated && <h3>{user.name}</h3>}
               <IconButton
                 edge="end"
                 aria-label="account of current user"

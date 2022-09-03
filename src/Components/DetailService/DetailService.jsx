@@ -1,29 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import { Link } from 'react-router-dom';
-import notFound from '../../assets/images/not_found.png'
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 import {ServiceJson, ProviderService} from './BeutyService'
-
+import { Box, Button, FormControl, Grid, InputLabel, Select, TextField, ThemeProvider, Typography } from '@material-ui/core';
+import LogoIMG from '../../assets/images/img_logo.png';
+import theme from '../../ThemeConfig';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 500,
     margin: 'auto',
-    marginTop: 100
+    marginTop: 50
   },
   media: {
     height: 0,
@@ -39,9 +24,6 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-  avatar: {
-    backgroundColor: red[500],
-  },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 150,
@@ -51,6 +33,16 @@ const useStyles = makeStyles((theme) => ({
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
+  },
+  detailImg : {
+    height: 300,
+    width: 300
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 250,
+    paddingTop: 5
   },
 }));
 
@@ -68,51 +60,131 @@ export default function DetailService() {
   };
 
   return (
-    <div className='detail' key={item.id}>
-        <div>
-            <img src={item.image_link} className='detail-img'/>
-        </div>
-        <div className='box'>
-            <div className='row'>
-                <FormControl className={classes.formControl}>
-                    <InputLabel>Service</InputLabel>
-                    <Select
-                        native
-                        onChange={(e) => handleService(e)}
-                    >
-                        <option aria-label="None" value="" />
-                        {
-                            ServiceJson.map( s => <option value={`${s.name}`}>{`${s.name}`}</option> )    
-                        }
-                    </Select>
-                </FormControl>
-                <FormControl className={classes.formControl}>
-                    <InputLabel>Provider</InputLabel>
-                    <Select
-                        native
-                        onChange={(e) => handleProvider(e)}
-                    >
-                        <option aria-label="None" value="" />
-                        {
-                            ProviderService
-                                .filter(p => p.service.includes(service))
-                                .map( p => <option value={`${p.name}`}>{`${p.name}`}</option> )    
-                        }
-                    </Select>
-                </FormControl>
-                <h4>${ProviderService.filter(p => p.name === provider).price.service}</h4>
-                <p>{ProviderService.filter(p => p.name === provider).price.service}</p>
-                <div className='select'>
-                    <p>{ServiceJson.filter(s => s.name === service).description}</p>
-                </div>
-                <Link to='/cart' className='cart'>
-                    Add to Cart
-                </Link>
-                <Link to='/cart' className='fav'>
-                    Add to Favorites
-                </Link>
-            </div>
-        </div>
-    </div>
-  );
+        <ThemeProvider theme={theme}>
+            <Box
+                p={5}
+            >
+                <Grid
+                    container
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="flex-start"
+                >
+                    <Grid xs={12}>
+                        <Typography variant="h5" gutterBottom>
+                            Elegí como cuidarte...
+                        </Typography>
+                    </Grid>
+                    <Grid xs={3}>
+                        <Box
+                            p={1}
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                            border={1}
+                            borderRadius="borderRadius"
+                            borderColor='primary.main'
+                        >
+                            <img 
+                                src={service
+                                        ? `${ServiceJson.filter(s => s.name === service)[0].img}`
+                                        : LogoIMG } 
+                                className={classes.detailImg}
+                                alt='imagen de servicio'
+                            />
+                        </Box>
+                        <Typography variant="body2" gutterBottom>
+                            {service 
+                                ? ServiceJson.filter(s => s.name === service)[0].description
+                                : "Select your service" }
+                        </Typography>
+                    </Grid>
+                    <Grid xs={4}>
+                        <Grid
+                            container
+                            direction="column"
+                            justifyContent="flex-start"
+                            alignItems="strech"
+                        >
+                            <Typography variant="h4" gutterBottom>
+                                $ {service 
+                                        ? provider 
+                                        ? ProviderService.filter(p => p.name === provider)[0].price[service]
+                                        : "---"
+                                        : "---" } 
+                            </Typography>
+                            <FormControl className={classes.formControl}>
+                                <InputLabel>Service</InputLabel>
+                                <Select
+                                    native
+                                    onChange={(e) => handleService(e)}
+                                    >
+                                    <option aria-label="None" value="" />
+                                    {
+                                        ServiceJson.map( s => <option value={`${s.name}`}>{`${s.name}`}</option> )    
+                                    }
+                                </Select>
+                            </FormControl>
+                            <FormControl className={classes.formControl}>
+                                <InputLabel>Provider</InputLabel>
+                                <Select
+                                    native
+                                    onChange={(e) => handleProvider(e)}
+                                    >
+                                    <option aria-label="None" value="" />
+                                    {
+                                        service && ProviderService
+                                        .filter(p => p.service.includes(service))
+                                        .map( p => <option value={`${p.name}`}>{`${p.name}`}</option> )    
+                                    }
+                                </Select>
+                            </FormControl>
+                            <FormControl className={classes.formControl}>
+                                <TextField
+                                    id="date"
+                                    label="Select date day"
+                                    type="date"
+                                    defaultValue=""
+                                    className={classes.textField}
+                                    InputLabelProps={{
+                                    shrink: true,
+                                    }}
+                                />
+                            </FormControl>
+                            <form className={classes.formControl} noValidate>
+                                <TextField
+                                    id="time"
+                                    label="Select date time"
+                                    type="time"
+                                    defaultValue="07:30"
+                                    className={classes.textField}
+                                    InputLabelProps={{
+                                    shrink: true,
+                                    }}
+                                    inputProps={{
+                                    step: 3000, // 5 min
+                                    }}
+                                />
+                            </form>
+                        </Grid>
+                    </Grid>
+                    <Grid xs={4}>
+                        <Grid
+                            container
+                            direction="column"
+                            justifyContent="flex-start"
+                            alignItems="strech"
+                            >
+                            <Button variant="contained" size="large" color="primary" className={classes.margin}>
+                                Add to Cart
+                            </Button>
+                            <Button variant="outlined" size="large" color="primary" className={classes.margin}>
+                                Add to Favorites
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Box>
+        </ThemeProvider>
+    );
 }
