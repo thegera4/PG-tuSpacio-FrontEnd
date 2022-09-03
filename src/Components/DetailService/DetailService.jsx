@@ -1,9 +1,4 @@
 import React from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {useParams} from "react-router-dom"
-import {getDetail} from '../../actions/index'
-import { useEffect } from 'react'
-import defaultImage from "../../assets/images/not_found.png"
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -21,6 +16,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { Link } from 'react-router-dom';
 import notFound from '../../assets/images/not_found.png'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import {ServiceJson, ProviderService} from './BeutyService'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,24 +42,30 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 150,
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
 }));
 
-export default function RecipeReviewCard() {
-  const { id } = useParams()
- 
+export default function DetailService() {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [service, setService] = useState('');
+  const [provider, setProvider] = useState('');
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  function handleService(e) {
+    return setService(e.target.value);
   };
 
-  const dispatch = useDispatch()
-  const item = useSelector((state) => state.productDetail)
-    
-  useEffect(() => {
-    dispatch(getDetail(id))   
-  }, [dispatch])
+  function handleProvider(e) {
+    return setProvider(e.target.value);
+  };
 
   return (
     <div className='detail' key={item.id}>
@@ -72,29 +74,36 @@ export default function RecipeReviewCard() {
         </div>
         <div className='box'>
             <div className='row'>
-                <h1>{item.name}</h1>
-                <h4>${item.price}</h4>
-                <StarBorderIcon />
-                <StarBorderIcon />
-                <StarBorderIcon />
-                <StarBorderIcon />
-                <StarBorderIcon />
-                <p>{item.description}</p>
-                <div className='colors'>
-                    <h3>Colors : </h3>
-                    { item.product_colors?.slice(0, 6).map((color, index) => (
-                            <button key={index} style={{background: color.hex_value}}></button>
-                        ))
-                    }
-                </div>
+                <FormControl className={classes.formControl}>
+                    <InputLabel>Service</InputLabel>
+                    <Select
+                        native
+                        onChange={(e) => handleService(e)}
+                    >
+                        <option aria-label="None" value="" />
+                        {
+                            ServiceJson.map( s => <option value={`${s.name}`}>{`${s.name}`}</option> )    
+                        }
+                    </Select>
+                </FormControl>
+                <FormControl className={classes.formControl}>
+                    <InputLabel>Provider</InputLabel>
+                    <Select
+                        native
+                        onChange={(e) => handleProvider(e)}
+                    >
+                        <option aria-label="None" value="" />
+                        {
+                            ProviderService
+                                .filter(p => p.service.includes(service))
+                                .map( p => <option value={`${p.name}`}>{`${p.name}`}</option> )    
+                        }
+                    </Select>
+                </FormControl>
+                <h4>${ProviderService.filter(p => p.name === provider).price.service}</h4>
+                <p>{ProviderService.filter(p => p.name === provider).price.service}</p>
                 <div className='select'>
-                    <h3>Quantity : </h3>
-                    <select name="" id="">
-                        <option value="">1</option>
-                        <option value="">2</option>
-                        <option value="">3</option>
-                        <option value="">4</option>
-                    </select>
+                    <p>{ServiceJson.filter(s => s.name === service).description}</p>
                 </div>
                 <Link to='/cart' className='cart'>
                     Add to Cart
