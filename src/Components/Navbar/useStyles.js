@@ -89,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
   iconColors:{
     color: '#257558',
   }
+
 }));
 
 export default useStyles;
