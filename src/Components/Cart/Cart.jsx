@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import './Cart.css'
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(0),
         backgroundColor: '#257558',
         color: '#fff',
-        width: '100%'
+        width: '100%',
     }
   }));
 
@@ -58,40 +58,58 @@ const Cart = () => {
 
   return (
     <section>
+        {cartProducts.length === 0 ? 
+        
+            <Box
+              textAlign="center"
+              marginBottom="20px" 
+              marginTop="20px"
+              fontWeight="fontWeightBold"
+              fontSize={30}>
+                Your Cart is Empty
+            </Box> : 
+            <Box 
+              textAlign="left" 
+              marginLeft="60px" 
+              marginBottom="20px" 
+              marginTop="20px"
+              fontWeight="fontWeightBold" 
+              fontSize={30}>
+                Your order :
+            </Box>
+        }
         {cartProducts?.map(item => (
             <div className='detail cart' key={item.id}>
-                <div>
+                <div className ='cart-img-cont'>
                 <img src={item.image_link} className='cart-img'/>
                 </div>
                 <div className='box'>
                     <div className='row'>
                         <div className='price'>
-                        <h3>{item.name}</h3>
+                        <h4 id='title'>{item.name}</h4>
                         <h4>${item.price * count}</h4>
                         </div>
                         <Box component="fieldset" borderColor="transparent" m={0} p={0}>
                         <Rating name="read-only" value={item.rating} readOnly precision={0.1} size="medium"/>
                         </Box>
                         <div className='colors'>
-                            <h3>Colors : </h3>
-                        {item.product_colors?.slice(0, 6).map((color, index) => (
+                            <h4>Colors : </h4>
+                        {item.product_colors?.slice(0, 4).map((color, index) => (
                         <button key={index} style={{background: color.hex_value}}></button>
                         ))}
                         </div>
                         <div className='amount'>
-                          <h3>Quantity : </h3>
+                          <h4>Quantity : </h4>
                           <button className='count' onClick={() => handleDecrement(item.price)}>-</button>
                           <span>{count}</span>
                           <button className='count' onClick={() => handleIncrement()}>+</button>
                         </div>
-                        {/* <button  className='fav' onClick={() => handleDelete(item.id)}>
-                            Delete
-                        </button> */}
                              <Button
                                 variant="outlined"
                                 className={classes.button}
                                 startIcon={<DeleteIcon />}
                                 onClick={() => handleDelete(item.id)}
+                                size="small"
                             >
                             Delete
                             </Button>
@@ -101,6 +119,8 @@ const Cart = () => {
                 </div>
             </div>
          )) }
+
+
          <div className='total'>
          <Link to='/checkout'>
          <Button

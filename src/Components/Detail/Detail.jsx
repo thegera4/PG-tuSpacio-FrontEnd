@@ -1,9 +1,9 @@
- import React, {useState} from 'react'
- import {useDispatch, useSelector} from 'react-redux'
- import {useParams} from "react-router-dom"
- import {getDetail, addToCart, addToWishlist, removeFromWishlist, addNotification} from '../../actions/index'
- import { useEffect } from 'react'
- import defaultImage from "../../assets/images/not_found.png"
+import React, {useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {useParams} from "react-router-dom"
+import {getDetail, addToCart, addToWishlist, removeFromWishlist, addNotification} from '../../actions/index'
+import { useEffect } from 'react'
+import defaultImage from "../../assets/images/not_found.png"
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -26,8 +26,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
-
-
+import ReactImageMagnify from 'react-image-magnify';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,11 +72,11 @@ export default function RecipeReviewCard() {
   const { id } = useParams()
  
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  // const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  // const handleExpandClick = () => {
+  //   setExpanded(!expanded);
+  // };
 
 
 
@@ -85,17 +84,12 @@ export default function RecipeReviewCard() {
   const item = useSelector((state) => state.productDetail)
   const cart = useSelector((state) => state.cart)
   const fav = useSelector((state) => state.favorites)
-
+  const [count, setCount] = useState(1)
+  const image = item.image_link
  
-
   useEffect(() => {
- 
     dispatch(getDetail(id))   
-
-  }
-  , [dispatch])
-
-  
+  } , [dispatch, id])
 
   function handleCart(e) {
       if(!cart.includes(e)) {
@@ -112,7 +106,18 @@ export default function RecipeReviewCard() {
     dispatch(removeFromWishlist(e.id))
   }
 
+  function handleIncrement(){
+    setCount(count + 1)
+  }
 
+  function handleDecrement(){
+     if(count>1){
+         setCount(count - 1)
+     }else {
+         return
+     }
+     
+  }
 
 
   return (
@@ -177,26 +182,37 @@ export default function RecipeReviewCard() {
                   <Typography color="textPrimary">{item.name}</Typography>
                 </Breadcrumbs>
                 </div>
-                <div>
-                <img src={item.image_link} className='detail-img'/>
                 <div className='image-list'>
-                <img src={item.image_link} className='detail-img-small'/>   
-                <img src={notFound} className='detail-img-small'/> 
-                <img src={notFound} className='detail-img-small'/> 
+                <img src={item.image_link || defaultImage} className='detail-img-small'/> 
+                </div>  
+                <div className='image-cont'>
+                {/* <img src={image} className='detail-img'/> */}
+                <ReactImageMagnify {...{
+                    smallImage: {
+                        isFluidWidth: true,
+                        src: image,
+                    },
+                    largeImage: {
+                        src: image,
+                        width: 800,
+                        height: 800,
+                    }
+                }} />
                 </div>
-                </div>
+
                 <div className='box'>
                     <div className='row'>
                         <h1>{item.name}</h1>
+                        <h3>By {item.brand}</h3>
                         <ul className='tag'>
                         {item.tag_list?.map((ele, index) => (
                         <p key={index} >{ele}</p>
                         ))}
                         </ul>
-                        <h4>${item.price}</h4>
+                        <h3>${item.price * count}</h3>
                         
-                        <Box component="fieldset" borderColor="transparent" m={0} p={0}>
-                        <Rating name="read-only" value={item.rating} readOnly precision={0.1} size="large"/>
+                        <Box component="fieldset" borderColor="transparent" m={0} p={0} >
+                        <Rating name="read-only" value={item.rating} readOnly precision={0.1} size="large" zIndex={-1}/>
                         </Box>
 
                         <p>{item.description}</p>
@@ -208,9 +224,9 @@ export default function RecipeReviewCard() {
                         </div>
                         <div className='amount'>
                         <h3>Quantity : </h3>
-                          <button className='count'>-</button>
-                          <span>0</span>
-                          <button className='count'>+</button>
+                          <button className='count' onClick={() => handleDecrement(item.price)}>-</button>
+                          <span>{count}</span>
+                          <button className='count' onClick={() => handleIncrement()}>+</button>
                         </div>
                         <Button
                           variant="contained"

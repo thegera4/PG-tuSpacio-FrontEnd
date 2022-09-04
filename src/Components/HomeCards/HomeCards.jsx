@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
+// import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -30,8 +30,8 @@ export default function HomeCards(props) {
   }
   function handleCart(e) {
     e.preventDefault()
-    dispatch(addNotification())
     if(!props.cart) {
+      dispatch(addNotification())
       dispatch(addToCart(props.products))
     }else {
       alert('The product is already added to the cart')
@@ -42,35 +42,29 @@ export default function HomeCards(props) {
     <>
     { !products? <div>Not product Found</div> :
       <Card className={classes.root}>
-        <CardActionArea  >
         <Box
           display="flex"
           justifyContent="end"
           alignItems="end"
-          minHeight="5vh">
+          minHeight="3vh">
           <CardActions >
             <Button 
               size="small" 
-              color="primary" 
               onClick={(e) => handleFavorite(e)}>
               {props.favorite ? 
-                <Favorite /> : <NotFavorite />} 
+                <Favorite className={classes.iconColors}/> : 
+                <NotFavorite className={classes.iconColors}/>} 
             </Button>
             <Button 
               size="small" 
-              color="primary"
               onClick={(e) => handleCart(e)}>
-              <ShoppingCartIcon />
+              <ShoppingCartIcon className={classes.iconColors} />
             </Button>
           </CardActions>   
         </Box>
         <Link to={`/${props.products.id}`}>
-          <CardMedia
-            className={classes.media}
-            image={props.products.image_link?
-              props.products.image_link:
-              Placeholder} />
-        </Link>
+          <img className='card-image' src={props.products.image_link} alt="" />
+         </Link>
           <CardContent className={classes.content}>
             <Typography component="div">
               <Box 
@@ -92,8 +86,7 @@ export default function HomeCards(props) {
             </Box>
             </Typography>  
         </CardContent>
-      </CardActionArea>
-    </Card>
+      </Card>
     }
   </>
   )           

@@ -34,16 +34,13 @@ export default function WishlistCards({props}) {
           alignItems="end"
           minHeight="5vh">
           <CardActions >
-            <Button 
-              size="small" 
-              color="primary" >
-              <ShoppingCartIcon />
+            <Button size="small"  >
+              <ShoppingCartIcon className={classes.iconColors} />
             </Button>
             <Button 
               size="small" 
-              color="primary"
               onClick={(e) => handleDelete(e)} >
-              <DeleteForeverIcon />
+              <DeleteForeverIcon className={classes.iconColors}/>
             </Button>
           </CardActions>   
         </Box>

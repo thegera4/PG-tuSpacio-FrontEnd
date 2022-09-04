@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'space-evenly',    
     height: '30px',
-    paddingLeft: 12
+    paddingLeft: 12,
+    paddingBottom: 12
   },
     
 }));

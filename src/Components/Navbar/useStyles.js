@@ -3,7 +3,11 @@ import { alpha, makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
-    
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    zIndex: 750,
+    width:"100%",
   },
   menuButton: {
     display: 'flex',
@@ -82,6 +86,10 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  iconColors:{
+    color: '#257558',
+  }
+
 }));
 
 export default useStyles;
