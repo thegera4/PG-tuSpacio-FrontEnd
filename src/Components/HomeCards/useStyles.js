@@ -2,20 +2,21 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   root: {
-    width: 345,
-    height: 435,
+    width: 300,
+    height: 330,
     border: '1px solid #eceeed',
-    marginBottom: "5px",
+    margin: 20
   },
   media: {
     height: 300,
   },
   content: {
-    marginTop: 10,
-    height: 100,
-    backgroundColor: "#8d8d8d",
-    color: "#ffffff"
-  }  
+    height: 80,
+    backgroundColor: "#eceeed"
+  },
+  iconColors: {
+    color: '#257558', 
+  },
 });
 
 export default useStyles;

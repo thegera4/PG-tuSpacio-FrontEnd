@@ -4,7 +4,6 @@ import HomeCards from '../../Components/HomeCards/HomeCards';
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts } from '../../actions';
 import BasicPagination from '../BasicPagination/Pagination';
-import useStyles from './useStyles';
 import LandingPage from '../Landing/Landing';
 import { Box } from '@material-ui/core';
 
@@ -14,6 +13,8 @@ export default function SpacingGrid(order) {
   const dispatch = useDispatch()
   const products = useSelector(state => state.products)
   const favorites = useSelector(state => state.favorites)
+  const cart = useSelector(state => state.cart)
+
   const currentPage = useSelector(state => state.currentPageHome)
   const [productsPerPage] = useState(9);
   const LAST_PRODUCT = currentPage * productsPerPage;
@@ -30,6 +31,9 @@ export default function SpacingGrid(order) {
 
   function productIsFavorite(productID) {
     return favorites.some(favorite => favorite.id === productID)
+  }
+  function productInCart(productID) {
+    return cart.some(product => product.id === productID)
   }
 
   return (

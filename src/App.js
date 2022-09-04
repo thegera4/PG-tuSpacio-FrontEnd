@@ -11,6 +11,8 @@ import Wishlist from './Components/Wishlist/Wishlist'
 import Cart from './Components/Cart/Cart'
 import Profile from './Components/Profile/Profile';
 import theme from './ThemeConfig'
+import Checkout from './Components/Checkout/Checkout';
+import OrderDetail from './Components/OrderDetail/OrderDetail.jsx';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
           <Route path="/wishlist" element={ <Wishlist /> } />
           <Route path="/cart" element={ <Cart /> } />
           <Route path="/profile" element={ <Profile /> } />
+          <Route path="/checkout" element={ <Checkout /> } />
+          <Route path="/orders/:id" element={ <OrderDetail /> } />
         </Routes>  
         <Footer />  
       </Container>

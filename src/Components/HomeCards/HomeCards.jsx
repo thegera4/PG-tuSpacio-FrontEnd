@@ -14,7 +14,7 @@ import Favorite from '@material-ui/icons/Favorite';
 import NotFavorite from '@material-ui/icons/FavoriteBorder';
 import Placeholder from '../../assets/images/placeholder_home.png';
 import Box from '@material-ui/core/Box';
-import { addToWishlist, removeFromWishlist, addToCart } from '../../actions';
+import { addToWishlist, removeFromWishlist, addToCart, addNotification } from '../../actions';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 export default function HomeCards(props) {
@@ -30,7 +30,12 @@ export default function HomeCards(props) {
   }
   function handleCart(e) {
     e.preventDefault()
-    dispatch(addToCart(props.products))
+    if(!props.cart) {
+      dispatch(addNotification())
+      dispatch(addToCart(props.products))
+    }else {
+      alert('The product is already added to the cart')
+    }
   }
 
   return (
@@ -45,27 +50,21 @@ export default function HomeCards(props) {
           <CardActions >
             <Button 
               size="small" 
-              color="primary" 
               onClick={(e) => handleFavorite(e)}>
               {props.favorite ? 
-                <Favorite /> : <NotFavorite />} 
+                <Favorite className={classes.iconColors}/> : 
+                <NotFavorite className={classes.iconColors}/>} 
             </Button>
             <Button 
               size="small" 
-              color="primary"
               onClick={(e) => handleCart(e)}>
-              <ShoppingCartIcon />
+              <ShoppingCartIcon className={classes.iconColors} />
             </Button>
           </CardActions>   
         </Box>
         <Link to={`/${props.products.id}`}>
-          <CardMedia
-            className={classes.media}
-            image={ props.products.image_link
-              ? props.products.image_link
-              : Placeholder }
-          />
-        </Link>
+          <img className='card-image' src={props.products.image_link} alt="" />
+         </Link>
           <CardContent className={classes.content}>
             <Typography component="div">
               <Box 

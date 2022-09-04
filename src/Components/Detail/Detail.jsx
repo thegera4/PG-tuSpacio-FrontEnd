@@ -1,52 +1,72 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useParams} from "react-router-dom"
-import {getDetail} from '../../actions/index'
+import {getDetail, addToCart, addToWishlist, removeFromWishlist, addNotification} from '../../actions/index'
 import { useEffect } from 'react'
-// import defaultImage from "../../assets/images/not_found.png"
-// import { makeStyles } from '@material-ui/core/styles';
-// import clsx from 'clsx';
-// import Card from '@material-ui/core/Card';
-// import CardHeader from '@material-ui/core/CardHeader';
-// import CardMedia from '@material-ui/core/CardMedia';
-// import CardContent from '@material-ui/core/CardContent';
-// import CardActions from '@material-ui/core/CardActions';
-// import Collapse from '@material-ui/core/Collapse';
-// import IconButton from '@material-ui/core/IconButton';
-// import Typography from '@material-ui/core/Typography';
-// import { red } from '@material-ui/core/colors';
-// import FavoriteIcon from '@material-ui/icons/Favorite';
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-// import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import { Link } from 'react-router-dom';
+import defaultImage from "../../assets/images/not_found.png"
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import { red } from '@material-ui/core/colors';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+// import { Link } from 'react-router-dom';
 import notFound from '../../assets/images/not_found.png'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Link from '@material-ui/core/Link';
+import ReactImageMagnify from 'react-image-magnify';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 500,
+    margin: 'auto',
+    marginTop: 100
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
+  button: {
+    margin: theme.spacing(0),
+    borderColor: '#257558',
+    color: '#257558',
+    width: '100%',
+    marginTop: 10
+  },
+  button2: {
+      margin: theme.spacing(0),
+      backgroundColor: '#257558',
+      color: '#fff',
+      width: '100%',
+      marginTop: 10
+  }
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     maxWidth: 500,
-//     margin: 'auto',
-//     marginTop: 100
-//   },
-//   media: {
-//     height: 0,
-//     paddingTop: '56.25%', // 16:9
-//   },
-//   expand: {
-//     transform: 'rotate(0deg)',
-//     marginLeft: 'auto',
-//     transition: theme.transitions.create('transform', {
-//       duration: theme.transitions.duration.shortest,
-//     }),
-//   },
-//   expandOpen: {
-//     transform: 'rotate(180deg)',
-//   },
-//   avatar: {
-//     backgroundColor: red[500],
-//   },
-// }));
+}));
 
 export default function RecipeReviewCard() {
   const { id } = useParams()
@@ -58,12 +78,47 @@ export default function RecipeReviewCard() {
   //   setExpanded(!expanded);
   // };
 
+
+
   const dispatch = useDispatch()
   const item = useSelector((state) => state.productDetail)
+  const cart = useSelector((state) => state.cart)
+  const fav = useSelector((state) => state.favorites)
+  const [count, setCount] = useState(1)
+  const image = item.image_link
  
   useEffect(() => {
     dispatch(getDetail(id))   
   } , [dispatch, id])
+
+  function handleCart(e) {
+      if(!cart.includes(e)) {
+        dispatch(addToCart(e))
+        dispatch(addNotification())
+      }
+      else {
+        alert('The product is already added to the cart')
+      }
+  }
+  function handleFavorite(e) {
+    !fav.includes(e)?
+    dispatch(addToWishlist(e)) :
+    dispatch(removeFromWishlist(e.id))
+  }
+
+  function handleIncrement(){
+    setCount(count + 1)
+  }
+
+  function handleDecrement(){
+     if(count>1){
+         setCount(count - 1)
+     }else {
+         return
+     }
+     
+  }
+
 
   return (
     // <Card className={classes.root} >
@@ -116,23 +171,50 @@ export default function RecipeReviewCard() {
     //   </Collapse>
     // </Card>
     <div className='detail' key={item.id}>
-                <div>
-                <img src={item.image_link} className='detail-img' alt='detail-img'/>
+                <div className='breadcrums'>
+                <Breadcrumbs aria-label="breadcrumb">
+                  <Link color="inherit" href="/" >
+                   Products
+                  </Link>
+                  <Link color="inherit"  >
+                    {item.category}
+                  </Link>
+                  <Typography color="textPrimary">{item.name}</Typography>
+                </Breadcrumbs>
+                </div>
                 <div className='image-list'>
-                <img src={item.image_link} className='detail-img-small' alt='detail-img-small'/>   
-                <img src={notFound} className='detail-img-small' alt='detail-img-small2'/> 
-                <img src={notFound} className='detail-img-small' alt='detail-img-small3'/> 
+                <img src={item.image_link || defaultImage} className='detail-img-small'/> 
+                </div>  
+                <div className='image-cont'>
+                {/* <img src={image} className='detail-img'/> */}
+                <ReactImageMagnify {...{
+                    smallImage: {
+                        isFluidWidth: true,
+                        src: image,
+                    },
+                    largeImage: {
+                        src: image,
+                        width: 800,
+                        height: 800,
+                    }
+                }} />
                 </div>
-                </div>
+
                 <div className='box'>
                     <div className='row'>
                         <h1>{item.name}</h1>
-                        <h4>${item.price}</h4>
-                        <StarBorderIcon />
-                        <StarBorderIcon />
-                        <StarBorderIcon />
-                        <StarBorderIcon />
-                        <StarBorderIcon />
+                        <h3>By {item.brand}</h3>
+                        <ul className='tag'>
+                        {item.tag_list?.map((ele, index) => (
+                        <p key={index} >{ele}</p>
+                        ))}
+                        </ul>
+                        <h3>${item.price * count}</h3>
+                        
+                        <Box component="fieldset" borderColor="transparent" m={0} p={0} >
+                        <Rating name="read-only" value={item.rating} readOnly precision={0.1} size="large" zIndex={-1}/>
+                        </Box>
+
                         <p>{item.description}</p>
                         <div className='colors'>
                             <h3>Colors : </h3>
@@ -140,22 +222,37 @@ export default function RecipeReviewCard() {
                         <button key={index} style={{background: color.hex_value}}></button>
                         ))}
                         </div>
-                        <div className='select'>
+                        <div className='amount'>
                         <h3>Quantity : </h3>
-                        <select name="" id="">
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                            <option value="">4</option>
-                        </select>
+                          <button className='count' onClick={() => handleDecrement(item.price)}>-</button>
+                          <span>{count}</span>
+                          <button className='count' onClick={() => handleIncrement()}>+</button>
                         </div>
+                        <Button
+                          variant="contained"
+                          className={classes.button2}
+                          startIcon={<ShoppingCartIcon />}
+                          onClick={(e) => handleCart(item)}
+                          >
+                          ADD TO CART
+                          </Button>
                         
-                        <Link to='/cart' className='cart'>
+                        {/* <button className='cart' onClick={(e) => handleCart(item)}>
                             Add to Cart
-                        </Link>
-                        <Link to='/cart' className='fav'>
+                        </button> */}
+                        
+                        {/* <button className='fav' onClick={(e) => handleFavorite(item)}>
                             Add to Favorites
-                        </Link>
+                        </button> */}
+                        <Button
+                                variant="outlined"
+                                className={classes.button}
+                                startIcon={<FavoriteIcon />}
+                                onClick={(e) => handleFavorite(item)}
+                            >
+                            ADD TO FAVORITES
+                            </Button>
+                        
                     </div>
                     
                 </div>

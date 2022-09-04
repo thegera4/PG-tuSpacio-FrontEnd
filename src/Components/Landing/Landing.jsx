@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     height: 45,
     textPrimary:'#ffffff',
     paddingLeft: theme.spacing(5),
-    backgroundColor: '#57a485',
+    backgroundColor: 'fff',
   }, 
   colors:{
     backgroundColor: '#57a485',
@@ -143,4 +143,3 @@ export default function LandingPage() {
     </div>
   );
 }
-

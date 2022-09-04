@@ -6,7 +6,7 @@
 }
 
 .detail-img {
-    max-width: 600px;
+    max-width: 700px;
     min-width: 290px;
     height: 500px;
     width: 100%;
@@ -18,22 +18,21 @@
 }
 .detail-img-small {
     max-width: 100px;
-    min-width: 100px;
     height: 100px;
     width: 100%;
     display: block;
     object-fit: cover;
-    border-radius: 2px;
-    border: 1px solid gray;
-    margin-top: 10px;
-    margin-right: 10px;
+    border-radius: 5px;
+    margin-right: 20px;
 }
 
 .detail .box {
     max-width: 600px;
     min-width: 290px; 
-    height: 500px;
+    height: 1000px;
     width: 100%;
+    margin-left: 50px;
+    
 }
 
 
@@ -52,6 +51,11 @@
     width: 100%;
     padding: 10px 25px;
     border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.box h1{
+    margin-top: 0;
 }
 
 .colors button{
@@ -69,9 +73,13 @@
     align-items: center;
 }  
 
-.colors h3{
+.colors h4{
    margin-right: 20px;
 }  
+
+.colors h3{
+    margin-right: 20px;
+ }  
 
 .row h4{
     font-weight: 600;
@@ -88,6 +96,7 @@
     padding: 10px 25px;
     border-radius: 5px;
     margin-top: 10px;
+    cursor: pointer;
 }
 .box .fav:hover {
   background-color: aliceblue;
@@ -103,6 +112,143 @@
     align-items: center;
 }
 
-.select h3 {
+.amount h4 {
+    margin-right: 20px;
+}
+.amount h3 {
+    margin-right: 20px;
+}
+
+section .cart {
+    position: relative;
+    border: 1px solid #ccc;
+
+}
+.amount {
+    display: flex;
+    align-items: center;
+}
+
+
+
+.amount span {
+    color: crimson;
+    padding: 0 14px;
+    height: 25px;
+}
+
+.amount .count {
+    width: 25px;
+    height: 25px;
+    border: 1px solid #257558;
+    outline: none;
+    color: #257558;
+    background: transparent;
+    cursor: pointer;
+   
+}
+
+.total {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-bottom: 70px;
+}
+
+.total .cart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #257558;
+    color: white;
+    text-decoration: none;
+    width: 100%;
+    padding: 10px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+
+    
+}
+
+.total h3 {
+    margin-right: 50px;
+    margin-left: 50px;
+    color: crimson;
+
+}
+
+.tag {
+    display: flex;
+    margin: 0;
+    padding: 0;
+
+}
+
+.tag p {
     margin-right: 10px;
+    background: rgba(85, 85, 85, 0.227);
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.cart-img-cont {
+    display: flex;
+    align-items: center;
+    width: 200px;
+}
+
+.cart-img {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.cart .box {
+    max-width: 300px;
+    min-width: 90px; 
+    height: 300px;
+    width: 100%;
+}
+
+.price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price h4 {
+    color: crimson;
+    margin-top: 20px;
+}
+
+.breadcrums {
+    width: 100%;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+
+#title {
+    margin-top: 20px;
+    color: black;
+}
+
+.image-cont {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    height: 400px;
+    border-radius: 10px;
+    z-index: 5;
+    background-color:white;
+}
+
+
+.card-image {
+    margin-left: 90px;
+    width: 150px;
+    height: 200px;
 }

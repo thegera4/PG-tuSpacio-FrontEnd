@@ -24,13 +24,22 @@ import Logout from '../Logout/Logout';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Avatar } from '@material-ui/core';
 
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}))(Badge);
 
 export default function Navbar() {
   const navigate = useNavigate();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
-  const data = useSelector(state => state.products)
+  const data = useSelector((state) => state.products);
+  const notification = useSelector((state) => state.notification);
 
   const { user, isAuthenticated } = useAuth0();
 
@@ -44,15 +53,15 @@ export default function Navbar() {
     setAnchorEl(null);
   };
 
+  const menuId = "primary-search-account-menu";
 
-  const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -65,6 +74,7 @@ export default function Navbar() {
           </>
           : <MenuItem onClick={Login()}>Sing in</MenuItem>
       }
+     
     </Menu>
   );
 
@@ -99,7 +109,7 @@ export default function Navbar() {
             <div className={classes.search}>
               <SearchBar placeholder="Search product..." data={data} />
             </div>
-            {/* Iconos de carrito y perfil */}
+            {/* Iconos de lado derecho */}
             <div className={classes.sectionDesktop}>
               <IconButton color="primary" onClick={() => navigate('/wishlist')} >
                 <Badge color="secondary" overlap="rectangular">
@@ -121,7 +131,7 @@ export default function Navbar() {
                 {
                   isAuthenticated
                     ? <Avatar alt={user.name} src={`${user.picture}`} />
-                    : <AccountCircle />
+                    : <AccountCircle className={classes.iconColors}/>
                 }
               </IconButton>
             </div>
@@ -130,7 +140,8 @@ export default function Navbar() {
               <IconButton
                 aria-label="show more"
                 aria-haspopup="true"
-                color="inherit" >
+                color="inherit"
+              >
                 <MoreIcon />
               </IconButton>
             </div>
