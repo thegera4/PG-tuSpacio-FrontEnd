@@ -13,7 +13,7 @@ import Profile from './Components/Profile/Profile';
 import theme from './ThemeConfig'
 import Checkout from './Components/Checkout/Checkout';
 import OrderDetail from './Components/OrderDetail/OrderDetail.jsx';
-
+import CreateUser from './Components/CreateUser/CreateUser.jsx';
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -23,6 +23,7 @@ function App() {
           <Route path="/" exact element={ <ContainerCards /> } /> 
           <Route path="/:id" element={ <Detail /> } />
           <Route path="/service" element={ <DetailService /> } />
+          <Route path="/createUser" element={ <CreateUser /> } />
           <Route path="/create" element={ <CreateProduct /> } />
           <Route path="/wishlist" element={ <Wishlist /> } />
           <Route path="/cart" element={ <Cart /> } />

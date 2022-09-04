@@ -34,6 +34,7 @@ const StyledBadge = withStyles((theme) => ({
 }))(Badge);
 
 export default function Navbar() {
+
   const navigate = useNavigate();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
