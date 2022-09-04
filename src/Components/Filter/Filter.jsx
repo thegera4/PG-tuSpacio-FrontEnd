@@ -7,6 +7,7 @@ import Select from '@material-ui/core/Select';
 import { Box, Button, Grid } from '@material-ui/core';
 import { filterByBrand, filterByCategory, getAllBrands, getCategories, orderByAbc, 
     orderByPrice, setCurrentHomePage, OrderByRating } from '../../actions';
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -14,7 +15,11 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 150,
     },
     margin: {
-      margin: theme.spacing(1),
+      margin: 10
+    },
+    margin2: {
+      marginTop: 25,
+      marginLeft: 10
     },
     extendedIcon: {
       marginRight: theme.spacing(1),
@@ -22,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Filter({setOrder}) {
+    const navigate = useNavigate()
     const categories = useSelector((state) => state.categories)
     const brands = useSelector((state) => state.brands)
     const classes = useStyles();
@@ -97,7 +103,7 @@ export default function Filter({setOrder}) {
                 container
                 direction="row"
                 justifyContent="space-between"
-                alignItems="center"
+                alignItems="flex-end"
             >
                 <Grid item xs='auto'>
                     {/* Filter by Brands */}
@@ -168,15 +174,25 @@ export default function Filter({setOrder}) {
                             <option value='min-max'>1...5</option>
                         </Select>
                     </FormControl>
+                        <Button 
+                            onClick={() => console.log("Limpiando filtros")}
+                            color="secondary"
+                            size="small"
+                            className={classes.margin2}
+                        >
+                            Clean Filters
+                        </Button>
+                    
                 </Grid>
-                
-                <Grid item xs={2}>
+                <Grid item xs='auto'>
                     <Button 
-                        onClick={() => console.log("Limpiando filtros")} 
-                        variant="outlined"
-                        size="small"
+                        onClick={() => navigate('/service')}
+                        variant="contained" 
+                        color="secondary"
                         className={classes.margin}
-                    > Clean Filters</Button>
+                    >
+                        Beuthy Services
+                    </Button>
                 </Grid>
             </Grid>
         </Box>

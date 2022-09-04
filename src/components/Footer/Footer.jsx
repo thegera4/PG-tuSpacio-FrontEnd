@@ -13,9 +13,16 @@ import amex from '../../assets/images/amex.png';
 import mastercard from '../../assets/images/mastercard.png';
 import paypal from '../../assets/images/paypal.png';
 import theme from '../../ThemeConfig';
+import { useAuth0 } from '@auth0/auth0-react';
+import { useNavigate } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import Login from '../Login/Login';
+import Logout from '../Logout/Logout';
 
 export default function Footer() {
     const classes = useStyles();
+    const navigate = useNavigate();
+    const { isAuthenticated } = useAuth0();
     return (
         <ThemeProvider theme={theme}>
             <Typography component="h1" variant='subtitle1' >
@@ -34,10 +41,26 @@ export default function Footer() {
                         <Grid item xs={3}>
                             <Box>
                                 <Typography variant="h6" gutterBottom> PRODUCTS </Typography>
-                                <Typography variant="body2" gutterBottom> Make Up </Typography>
-                                <Typography variant="body2" gutterBottom> Dermocosmetics </Typography>
-                                <Typography variant="body2" gutterBottom> Manicure </Typography>
-                                <Typography variant="body2" gutterBottom> Barbershop </Typography>
+                                <Typography variant="body2" gutterBottom>
+                                    <Link href="#" onClick={()=>navigate('/')} color="inherit">
+                                        Make up
+                                    </Link>
+                                </Typography>
+                                <Typography variant="body2" gutterBottom>
+                                    <Link href="#" onClick={()=>navigate('/service')} color="inherit">
+                                        Dermotherapy
+                                    </Link>
+                                </Typography>
+                                <Typography variant="body2" gutterBottom>
+                                    <Link href="#" onClick={()=>navigate('/service')} color="inherit">
+                                        Manicure
+                                    </Link>
+                                </Typography>
+                                <Typography variant="body2" gutterBottom>
+                                    <Link href="#" onClick={()=>navigate('/service')} color="inherit">
+                                        Barbershop
+                                    </Link>
+                                </Typography>
                             </Box>
                         </Grid>
                         
@@ -45,8 +68,28 @@ export default function Footer() {
                             <Box>
                                 <Typography variant="h6" gutterBottom> INFORMATION </Typography>
                                 <Typography variant="body2" gutterBottom> How to buy? </Typography>
-                                <Typography variant="body2" gutterBottom> My count </Typography>
-                                <Typography variant="body2" gutterBottom> Sign in </Typography>
+                                {
+                                    isAuthenticated 
+                                        ?   <Typography variant="body2" gutterBottom>
+                                                <Link href="#" onClick={Logout()} color="inherit">
+                                                    Sign out
+                                                </Link>
+                                            </Typography> 
+                                        :   <Typography variant="body2" gutterBottom>
+                                                <Link href="#" onClick={Login()} color="inherit">
+                                                    Sign in
+                                                </Link>
+                                            </Typography>
+                                }
+                                {
+                                    isAuthenticated 
+                                        ? <Typography variant="body2" gutterBottom>
+                                            <Link href="#" onClick={()=>navigate('/profile')} color="inherit">
+                                                My acount
+                                            </Link>
+                                          </Typography>
+                                        : <></>
+                                }
                                 <Typography variant="body2" gutterBottom> About us </Typography>
                             </Box>
                         </Grid>

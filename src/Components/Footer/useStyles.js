@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   logoCardImgMC: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',    
+    justifyContent: 'space-evenly',    
     height: '30px',
     paddingLeft: 12,
     paddingBottom: 12

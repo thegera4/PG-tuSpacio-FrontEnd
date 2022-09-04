@@ -62,6 +62,9 @@ export default function DetailService() {
   return (
         <ThemeProvider theme={theme}>
             <Box
+                display='flex'
+                FlexWarp='wrap'
+                flex-direction='row'
                 p={5}
             >
                 <Grid
@@ -84,6 +87,8 @@ export default function DetailService() {
                             border={1}
                             borderRadius="borderRadius"
                             borderColor='primary.main'
+                            height={300}
+                            width={300}
                         >
                             <img 
                                 src={service
@@ -93,11 +98,6 @@ export default function DetailService() {
                                 alt='imagen de servicio'
                             />
                         </Box>
-                        <Typography variant="body2" gutterBottom>
-                            {service 
-                                ? ServiceJson.filter(s => s.name === service)[0].description
-                                : "Select your service" }
-                        </Typography>
                     </Grid>
                     <Grid xs={4}>
                         <Grid
@@ -156,7 +156,7 @@ export default function DetailService() {
                                     id="time"
                                     label="Select date time"
                                     type="time"
-                                    defaultValue="07:30"
+                                    defaultValue="hh:mm"
                                     className={classes.textField}
                                     InputLabelProps={{
                                     shrink: true,
@@ -172,9 +172,17 @@ export default function DetailService() {
                         <Grid
                             container
                             direction="column"
-                            justifyContent="flex-start"
-                            alignItems="strech"
+                            justifyContent="center"
+                            alignItems="stretch"
                             >
+                            <Grid xs={12}>
+                                <Typography variant="body1" gutterBottom>Description:</Typography>
+                                <Typography variant="body2" gutterBottom>
+                                {service 
+                                    ? ServiceJson.filter(s => s.name === service)[0].description
+                                    : "Select your service" }
+                                </Typography>
+                            </Grid>
                             <Button variant="contained" size="large" color="primary" className={classes.margin}>
                                 Add to Cart
                             </Button>
