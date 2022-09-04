@@ -23,6 +23,7 @@ import Login from '../Login/Login';
 import Logout from '../Logout/Logout';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Avatar } from '@material-ui/core';
+import {withStyles} from '@material-ui/core';
 
 const StyledBadge = withStyles((theme) => ({
   badge: {

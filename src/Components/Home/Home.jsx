@@ -6,6 +6,7 @@ import { getAllProducts } from '../../actions';
 import BasicPagination from '../BasicPagination/Pagination';
 import LandingPage from '../Landing/Landing';
 import { Box } from '@material-ui/core';
+import useStyles from './useStyles';
 
 export default function SpacingGrid(order) {
   const [spacing, setSpacing] = React.useState(2);

@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipeReviewCard() {
   const { id } = useParams()
  
-  // const classes = useStyles();
+  const classes = useStyles();
   // const [expanded, setExpanded] = React.useState(false);
 
   // const handleExpandClick = () => {
