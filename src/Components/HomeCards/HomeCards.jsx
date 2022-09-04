@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
+// import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -42,12 +42,11 @@ export default function HomeCards(props) {
     <>
     { !products? <div>Not product Found</div> :
       <Card className={classes.root}>
-        <CardActionArea  >
         <Box
           display="flex"
           justifyContent="end"
           alignItems="end"
-          minHeight="5vh">
+          minHeight="3vh">
           <CardActions >
             <Button 
               size="small" 
@@ -65,7 +64,7 @@ export default function HomeCards(props) {
         </Box>
         <Link to={`/${props.products.id}`}>
           <img className='card-image' src={props.products.image_link} alt="" />
-          </Link>
+         </Link>
           <CardContent className={classes.content}>
             <Typography component="div">
               <Box 
@@ -87,8 +86,7 @@ export default function HomeCards(props) {
             </Box>
             </Typography>  
         </CardContent>
-      </CardActionArea>
-    </Card>
+      </Card>
     }
   </>
   )           

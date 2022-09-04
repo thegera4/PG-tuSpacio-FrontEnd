@@ -46,7 +46,7 @@ export default function BasicPagination(
         shape="rounded" 
         variant="outlined"
         size="large" 
-        color="default"
+        color="primary"
         onChange = {(event,page)=>handlePageClick(page)}
         hideNextButton={true}
         hidePrevButton={true} />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
-import {Paper, Box} from '@material-ui/core';
+import {Paper} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
@@ -13,14 +13,14 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 1200,
+    maxWidth: "auto",
     flexGrow: 1,
-    margin: 30,
+    margin: 'auto',
   },
   header: {
     display: 'flex',
     alignItems: 'center',
-    height: 30,
+    height: 45,
     textPrimary:'#ffffff',
     paddingLeft: theme.spacing(5),
     backgroundColor: 'fff',
@@ -33,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     height: 400,
-    maxWidth: 1200,
+    maxWidth: "auto",
     overflow: 'hidden',
-    display: 'block',
+    // display: 'block',
     width: '100%',
   },
   buttons: {
-    colorText: '#57a485',
+    colorText: '#57a485', 
   },
 }));
 
@@ -47,19 +47,19 @@ const useStyles = makeStyles((theme) => ({
 const itemData = [
   {
       img: "https://img.freepik.com/vector-gratis/banner-entrega-linea-laptop-realista-paquetes-nubes-e-iconos-sociales-estilo-realista_548887-53.jpg?w=996&t=st=1661973848~exp=1661974448~hmac=d3c5aa661e7036d7b70f489d68f4de08c9182be3aea8a39d2ac68e57c5fd5346",
-      title: "Entregamos a todo el pais,"
+      title: "Entregamos a todo el pais,..."
   },
   {
       img: "https://img.freepik.com/foto-gratis/chica-descalza-inspirada-gafas-pie-sobre-pierna-estudio-foto-interior-mujer-joven-entusiasta-camisa-cuadros-posando-sobre-fondo-burdeos_197531-25186.jpg?size=626&ext=jpg&uid=R21970068&ga=GA1.2.1703121374.1661973682",
-      title: "inspiramos Confianza a nuestros clientes"
+      title: "...inspiramos confianza a nuestros clientes,..."
   },
   {
       img: "https://img.freepik.com/foto-gratis/grupo-manos-diversas-multietnicas-levantadas_53876-64967.jpg?size=626&ext=jpg&uid=R21970068&ga=GA1.2.1703121374.1661973682",
-      title: "trabajamos en equipo"
+      title: "...trabajamos en equipo..."
   },
   {
       img: "https://img.freepik.com/foto-gratis/personas-que-trabajan-juntas-proyecto-empresarial_23-2148746319.jpg?w=996&t=st=1661974560~exp=1661975160~hmac=83412d86649f33eb6eb9e6efa53f876d75fb93918c33888cb9ee61a303dcbfdf",
-      title: "para que todo salga como lo esperas..."
+      title: "...para que todo salga como lo esperas."
   },
   {
       img: "https://img.freepik.com/foto-gratis/vista-trasera-hombre-negocios-hablar-telefono-ciudad_53876-129657.jpg?size=626&ext=jpg&uid=R21970068&ga=GA1.2.1703121374.1661973682",
@@ -102,17 +102,20 @@ export default function LandingPage() {
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents
-        animateHeight='true'
+        animateHeight={true}
         // containerStyle={}
       >
        
-        {itemData.map((step, index) => (
-          <div key={step.title}>
-            {Math.abs(activeStep - index) <= 2 ? (
-              <img className={classes.img} src={step.img} alt={step.title} />
-            ) : null}
-          </div>
-        ))}
+        {
+          itemData.map((step, index) => (
+            <div key={step.title}>
+              { Math.abs(activeStep - index) <= 2 
+                  ? <img className={classes.img} src={step.img} alt={step.title} />
+                  : null
+              }
+            </div>
+          ))
+        }
         
       </AutoPlaySwipeableViews>
 
@@ -129,11 +132,11 @@ export default function LandingPage() {
           </Button>
         }
         backButton={
-          <Typography variant='subtitle1'color='textPrimary'>
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-            Back
-          </Button>
+          <Typography variant='subtitle1' color='textPrimary'>
+            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+              {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+              Back
+            </Button>
           </Typography>
         }
       />

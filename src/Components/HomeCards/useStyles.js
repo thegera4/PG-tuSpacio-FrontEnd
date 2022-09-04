@@ -6,7 +6,6 @@ const useStyles = makeStyles({
     height: 330,
     border: '1px solid #eceeed',
     margin: 20
-
   },
   media: {
     height: 300,

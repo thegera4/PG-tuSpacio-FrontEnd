@@ -5,26 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts } from '../../actions';
 import BasicPagination from '../BasicPagination/Pagination';
 import LandingPage from '../Landing/Landing';
-import { makeStyles } from '@material-ui/core/styles';
+import { Box } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    marginBottom: 100
-  },
-  paper: {
-    height: 140,
-    width: 100,
-  },
-  control: {
-    padding: theme.spacing(2),
-  },
-  centering: {
-   
-  }
-}));
-
-export default function SpacingGrid() {
+export default function SpacingGrid(order) {
   const [spacing, setSpacing] = React.useState(2);
   const classes = useStyles();
   const dispatch = useDispatch()
@@ -41,7 +24,7 @@ export default function SpacingGrid() {
   useEffect(() => {
     dispatch(getAllProducts())
   }, [dispatch])
-  
+
   const handleChange = (event) => {
     setSpacing(Number(event.target.value));
   };
@@ -55,34 +38,47 @@ export default function SpacingGrid() {
 
   return (
     <>
-    <Grid container direction='row' >
-      <Grid item xs={12}>
-        <LandingPage />
+      <Grid container direction='row' >
+        <Grid item xs={12}>
+          {order && <LandingPage />}
+        </Grid>
       </Grid>
-      </Grid>
-      <BasicPagination 
-        className={classes.centering} 
+
+      <BasicPagination
+        className={classes.centering}
         currentPage={currentPage}
         productsPerPage={productsPerPage}
         totalProducts={products.length}
         onChange={handleChange}
-        />
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12}>
-          <Grid 
-            container justifyContent="center" 
-            spacing={spacing}>
-            {RENDERED_PRODUCTS?.map((product, index) => (
-              <Grid key={index} item>
-                <HomeCards 
-                className={classes.paper} 
-                products = {product}
-                favorite = {productIsFavorite(product.id)}
-                cart = {productInCart(product.id)}
-                />
-              </Grid>
-            ))}
-          </Grid>
+      />
+
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-around"
+        alignItems="center"
+
+      >
+        <Grid item xs={10}>
+          <Box
+            mb = {4}
+          >
+            <Grid
+              container 
+              justifyContent="center"
+              spacing={spacing}
+            >
+                {RENDERED_PRODUCTS?.map((product, index) => (
+                  <Grid key={index} item>
+                    <HomeCards
+                      className={classes.paper}
+                      products={product}
+                      favorite={productIsFavorite(product.id)}
+                    />
+                  </Grid>
+                ))}
+            </Grid>
+          </Box>
         </Grid>
       </Grid>
     </>

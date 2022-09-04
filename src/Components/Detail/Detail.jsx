@@ -1,9 +1,9 @@
- import React, {useState} from 'react'
- import {useDispatch, useSelector} from 'react-redux'
- import {useParams} from "react-router-dom"
- import {getDetail, addToCart, addToWishlist, removeFromWishlist, addNotification} from '../../actions/index'
- import { useEffect } from 'react'
- import defaultImage from "../../assets/images/not_found.png"
+import React, {useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {useParams} from "react-router-dom"
+import {getDetail, addToCart, addToWishlist, removeFromWishlist, addNotification} from '../../actions/index'
+import { useEffect } from 'react'
+import defaultImage from "../../assets/images/not_found.png"
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -27,8 +27,6 @@ import Button from '@material-ui/core/Button';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
 import ReactImageMagnify from 'react-image-magnify';
-
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,12 +71,12 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipeReviewCard() {
   const { id } = useParams()
  
-  const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  // const classes = useStyles();
+  // const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  // const handleExpandClick = () => {
+  //   setExpanded(!expanded);
+  // };
 
 
 
@@ -89,15 +87,9 @@ export default function RecipeReviewCard() {
   const [count, setCount] = useState(1)
   const image = item.image_link
  
-
   useEffect(() => {
- 
     dispatch(getDetail(id))   
-
-  }
-  , [dispatch])
-
-  
+  } , [dispatch, id])
 
   function handleCart(e) {
       if(!cart.includes(e)) {
@@ -126,7 +118,6 @@ export default function RecipeReviewCard() {
      }
      
   }
-
 
 
   return (
