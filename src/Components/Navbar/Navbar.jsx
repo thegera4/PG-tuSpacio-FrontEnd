@@ -18,7 +18,7 @@ import useStyles from './useStyles';
 import { useSelector } from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Login from '../Login/Login';
 import Logout from '../Logout/Logout';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -41,9 +41,13 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const data = useSelector((state) => state.products);
-  const notification = useSelector((state) => state.notification);
+
 
   const { user, isAuthenticated } = useAuth0();
+
+  const cart = useSelector((state) => state.cart);
+  let mapped= cart.map(item => item.quantity)
+  let total = mapped.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
 
   // if (isAuthenticated) console.log(user);
 
@@ -118,11 +122,16 @@ export default function Navbar() {
                   <FavoriteIcon />
                 </Badge>
               </IconButton>
-              <IconButton color="primary" onClick={() => navigate('/cart')}>
-                <Badge color="secondary" overlap="rectangular">
-                  <ShoppingCartIcon />
-                </Badge>
+
+              
+            <Link to='/cart' id='link'>
+               <IconButton aria-label="cart">
+              <StyledBadge badgeContent={total} color= 'error'>
+              <ShoppingCartIcon className={classes.iconColors}/>
+              </StyledBadge>
               </IconButton>
+              </Link>
+
               <IconButton
                 edge="end"
                 aria-label="account of current user"
