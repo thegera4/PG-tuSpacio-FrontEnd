@@ -49,7 +49,7 @@ const SearchBar = ({ placeholder, data }) => {
                 { filteredData.slice(0, 6).map((value, key) => {
                   return (
                     <a 
-                      href='http://localhost:3000' 
+                      href='#' 
                       className='dataItem' onClick={ () => {
                       dispatch(getDetail(value.id))
                       navigate(`/${value.id}`)
