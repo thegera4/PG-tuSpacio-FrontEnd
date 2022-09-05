@@ -1,7 +1,7 @@
 import { GET_CATEGORIES, GET_ALL_PRODUCTS, SET_CURRENT_HOME_PAGE, GET_DETAIL, SEARCH_BY_CATEGORIE, 
   GET_ALL_BRANDS, SEARCH_BY_BRAND, ORDER_BY_PRICE, ORDER_BY_NAME, POST_PRODUCT, GET_NAME, ORDER_BY_RATING, 
 
-  ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST, ADD_TO_CART, REMOVE_FROM_CART, SET_ADMIN_OPTION, ADD_NOTIFICATION, DELETE_NOTIFICATION} from "../actions";
+  ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST, ADD_TO_CART, REMOVE_FROM_CART, SET_ADMIN_OPTION, CLEAR_CART, REMOVE_ONE} from "../actions";
 
 
 const initialState = {
@@ -97,11 +97,19 @@ function rootReducer(state = initialState, action) {
         favorites: state.favorites.filter(
           (el) => el.id !== action.payload)
       }
+      
       case ADD_TO_CART:
-        return {
-          ...state,
-          cart: [...state.cart, action.payload]
-        }
+        let newItem = state.products.find ((product) => product.id === action.payload)
+        let itemCart = state.cart.find((item) => item.id === newItem.id) // busco si ya esta en el carrito y lo guardo
+        return itemCart ? 
+        {...state, 
+        cart: state.cart.map(i => 
+          i.id === newItem.id 
+          ? {...i, quantity: i.quantity + 1} : i),}
+          : {...state, cart: [...state.cart, {...newItem, quantity: 1}]}
+
+
+
         case REMOVE_FROM_CART:
           return {
             ...state,
@@ -114,16 +122,25 @@ function rootReducer(state = initialState, action) {
               ...state,
               adminOption: action.payload
           }
-          case ADD_NOTIFICATION:
-            return {
+          case REMOVE_ONE:
+          let itemToRemove = state.cart.find(ele => ele.id === action.payload)
+          return itemToRemove.quantity > 1 ? {
             ...state,
-            notification: state.notification + 1
-            }
-            case DELETE_NOTIFICATION:
-              return {
-              ...state,
-              notification: state.notification > 0 ? state.notification - 1 : null
+            cart: state.cart.map(item => 
+              item.id === action.payload ? 
+              {...item, quantity: item.quantity - 1} 
+              : item),
+              } 
+              : {
+                ...state,
+                cart: state.cart.filter(item => item.id !== action.payload),
               }
+
+            case CLEAR_CART:
+            return {
+              ...state,
+              cart: [],
+            }
       default:
       return state;
   }

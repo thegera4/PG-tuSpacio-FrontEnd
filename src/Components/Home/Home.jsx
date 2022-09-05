@@ -22,6 +22,10 @@ export default function SpacingGrid(order) {
   const FIRST_PRODUCT = LAST_PRODUCT - productsPerPage;
   const RENDERED_PRODUCTS = products.slice(FIRST_PRODUCT, LAST_PRODUCT);
 
+
+
+
+  
   useEffect(() => {
     dispatch(getAllProducts())
   }, [dispatch])
@@ -36,6 +40,8 @@ export default function SpacingGrid(order) {
   function productInCart(productID) {
     return cart.some(product => product.id === productID)
   }
+
+
 
   return (
     <>
