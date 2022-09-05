@@ -20,6 +20,8 @@ export const SET_ADMIN_OPTION = "SET_ADMIN_OPTION";
 export const ADD_NOTIFICATION = "ADD_NOTIFICATION";
 export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
 export const ORDERS_FILTERS = 'ORDERS_FILTERS';
+export const CLEAR_CART = 'CLEAR_CART';
+export const REMOVE_ONE = 'REMOVE_ONE';
 
 // const API = 'http://localhost:3001/api';//API LOCAL
 const API = 'http://localhost:3001/api'
@@ -135,12 +137,12 @@ export function setAdminOption(value) {
   };
 }
 
-export function addNotification() {
-  return { type: ADD_NOTIFICATION };
+export function clearCart() {
+  return { type: CLEAR_CART }
 }
 
-export function deleteNotification() {
-  return { type: DELETE_NOTIFICATION };
+export function removeOne(product) {
+  return { type: REMOVE_ONE, payload: product}
 }
 
 export function orderCombine(filters) {
