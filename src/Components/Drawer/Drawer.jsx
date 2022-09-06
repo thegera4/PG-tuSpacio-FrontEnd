@@ -1,176 +1,97 @@
 /*import {React, useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import clsx from 'clsx';
+import { useNavigate } from "react-router-dom";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
+import {List, Box, Button} from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import Select from '@material-ui/core/Select';
-import Filter from '../Filter/Filter';
-import { Hidden, ThemeProvider } from '@material-ui/core';
+import {SwipeableDrawer} from '@material-ui/core';
 import {FormControl} from '@material-ui/core';
 import {InputLabel} from '@material-ui/core';
-import { getAllBrands, getCategories, setCurrentHomePage } from '../../actions/index';
+import { getAllBrands, getCategories, setCurrentHomePage, orderCombine } from '../../actions/index';
 
-const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
+const useStyles = makeStyles({
+  list: {
+    width: 250,
   },
-  appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+  formControl: {
+    margin: 1,
+    minWidth: 150,
   },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
-}));
-
-export default function PersistentDrawerLeft({setOrder}) {
-  const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = useState(false);
-  const brands = useSelector((state) => state.brands);
-  const categories = useSelector((state) => state.categories)
-
-  const dispatch = useDispatch();
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  useEffect ( () => {
-    dispatch(getCategories())
-    dispatch(getAllBrands())
-}, [dispatch] )
-
-//   const renderFilter = (
-//     <ThemeProvider>
-        
-//     </ThemeProvider>
-//   );
-//   const navigate = useNavigate();
-//     const categories = useSelector((state) => state.categories)
-//     const brands = useSelector((state) => state.brands)
-//     const classes = useStyles();
-//     const dispatch = useDispatch();
-//     const [stars, setStars] = useState([]);
-
-//     useEffect ( () => {
-//         dispatch(getCategories())
-//         dispatch(getAllBrands())
-//     }, [dispatch] )
+  margin2: {
+    marginTop: 20,
     
+  },
+});
+
+
+export default function DrawerBox({setOrder}) {
+const classes = useStyles();
+const navigate = useNavigate()
+const categories = useSelector((state) => state.categories)
+const brands = useSelector((state) => state.brands)
+const [open, setOpen] = useState(false)
+const [filters, setFilters] = useState({
+  "alpha": "",
+  "category": "",
+  "price": "",
+  "brand": "",
+  "rating": ""
+})
+
+const dispatch = useDispatch();
     
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        color='#ffffff'
-        position="relative"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
+    useEffect ( () => {
+        dispatch(getCategories())
+        dispatch(getAllBrands())
+    }, [dispatch] )
+
+function handlefilter(e) {
+  e.preventDefault();
+  // console.log(filters)
+  dispatch(orderCombine({...filters, [e.target.name]: e.target.value}));
+  dispatch(setCurrentHomePage(1))
+  let {alpha,category,price,brand,rating}=filters
+  setOrder(`filters by ${alpha,category,price,brand,rating}`)
+}
+
+
+  return(
+    <div>
+      <IconButton 
+      edge='start'
+      color='inherit'
+      arial-label ='open drawer'
+      onClick={() => setOpen(true)}
       >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
+        <MenuIcon />
+      </IconButton>
+      <SwipeableDrawer
+      anchor='left'
+      open={open}
+      onClose={() => setOpen(!open)}
+      onOpen={() => {}}
+      >
+        <div className={classes.list}>
+          <Box
+          textAlign='center'
+          p={2}
           >
-            <MenuIcon />
-          </IconButton>
-          <Hidden mdDown>
-            <Filter/>
-          </Hidden>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-
-        <Divider />
-       
-            <FormControl className={classes.formControl}>
+          </Box>
+          <Divider />
+          <List>
+              <FormControl className={classes.formControl}>
                 <InputLabel>Brands</InputLabel>
                 <Select
                     native
-                    onChange={(e) => console.log('Brands')}
+                    name="brand"
+                    onChange={ (e) => {
+                        setFilters({...filters, "brand": e.target.value});
+                        handlefilter(e)
+                    }}
                 >
                     <option aria-label="None" value="" />
                     {
@@ -178,60 +99,97 @@ export default function PersistentDrawerLeft({setOrder}) {
                         brands.map( b => <option value={`${b}`}>{`${b.toUpperCase()}`}</option> )    
                     }
                 </Select>
-            </FormControl>
-          
-        <Divider />
-            <FormControl className={classes.formControl}>
-                <InputLabel>Categories</InputLabel>
-                <Select
-                    native
-                    onChange={(e) => console.log('cat')}
-                >
-                    <option aria-label="None" value="" />
-                    {
-                        categories.length &&
-                        categories.map( c => <option value={`${c.name}`}>{`${c.name.toUpperCase()}`}</option> )
-                    }
-                </Select>
-            </FormControl>
-        <Divider />
-            <FormControl className={classes.formControl}>
-                <InputLabel>Sort by Name</InputLabel>
-                <Select
-                    native
-                    onChange={(e) => console.log('name')}
-                >
-                    <option aria-label="None" value="" />
-                    <option value="a-to-z">A to Z</option>
-                    <option value="z-to-a">Z to A</option>
-                </Select>
-            </FormControl>
-            <Divider />
-            <FormControl className={classes.formControl}>
-                <InputLabel>Order by Price</InputLabel>
-                <Select
-                    native
-                    onChange={(e) => console.log('Price')}
-                >
-                    <option aria-label="None" value="" />
-                    <option value='min-max'>Low to High</option>
-                    <option value='max-min'>High to Low</option>
-                </Select>
-            </FormControl>
-            <Divider />
-            <FormControl className={classes.formControl}>
-                <InputLabel>Order by Rating</InputLabel>
-                <Select
-                    native
-                    onChange={(e) => console.log('rating')}
-                >
-                    <option aria-label="None" value="" />
-                    <option value='max-min'>5...1</option>
-                    <option value='min-max'>1...5</option>
-                </Select>
-            </FormControl>
-      </Drawer>
-     
+              </FormControl>
+              <Divider />
+              <FormControl className={classes.formControl}>
+                  <InputLabel>Categories</InputLabel>
+                  <Select
+                      native
+                      name="category"
+                      onChange={(e) => {
+                          setFilters({...filters, "category": e.target.value});
+                          handlefilter(e)
+                      }}
+                  >
+                      <option aria-label="None" value="" />
+                      {
+                          categories.length &&
+                          categories.map( c => <option value={`${c.name}`}>{`${c.name.toUpperCase()}`}</option> )
+                      }
+                  </Select>
+              </FormControl>
+              <Divider />
+              <FormControl className={classes.formControl}>
+                  <InputLabel>Sort by Name</InputLabel>
+                  <Select
+                      native
+                      name="alpha"
+                      onChange={(e) => {
+                          setFilters({...filters, "alpha": e.target.value});
+                          handlefilter(e)
+                      }}
+                  >
+                      <option aria-label="None" value="" />
+                      <option value="asc">A to Z</option>
+                      <option value="desc">Z to A</option>
+                  </Select>
+              </FormControl>
+              <Divider />
+             
+              <FormControl className={classes.formControl}>
+                  <InputLabel>Order by Price</InputLabel>
+                  <Select
+                      native
+                      name="price"
+                      onChange={(e) => {
+                          setFilters({...filters, "price": e.target.value});
+                          handlefilter(e)
+                      }}
+                  >
+                      <option aria-label="None" value="" />
+                      <option value='asc'>Low to High</option>
+                      <option value='desc'>High to Low</option>
+                  </Select>
+              </FormControl>
+                <Divider variant='fullWidth' />
+              <FormControl className={classes.formControl}>
+                  <InputLabel>Order by Rating</InputLabel>
+                  <Select
+                      native
+                      name="rating"
+                      onChange={(e) => {
+                          setFilters({...filters, "rating": e.target.value});
+                          handlefilter(e)
+                      }}
+                  >
+                      <option aria-label="None" value="" />
+                      <option value='desc'>5...1</option>
+                      <option value='asc'>1...5</option>
+                  </Select>
+              </FormControl>
+                <Divider variant='fullWidth' />
+              <Button 
+                  onClick={() => console.log("Limpiando filtros")}
+                  color="secondary"
+                  fullWidth='true'
+                  size="small"
+                  className={classes.margin2}
+              >
+                  Clean Filters
+              </Button>
+                <Divider variant='fullWidth' />
+              <Button 
+                  onClick={() => navigate('/service')}
+                  fullWidth='true'
+                  color="secondary"
+                  className={classes.margin2}
+              >
+                  Beuthy Services
+              </Button>
+              
+          </List>
+        </div>
+      </SwipeableDrawer>
     </div>
-  );
-}*/
+  )
+}

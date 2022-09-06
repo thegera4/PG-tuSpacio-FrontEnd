@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { Box, Button, Grid } from '@material-ui/core';
+import { Box, Button, Grid, Hidden } from '@material-ui/core';
 import { getAllBrands, getCategories, setCurrentHomePage, orderCombine } from '../../actions';
 import { useNavigate } from "react-router-dom";
 
@@ -82,8 +82,8 @@ export default function Filter({setOrder}) {
                 justifyContent="space-between"
                 alignItems="flex-end"
             >
-
                 <Grid item xs='auto'>
+                <Hidden smDown>
                     {/* Filter by Brands */}
                     <FormControl className={classes.formControl}>
                         <InputLabel>Brands</InputLabel>
@@ -140,7 +140,7 @@ export default function Filter({setOrder}) {
                             <option value="desc">Z to A</option>
                         </Select>
                     </FormControl>
-
+                    
 
                     {/* Orden por Precio */}
                     <FormControl className={classes.formControl}>
@@ -158,7 +158,8 @@ export default function Filter({setOrder}) {
                             <option value='desc'>High to Low</option>
                         </Select>
                     </FormControl>
-
+                    </Hidden>
+                    <Hidden smDown>
                     {/* Order por Rating */}
                     <FormControl className={classes.formControl}>
                         <InputLabel>Order by Rating</InputLabel>
@@ -175,6 +176,7 @@ export default function Filter({setOrder}) {
                             <option value='asc'>1...5</option>
                         </Select>
                     </FormControl>
+                    
                         <Button 
                             onClick={() => console.log("Limpiando filtros")}
                             color="secondary"
@@ -183,8 +185,9 @@ export default function Filter({setOrder}) {
                         >
                             Clean Filters
                         </Button>
-                    
+                        </Hidden>
                 </Grid>
+                <Hidden mdDown>
                 <Grid item xs='auto'>
                     <Button 
                         onClick={() => navigate('/service')}
@@ -194,7 +197,9 @@ export default function Filter({setOrder}) {
                     >
                         Beuthy Services
                     </Button>
+                    
                 </Grid>
+                </Hidden>
             </Grid>
         </Box>
     );

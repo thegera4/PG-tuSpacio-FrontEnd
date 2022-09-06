@@ -24,6 +24,7 @@ import Logout from '../Logout/Logout';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Avatar } from '@material-ui/core';
 import {withStyles} from '@material-ui/core';
+import DrawerBox from '../Drawer/Drawer';
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -89,15 +90,7 @@ export default function Navbar() {
       <div className={classes.grow}>
         <AppBar position="static" color="inherit">
           <Toolbar>
-            {/* Hamburguesa */}
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="open drawer">
-              <MenuIcon />
-            </IconButton>
-            {/* Logo */}
+            <DrawerBox />
             <IconButton color="primary" onClick={() => navigate('/')} >
                 <Box className={classes.logoBox}>
                   <img
@@ -127,7 +120,7 @@ export default function Navbar() {
             <Link to='/cart' id='link'>
                <IconButton aria-label="cart">
               <StyledBadge badgeContent={total} color= 'error'>
-              <ShoppingCartIcon className={classes.iconColors}/>
+                <ShoppingCartIcon className={classes.iconColors}/>
               </StyledBadge>
               </IconButton>
               </Link>
