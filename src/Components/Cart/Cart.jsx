@@ -19,6 +19,13 @@ import Box from '@material-ui/core/Box';
 
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: "auto",
+    flexGrow: 1,
+    margin: 'auto',
+    height: '80vh',
+    marginTop: 50
+  },
     button: {
       margin: theme.spacing(0),
       borderColor: '#257558',
@@ -111,8 +118,8 @@ const Cart = () => {
           fontSize={30}>
             Your Cart is Empty
         </Box> : 
-        <div>
-    <TableContainer component={Paper}>
+        <div >
+    <TableContainer component={Paper}  className={classes.root}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -156,7 +163,7 @@ const Cart = () => {
               onClick={() => handleClear()}
               startIcon={<DeleteIcon />}
              >
-             delte all
+             delete all
             </Button>
             <Link to='/checkout'>
             <Button

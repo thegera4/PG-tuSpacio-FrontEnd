@@ -117,10 +117,10 @@ export default function RecipeReviewCard() {
    <div className='detail' key={item.id}>
                <div className='breadcrums'>
                <Breadcrumbs aria-label="breadcrumb">
-                 <Link to="/" >
+                 <Link to="/home" >
                   Products
                  </Link>
-                 <Link to='/'>
+                 <Link to='/home'>
                    {item.category}
                  </Link>
                  <Typography color="textPrimary">{item.name}</Typography>

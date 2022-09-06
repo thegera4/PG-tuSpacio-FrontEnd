@@ -8,6 +8,7 @@ import LandingPage from '../Landing/Landing';
 import { Box } from '@material-ui/core';
 import useStyles from './useStyles';
 
+
 export default function SpacingGrid(order) {
   const [spacing, setSpacing] = React.useState(2);
   const classes = useStyles();
@@ -45,12 +46,12 @@ export default function SpacingGrid(order) {
 
   return (
     <>
-      <Grid container direction='row' >
+      {/* <Grid container direction='row' >
         <Grid item xs={12}>
           {order && <LandingPage />}
         </Grid>
-      </Grid>
-
+      </Grid> */}
+     
       <BasicPagination
         className={classes.centering}
         currentPage={currentPage}

@@ -14,13 +14,16 @@ import theme from './ThemeConfig'
 import Checkout from './Components/Checkout/Checkout';
 import OrderDetail from './Components/OrderDetail/OrderDetail.jsx';
 import CreateUser from './Components/CreateUser/CreateUser.jsx';
+import LandingPage from './Components/LandingPage/LandingPage';
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth='xl' disableGutters={true} style={{ backgroundColor: '#c8e6c9' }} >
+      <Container maxWidth='xl' disableGutters={true} style={{ backgroundColor: 'f4f4f4' }} >
         <Navbar />
         <Routes>
-          <Route path="/" exact element={ <ContainerCards /> } /> 
+          <Route path="/" element={ <LandingPage /> } /> 
+          <Route path="/home" exact element={ <ContainerCards /> } /> 
           <Route path="/:id" element={ <Detail /> } />
           <Route path="/service" element={ <DetailService /> } />
           <Route path="/createUser" element={ <CreateUser /> } />

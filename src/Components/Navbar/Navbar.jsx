@@ -98,7 +98,7 @@ export default function Navbar() {
               <MenuIcon />
             </IconButton>
             {/* Logo */}
-            <IconButton color="primary" onClick={() => navigate('/')} >
+            <IconButton color="primary" onClick={() => navigate('/home')} >
                 <Box className={classes.logoBox}>
                   <img
                     className={classes.logoImg}
