@@ -50,7 +50,7 @@ export default function Navbar() {
   let mapped= cart.map(item => item.quantity)
   let total = mapped.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
 
-  // if (isAuthenticated) console.log(user);
+  if (isAuthenticated) console.log(user);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -78,6 +78,9 @@ export default function Navbar() {
             <MenuItem>{user.name}</MenuItem>
             <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
             <MenuItem onClick={Logout()}>Sing out</MenuItem>
+            {/* {
+              user.name === ''
+            } */}
           </>
           : <MenuItem onClick={Login()}>Sing in</MenuItem>
       }
