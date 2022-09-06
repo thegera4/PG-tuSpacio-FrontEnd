@@ -14,8 +14,8 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "auto",
-    flexGrow: 1,
     margin: 'auto',
+    paddingTop: 93,
   },
   header: {
     display: 'flex',
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     height: 45,
     textPrimary:'#ffffff',
     paddingLeft: theme.spacing(5),
-    backgroundColor: 'fff',
+    backgroundColor: '#57a485',
   }, 
   colors:{
     backgroundColor: '#57a485',
