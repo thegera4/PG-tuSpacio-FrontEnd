@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     width: '100%',
     bottom: 0,
+    marginTop:50
     // fontFamily: 'roboto' 
   },
   logoCardsBox: {

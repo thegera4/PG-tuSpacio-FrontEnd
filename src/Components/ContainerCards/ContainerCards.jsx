@@ -4,12 +4,23 @@ import React, { useState } from "react";
 import Home from '../../Components/Home/Home';
 import Filter from "../Filter/Filter";
 import PersistentDrawerLeft from '../Drawer/Drawer'
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+      maxWidth: "auto",
+      flexGrow: 1,
+      margin: 'auto',
+      height: 'auto'
+    },
+  }));
+  
 export default function ContainerCards() {
-    
+    const classes = useStyles();
     const [order, setOrder] = useState("")
        
     return(
+        <div className={classes.root}>
         <div>
             {/*<PersistentDrawerLeft />*/}
             <Filter 

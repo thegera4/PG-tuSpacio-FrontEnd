@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './SearchBar.css'
 import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch } from 'react-redux'
-import { getDetail } from '../../actions/index'
+import { getDetail, getName, getAllProducts } from '../../actions/index'
 import { useNavigate } from "react-router-dom";
 
 const SearchBar = ({ placeholder, data }) => {
@@ -30,16 +30,28 @@ const SearchBar = ({ placeholder, data }) => {
     setWordEntered('')
   }
 
+  useEffect(() => {
+    dispatch(getAllProducts())
+  }, [dispatch, ])
+  
+  const handleSearch = () => {
+    dispatch(getName(wordEntered))
+    setFilteredData([])
+    setWordEntered('')
+    
+  }
+
+  console.log(wordEntered)
+
   return (
     <div className='search'>
       <div className='searchInputs'>
         <input type="text" placeholder={placeholder} value={wordEntered} onChange={handleFilter} />
         <div className='searchIcon'>
-          {
-            filteredData.length === 0 
-              ? <SearchIcon id='searchBtn' /> 
-              : <CloseIcon id='clearBtn' onClick={clearInput} />
-          }
+          
+              <SearchIcon id='searchBtn' onClick={handleSearch}/> 
+              
+          
         </div>
       </div>
 

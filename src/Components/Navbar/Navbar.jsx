@@ -93,7 +93,17 @@ export default function Navbar() {
       <div className={classes.grow}>
         <AppBar position="static" color="inherit">
           <Toolbar>
-            <DrawerBox />
+            {/* Hamburguesa */}
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="open drawer">
+              <MenuIcon />
+            </IconButton>
+            {/* Logo */}
+            <IconButton color="primary" onClick={() => navigate('/home')} >
+              <DrawerBox />
             <IconButton color="primary" onClick={() => navigate('/')} >
                 <Box className={classes.logoBox}>
                   <img

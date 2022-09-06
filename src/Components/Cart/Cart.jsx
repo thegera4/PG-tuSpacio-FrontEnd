@@ -12,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Box from '@material-ui/core/Box';
+
 import useStyles from './useStyles';
 import { StyledTableCell, StyledTableRow } from './withStyles';
 import axios from 'axios';
@@ -63,8 +64,8 @@ const Cart = () => {
           fontSize={30}>
             Your Cart is Empty
         </Box> : 
-        <div>
-    <TableContainer component={Paper}>
+        <div >
+    <TableContainer component={Paper}  className={classes.root}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -107,7 +108,7 @@ const Cart = () => {
               onClick={() => handleClear()}
               startIcon={<DeleteIcon />}
              >
-             delte all
+             delete all
             </Button>
             <Button
               variant="contained"
