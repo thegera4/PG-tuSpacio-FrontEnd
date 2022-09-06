@@ -23,8 +23,7 @@ import Filter from '../Filter/Filter';
 import { Hidden, ThemeProvider } from '@material-ui/core';
 import {FormControl} from '@material-ui/core';
 import {InputLabel} from '@material-ui/core';
-import { filterByBrand, filterByCategory, getAllBrands, getCategories, orderByAbc, 
-    orderByPrice, setCurrentHomePage, OrderByRating } from '../../actions/index';
+import { getAllBrands, getCategories, setCurrentHomePage } from '../../actions/index';
 
 const drawerWidth = 240;
 
@@ -124,51 +123,7 @@ export default function PersistentDrawerLeft({setOrder}) {
 //         dispatch(getAllBrands())
 //     }, [dispatch] )
     
-    function handleOrderByAbc(e) {
-        e.preventDefault();
-        // console.log(e.target.value);
-        dispatch(orderByAbc(e.target.value));
-        dispatch(setCurrentHomePage(1))
-        if (e.target.value) setOrder(`Order by ${e.target.value}`)
-        else setOrder("")
-    }
-
-    function handleOrderByPrice(e) {
-        e.preventDefault();
-        console.log(e.target.value);
-        dispatch(orderByPrice(e.target.value));
-        dispatch(setCurrentHomePage(1))
-        if (e.target.value) setOrder(`Order by ${e.target.value}`)
-        else setOrder("")
-    }
-
-    function handlefilterByBrand(e) {
-        e.preventDefault();
-        console.log(e.target.value);
-        dispatch(filterByBrand(e.target.value))
-        dispatch(setCurrentHomePage(1))
-        if (e.target.value) setOrder(`Filter by ${e.target.value}`)
-        else setOrder("")
-    }
-
-    function handlefilterByCategory(e) {
-        e.preventDefault();
-        console.log(e.target.value);
-        dispatch(filterByCategory(e.target.value))
-        dispatch(setCurrentHomePage(1))
-        if (e.target.value) setOrder(`Filter by ${e.target.value}`)
-        else setOrder("")
-    }
-
-    function handleOrderByRating(e) {
-        e.preventDefault();
-        console.log(e.target.value);
-        dispatch(OrderByRating(e.target.value));
-        dispatch(setCurrentHomePage(1))
-        if (e.target.value) setOrder(`Order by ${e.target.value}`)
-        else setOrder("")
-    }
-
+    
   return (
     <div className={classes.root}>
       <CssBaseline />
