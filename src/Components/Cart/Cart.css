@@ -261,5 +261,6 @@ section .cart {
 }
 
 .contenedor-gral {
-    height: 100vh;
+    min-height: 40vh;
+    height: auto;
 }

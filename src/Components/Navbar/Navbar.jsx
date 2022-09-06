@@ -24,6 +24,7 @@ import Logout from '../Logout/Logout';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Avatar } from '@material-ui/core';
 import {withStyles} from '@material-ui/core';
+import DrawerBox from '../Drawer/Drawer';
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -49,7 +50,7 @@ export default function Navbar() {
   let mapped= cart.map(item => item.quantity)
   let total = mapped.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
 
-  // if (isAuthenticated) console.log(user);
+  if (isAuthenticated) console.log(user);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -77,6 +78,9 @@ export default function Navbar() {
             <MenuItem>{user.name}</MenuItem>
             <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
             <MenuItem onClick={Logout()}>Sing out</MenuItem>
+            {/* {
+              user.name === ''
+            } */}
           </>
           : <MenuItem onClick={Login()}>Sing in</MenuItem>
       }
@@ -99,6 +103,8 @@ export default function Navbar() {
             </IconButton>
             {/* Logo */}
             <IconButton color="primary" onClick={() => navigate('/home')} >
+              <DrawerBox />
+            <IconButton color="primary" onClick={() => navigate('/')} >
                 <Box className={classes.logoBox}>
                   <img
                     className={classes.logoImg}
@@ -122,15 +128,20 @@ export default function Navbar() {
                   <FavoriteIcon />
                 </Badge>
               </IconButton>
+              <IconButton color="primary" onClick={() => navigate('/cart')} >
+                <Badge color="secondary" overlap="rectangular">
+                  <StyledBadge badgeContent={total} color= 'error'>
+                    <ShoppingCartIcon className={classes.iconColors}/>
+                  </StyledBadge>
+                </Badge>
+              </IconButton>
 
               
-            <Link to='/cart' id='link'>
-               <IconButton aria-label="cart">
-              <StyledBadge badgeContent={total} color= 'error'>
-              <ShoppingCartIcon className={classes.iconColors}/>
-              </StyledBadge>
+            {/* <Link to='/cart' id='link'>
+              <IconButton aria-label="cart">
+                  <ShoppingCartIcon className={classes.iconColors}/>
               </IconButton>
-              </Link>
+            </Link> */}
 
               <IconButton
                 edge="end"

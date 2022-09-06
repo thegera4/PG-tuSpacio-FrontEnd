@@ -3,6 +3,7 @@ import React, { useState } from "react";
 // import LandingPage from "../Landing/Landing";
 import Home from '../../Components/Home/Home';
 import Filter from "../Filter/Filter";
+import PersistentDrawerLeft from '../Drawer/Drawer'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -13,17 +14,20 @@ const useStyles = makeStyles((theme) => ({
       height: 'auto'
     },
   }));
-
+  
 export default function ContainerCards() {
     const classes = useStyles();
     const [order, setOrder] = useState("")
        
     return(
         <div className={classes.root}>
+        <div>
+            {/*<PersistentDrawerLeft />*/}
             <Filter 
-                setOrder={setOrder}    
+                setOrder={setOrder} 
             />
             <Home order={order}/>
+
         </div>
     )
 };

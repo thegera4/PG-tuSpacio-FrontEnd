@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { Box, Button, Grid } from '@material-ui/core';
-import { filterByBrand, filterByCategory, getAllBrands, getCategories, orderByAbc, 
-    orderByPrice, setCurrentHomePage, OrderByRating } from '../../actions';
+import { Box, Button, Grid, Hidden } from '@material-ui/core';
+import { getAllBrands, getCategories, setCurrentHomePage, orderCombine } from '../../actions';
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -31,57 +30,13 @@ export default function Filter({setOrder}) {
     const categories = useSelector((state) => state.categories)
     const brands = useSelector((state) => state.brands)
     const classes = useStyles();
-    const dispatch = useDispatch();
-    
-    useEffect ( () => {
-        dispatch(getCategories())
-        dispatch(getAllBrands())
-    }, [dispatch] )
-    
-    function handleOrderByAbc(e) {
-        e.preventDefault();
-        console.log(e.target.value);
-        dispatch(orderByAbc(e.target.value));
-        dispatch(setCurrentHomePage(1))
-        if (e.target.value) setOrder(`Order by ${e.target.value}`)
-        else setOrder("")
-    }
-
-    function handleOrderByPrice(e) {
-        e.preventDefault();
-        console.log(e.target.value);
-        dispatch(orderByPrice(e.target.value));
-        dispatch(setCurrentHomePage(1))
-        if (e.target.value) setOrder(`Order by ${e.target.value}`)
-        else setOrder("")
-    }
-
-    function handlefilterByBrand(e) {
-        e.preventDefault();
-        console.log(e.target.value);
-        dispatch(filterByBrand(e.target.value))
-        dispatch(setCurrentHomePage(1))
-        if (e.target.value) setOrder(`Filter by ${e.target.value}`)
-        else setOrder("")
-    }
-
-    function handlefilterByCategory(e) {
-        e.preventDefault();
-        console.log(e.target.value);
-        dispatch(filterByCategory(e.target.value))
-        dispatch(setCurrentHomePage(1))
-        if (e.target.value) setOrder(`Filter by ${e.target.value}`)
-        else setOrder("")
-    }
-
-    function handleOrderByRating(e) {
-        e.preventDefault();
-        console.log(e.target.value);
-        dispatch(OrderByRating(e.target.value));
-        dispatch(setCurrentHomePage(1))
-        if (e.target.value) setOrder(`Order by ${e.target.value}`)
-        else setOrder("")
-    }
+    const [filters, setFilters] = useState({
+        "alpha": "",
+        "category": "",
+        "price": "",
+        "brand": "",
+        "rating": ""
+    })
 
     /*
     nuevos filtros
@@ -94,10 +49,32 @@ export default function Filter({setOrder}) {
     rating ==> asc o desc
     
     */ 
+
+    const dispatch = useDispatch();
+    
+    useEffect ( () => {
+        dispatch(getCategories())
+        dispatch(getAllBrands())
+    }, [dispatch] )
+    
+    function handlefilter(e) {
+        e.preventDefault();
+        // console.log(filters)
+        dispatch(orderCombine({...filters, [e.target.name]: e.target.value}));
+        dispatch(setCurrentHomePage(1))
+        let {alpha,category,price,brand,rating}=filters
+        setOrder(`filters by ${alpha,category,price,brand,rating}`)
+    }
+
     return (
         <Box
             bgcolor='white'
-            boxShadow= '0px 10px 8px 0px rgba(0,0,0,0.18)'
+            // boxShadow= '0px 10px 8px 0px rgba(0,0,0,0.18)'
+            position= 'fixed'
+            top= {60}
+            left= {0}
+            zIndex= {800}
+            width="100%"
         >
             <Grid
                 container
@@ -106,12 +83,17 @@ export default function Filter({setOrder}) {
                 alignItems="flex-end"
             >
                 <Grid item xs='auto'>
+                <Hidden smDown>
                     {/* Filter by Brands */}
                     <FormControl className={classes.formControl}>
                         <InputLabel>Brands</InputLabel>
                         <Select
                             native
-                            onChange={(e) => handlefilterByBrand(e)}
+                            name="brand"
+                            onChange={ (e) => {
+                                setFilters({...filters, "brand": e.target.value});
+                                handlefilter(e)
+                            }}
                         >
                             <option aria-label="None" value="" />
                             {
@@ -121,12 +103,17 @@ export default function Filter({setOrder}) {
                         </Select>
                     </FormControl>
 
+
                     {/* Filter by Categories */}
                     <FormControl className={classes.formControl}>
                         <InputLabel>Categories</InputLabel>
                         <Select
                             native
-                            onChange={(e) => handlefilterByCategory(e)}
+                            name="category"
+                            onChange={(e) => {
+                                setFilters({...filters, "category": e.target.value});
+                                handlefilter(e)
+                            }}
                         >
                             <option aria-label="None" value="" />
                             {
@@ -136,44 +123,60 @@ export default function Filter({setOrder}) {
                         </Select>
                     </FormControl>
 
+
                     {/* Orden alfabetico */}
                     <FormControl className={classes.formControl}>
                         <InputLabel>Sort by Name</InputLabel>
                         <Select
                             native
-                            onChange={(e) => handleOrderByAbc(e)}
+                            name="alpha"
+                            onChange={(e) => {
+                                setFilters({...filters, "alpha": e.target.value});
+                                handlefilter(e)
+                            }}
                         >
                             <option aria-label="None" value="" />
-                            <option value="a-to-z">A to Z</option>
-                            <option value="z-to-a">Z to A</option>
+                            <option value="asc">A to Z</option>
+                            <option value="desc">Z to A</option>
                         </Select>
                     </FormControl>
+                    
 
                     {/* Orden por Precio */}
                     <FormControl className={classes.formControl}>
                         <InputLabel>Order by Price</InputLabel>
                         <Select
                             native
-                            onChange={(e) => handleOrderByPrice(e)}
+                            name="price"
+                            onChange={(e) => {
+                                setFilters({...filters, "price": e.target.value});
+                                handlefilter(e)
+                            }}
                         >
                             <option aria-label="None" value="" />
-                            <option value='min-max'>Low to High</option>
-                            <option value='max-min'>High to Low</option>
+                            <option value='asc'>Low to High</option>
+                            <option value='desc'>High to Low</option>
                         </Select>
                     </FormControl>
-
+                    </Hidden>
+                    <Hidden smDown>
                     {/* Order por Rating */}
                     <FormControl className={classes.formControl}>
                         <InputLabel>Order by Rating</InputLabel>
                         <Select
                             native
-                            onChange={(e) => handleOrderByRating(e)}
+                            name="rating"
+                            onChange={(e) => {
+                                setFilters({...filters, "rating": e.target.value});
+                                handlefilter(e)
+                            }}
                         >
                             <option aria-label="None" value="" />
-                            <option value='max-min'>5...1</option>
-                            <option value='min-max'>1...5</option>
+                            <option value='desc'>5...1</option>
+                            <option value='asc'>1...5</option>
                         </Select>
                     </FormControl>
+                    
                         <Button 
                             onClick={() => console.log("Limpiando filtros")}
                             color="secondary"
@@ -182,8 +185,9 @@ export default function Filter({setOrder}) {
                         >
                             Clean Filters
                         </Button>
-                    
+                        </Hidden>
                 </Grid>
+                <Hidden mdDown>
                 <Grid item xs='auto'>
                     <Button 
                         onClick={() => navigate('/service')}
@@ -193,7 +197,9 @@ export default function Filter({setOrder}) {
                     >
                         Beuthy Services
                     </Button>
+                    
                 </Grid>
+                </Hidden>
             </Grid>
         </Box>
     );
