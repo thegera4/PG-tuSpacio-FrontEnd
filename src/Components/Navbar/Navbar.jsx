@@ -78,9 +78,13 @@ export default function Navbar() {
             <MenuItem>{user.name}</MenuItem>
             <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
             <MenuItem onClick={Logout()}>Sing out</MenuItem>
-            {/* {
-              user.name === ''
-            } */}
+            {
+              user.name === 'TuSpacio' && <>
+                  <MenuItem onClick={() => navigate('/create')}>Create Product</MenuItem>
+                  <MenuItem onClick={() => navigate('/createUser')}>Users</MenuItem>
+                  <MenuItem onClick={() => navigate('/order/1')}>Orders</MenuItem>
+                </>
+            }
           </>
           : <MenuItem onClick={Login()}>Sing in</MenuItem>
       }
@@ -93,17 +97,7 @@ export default function Navbar() {
       <div className={classes.grow}>
         <AppBar position="static" color="inherit">
           <Toolbar>
-            {/* Hamburguesa */}
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="open drawer">
-              <MenuIcon />
-            </IconButton>
-            {/* Logo */}
-            <IconButton color="primary" onClick={() => navigate('/home')} >
-              <DrawerBox />
+            <DrawerBox />
             <IconButton color="primary" onClick={() => navigate('/')} >
                 <Box className={classes.logoBox}>
                   <img
