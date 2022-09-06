@@ -2,27 +2,15 @@ import * as React from 'react';
 import { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
+import useStyles from './useStyles';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import { useNavigate } from 'react-router-dom';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
-  button:{
-    backgroundColor: '#ff0000',
-    color: '#ffffff',
-    '&:hover': {
-      backgroundColor: '#ff3b3b'
-    },
-  }
-
-}));
-
-export default function DataGridDemo() {
+export default function UsersGrid() {
   const classes = useStyles();
+  const navigate = useNavigate();
+
   const columns = [
   { field: 'id', headerName: 'ID', width: 90,},
   {
@@ -70,7 +58,7 @@ export default function DataGridDemo() {
           </div>
         );
     }
-  }
+  },
 ];
 const rows = [
   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35, email: 'jsnow@got.com'},
@@ -91,6 +79,13 @@ const rows = [
   };
   return (
     <div style={{ height: 535, width: '100%', backgroundColor: '#fff'}}>
+      <Button
+        variant="contained"
+        className={classes.btnAdd}
+        startIcon={<PersonAddIcon />}
+        onClick={() => navigate('/createUser')}>
+          Add New User
+      </Button>
       <DataGrid
         rows={data}
         columns={columns}

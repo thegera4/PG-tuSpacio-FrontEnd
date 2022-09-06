@@ -7,7 +7,8 @@ const useStyles = makeStyles({
     border: '1px solid #eceeed',
     marginRight: 30,
     marginLeft: 30,
-    marginBottom: 70
+    marginBottom: 70,
+    marginTop: 100
 
   },
   media: {

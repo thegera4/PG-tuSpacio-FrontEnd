@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import {Container} from '@material-ui/core';
-import LandingPage from "../Landing/Landing";
+// import LandingPage from "../Landing/Landing";
 import Home from '../../Components/Home/Home';
 import Filter from "../Filter/Filter";
 import PersistentDrawerLeft from '../Drawer/Drawer'
@@ -13,9 +13,12 @@ export default function ContainerCards() {
         <div>
             <PersistentDrawerLeft />
             {/* <Filter 
-                setOrder={setOrder}    
+                setOrder={setOrder} 
             /> */}
             <Home />
+            />
+            <Home order={order}/>
+
         </div>
     )
 };

@@ -1,9 +1,8 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
+// import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,9 +11,8 @@ import { Link }from 'react-router-dom'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Favorite from '@material-ui/icons/Favorite';
 import NotFavorite from '@material-ui/icons/FavoriteBorder';
-import Placeholder from '../../assets/images/placeholder_home.png';
 import Box from '@material-ui/core/Box';
-import { addToWishlist, removeFromWishlist, addToCart, addNotification } from '../../actions';
+import { addToWishlist, removeFromWishlist, addToCart} from '../../actions';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 export default function HomeCards(props) {
@@ -30,24 +28,19 @@ export default function HomeCards(props) {
   }
   function handleCart(e) {
     e.preventDefault()
-    if(!props.cart) {
-      dispatch(addNotification())
-      dispatch(addToCart(props.products))
-    }else {
-      alert('The product is already added to the cart')
-    }
-  }
+    dispatch(addToCart(props.products.id))
+
+}
 
   return (
     <>
     { !products? <div>Not product Found</div> :
       <Card className={classes.root}>
-        <CardActionArea  >
         <Box
           display="flex"
           justifyContent="end"
           alignItems="end"
-          minHeight="5vh">
+          minHeight="3vh">
           <CardActions >
             <Button 
               size="small" 
@@ -65,7 +58,7 @@ export default function HomeCards(props) {
         </Box>
         <Link to={`/${props.products.id}`}>
           <img className='card-image' src={props.products.image_link} alt="" />
-          </Link>
+         </Link>
           <CardContent className={classes.content}>
             <Typography component="div">
               <Box 
@@ -83,12 +76,11 @@ export default function HomeCards(props) {
             fontSize={15}> 
               <AttachMoneyIcon 
                 fontSize="small"  />  
-                USD {props.products.price}  
+                ${Math.ceil(props.products.price)}
             </Box>
             </Typography>  
         </CardContent>
-      </CardActionArea>
-    </Card>
+      </Card>
     }
   </>
   )           
