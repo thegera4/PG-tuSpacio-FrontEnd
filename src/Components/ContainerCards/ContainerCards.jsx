@@ -11,11 +11,9 @@ export default function ContainerCards() {
        
     return(
         <div>
-            <PersistentDrawerLeft />
-            {/* <Filter 
+            {/* <PersistentDrawerLeft /> */}
+            <Filter 
                 setOrder={setOrder} 
-            /> */}
-            <Home />
             />
             <Home order={order}/>
 

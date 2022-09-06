@@ -148,21 +148,21 @@ export function removeOne(product) {
 export function orderCombine(filters) {
     const {alpha,brand,category,rating,price}=filters
     let filtersArray = []
-    if (alpha) filtersArray.push(`?alpha=${alpha}`);
-    if (brand) filtersArray.push(`?brand=${brand}`);
-    if (category) filtersArray.push(`?category=${category}`);
-    if (rating) filtersArray.push(`?rating=${rating}`);
-    if (price) filtersArray.push(`?price=${price}`);
-    let order = ''
+    if (alpha) filtersArray.push(`alpha=${alpha}`);
+    if (brand) filtersArray.push(`brand=${brand}`);
+    if (category) filtersArray.push(`category=${category}`);
+    if (rating) filtersArray.push(`rating=${rating}`);
+    if (price) filtersArray.push(`price=${price}`);
+    let order = '?'
     for (let i=0;i<filtersArray.length;i++) {
-        if (i===0) {order = filtersArray[i]}
+        if (i===0) {order = order + filtersArray[i]}
         else {order = order + '&' + filtersArray[i]}
     }
     return async function(dispatch) {
         try {
             let jsonOC;
             if (alpha||brand||category||rating||price) {
-                jsonOC = await axios.get(`${API}/products/orderCombine/${order}`);
+                jsonOC = await axios.get(`${API}/products/orderCombine${order}`);
             } else {
                 jsonOC = await axios.get(`${API}/products`); }
             console.log(jsonOC)
