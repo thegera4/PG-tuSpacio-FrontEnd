@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // import LandingPage from "../Landing/Landing";
 import Home from '../../Components/Home/Home';
 import Filter from "../Filter/Filter";
-
+import PersistentDrawerLeft from '../Drawer/Drawer'
 
 export default function ContainerCards() {
     
@@ -11,10 +11,14 @@ export default function ContainerCards() {
        
     return(
         <div>
-            <Filter 
-                setOrder={setOrder}    
+            <PersistentDrawerLeft />
+            {/* <Filter 
+                setOrder={setOrder} 
+            /> */}
+            <Home />
             />
             <Home order={order}/>
+
         </div>
     )
 };

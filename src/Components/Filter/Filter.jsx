@@ -105,6 +105,7 @@ export default function Filter({setOrder}) {
                 justifyContent="space-between"
                 alignItems="flex-end"
             >
+
                 <Grid item xs='auto'>
                     {/* Filter by Brands */}
                     <FormControl className={classes.formControl}>
@@ -121,6 +122,7 @@ export default function Filter({setOrder}) {
                         </Select>
                     </FormControl>
 
+
                     {/* Filter by Categories */}
                     <FormControl className={classes.formControl}>
                         <InputLabel>Categories</InputLabel>
@@ -136,6 +138,7 @@ export default function Filter({setOrder}) {
                         </Select>
                     </FormControl>
 
+
                     {/* Orden alfabetico */}
                     <FormControl className={classes.formControl}>
                         <InputLabel>Sort by Name</InputLabel>
@@ -148,6 +151,7 @@ export default function Filter({setOrder}) {
                             <option value="z-to-a">Z to A</option>
                         </Select>
                     </FormControl>
+
 
                     {/* Orden por Precio */}
                     <FormControl className={classes.formControl}>
