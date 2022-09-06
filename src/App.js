@@ -14,6 +14,7 @@ import theme from './ThemeConfig'
 import Checkout from './Components/Checkout/Checkout';
 import OrderDetail from './Components/OrderDetail/OrderDetail.jsx';
 import CreateUser from './Components/CreateUser/CreateUser.jsx';
+import CheckoutSuccess from './Components/Checkout/CheckoutSuccess';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/wishlist" element={ <Wishlist /> } />
             <Route path="/cart" element={ <Cart /> } />
             <Route path="/profile" element={ <Profile /> } />
+            <Route path="/checkout/success" element={ <CheckoutSuccess /> } />
             <Route path="/checkout" element={ <Checkout /> } />
             <Route path="/orders/:id" element={ <OrderDetail /> } />
           </Routes>  
