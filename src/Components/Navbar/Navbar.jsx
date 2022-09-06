@@ -115,15 +115,20 @@ export default function Navbar() {
                   <FavoriteIcon />
                 </Badge>
               </IconButton>
+              <IconButton color="primary" onClick={() => navigate('/cart')} >
+                <Badge color="secondary" overlap="rectangular">
+                  <StyledBadge badgeContent={total} color= 'error'>
+                    <ShoppingCartIcon className={classes.iconColors}/>
+                  </StyledBadge>
+                </Badge>
+              </IconButton>
 
               
-            <Link to='/cart' id='link'>
-               <IconButton aria-label="cart">
-              <StyledBadge badgeContent={total} color= 'error'>
-                <ShoppingCartIcon className={classes.iconColors}/>
-              </StyledBadge>
+            {/* <Link to='/cart' id='link'>
+              <IconButton aria-label="cart">
+                  <ShoppingCartIcon className={classes.iconColors}/>
               </IconButton>
-              </Link>
+            </Link> */}
 
               <IconButton
                 edge="end"
