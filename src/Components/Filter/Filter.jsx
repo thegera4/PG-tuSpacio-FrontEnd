@@ -87,7 +87,7 @@ export default function Filter({setOrder}) {
                     justifyContent="space-between"
                     alignItems="center"
                 >
-                    <Grid item xs={5}>
+                    <Grid item xs={6}>
                         {/* Filter by Brands */}
                         <FormControl className={classes.formControl}>
                             <InputLabel>Brands</InputLabel>
@@ -123,7 +123,7 @@ export default function Filter({setOrder}) {
                         <Button onClick={() => navigate('/create')} variant="contained">Create Product</Button>
                     </Grid> */}
 
-                    <Grid item xs={4.5}>
+                    <Grid item xs={6}>
                         {/* Orden alfabetico */}
                         <FormControl className={classes.formControl}>
                             <InputLabel>Sort by Name</InputLabel>
