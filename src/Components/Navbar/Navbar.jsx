@@ -26,6 +26,8 @@ import { Avatar } from '@material-ui/core';
 import {withStyles} from '@material-ui/core';
 import { getAllProducts } from '../../actions';
 import { useDispatch } from 'react-redux'
+import DrawerBox from '../Drawer/Drawer';
+
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -51,7 +53,7 @@ export default function Navbar() {
   let mapped= cart.map(item => item.quantity)
   let total = mapped.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
 
-  // if (isAuthenticated) console.log(user);
+  if (isAuthenticated) console.log(user);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -83,6 +85,13 @@ export default function Navbar() {
             <MenuItem>{user.name}</MenuItem>
             <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
             <MenuItem onClick={Logout()}>Sing out</MenuItem>
+            {
+              user.name === 'TuSpacio' && <>
+                  <MenuItem onClick={() => navigate('/create')}>Create Product</MenuItem>
+                  <MenuItem onClick={() => navigate('/createUser')}>Users</MenuItem>
+                  <MenuItem onClick={() => navigate('/order/1')}>Orders</MenuItem>
+                </>
+            }
           </>
           : <MenuItem onClick={Login()}>Sing in</MenuItem>
       }
@@ -95,6 +104,7 @@ export default function Navbar() {
       <div className={classes.grow}>
         <AppBar position="static" color="inherit">
           <Toolbar>
+
             {/* Hamburguesa */}
             <IconButton
               edge="start"
@@ -104,7 +114,10 @@ export default function Navbar() {
               <MenuIcon />
             </IconButton>
             {/* Logo */}
+       
+            <DrawerBox />
             <IconButton color="primary" onClick={() => handleRefresh()} >
+
                 <Box className={classes.logoBox}>
                   <img
                     className={classes.logoImg}
@@ -128,15 +141,20 @@ export default function Navbar() {
                   <FavoriteIcon />
                 </Badge>
               </IconButton>
+              <IconButton color="primary" onClick={() => navigate('/cart')} >
+                <Badge color="secondary" overlap="rectangular">
+                  <StyledBadge badgeContent={total} color= 'error'>
+                    <ShoppingCartIcon className={classes.iconColors}/>
+                  </StyledBadge>
+                </Badge>
+              </IconButton>
 
               
-            <Link to='/cart' id='link'>
-               <IconButton aria-label="cart">
-              <StyledBadge badgeContent={total} color= 'error'>
-              <ShoppingCartIcon className={classes.iconColors}/>
-              </StyledBadge>
+            {/* <Link to='/cart' id='link'>
+              <IconButton aria-label="cart">
+                  <ShoppingCartIcon className={classes.iconColors}/>
               </IconButton>
-              </Link>
+            </Link> */}
 
               <IconButton
                 edge="end"
@@ -167,5 +185,6 @@ export default function Navbar() {
         {renderMenu}
       </div>
     </ThemeProvider>
-  );
+  )
 }
+
