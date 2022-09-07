@@ -6,6 +6,7 @@ import { GET_CATEGORIES, GET_ALL_PRODUCTS, SET_CURRENT_HOME_PAGE, GET_DETAIL, SE
 
 const initialState = {
   products: [],
+  productsCopy:[],
   currentPageHome: 1,
   productDetail: {},
   categories: [],
@@ -66,6 +67,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         products: action.payload,
+        productsCopy: action.payload
       };
     case SET_CURRENT_HOME_PAGE:
       return {

@@ -30,9 +30,6 @@ const SearchBar = ({ placeholder, data }) => {
     setWordEntered('')
   }
 
-  useEffect(() => {
-    dispatch(getAllProducts())
-  }, [dispatch, ])
   
   const handleSearch = () => {
     dispatch(getName(wordEntered))

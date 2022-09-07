@@ -24,6 +24,8 @@ import Logout from '../Logout/Logout';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Avatar } from '@material-ui/core';
 import {withStyles} from '@material-ui/core';
+import { getAllProducts } from '../../actions';
+import { useDispatch } from 'react-redux'
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -35,12 +37,12 @@ const StyledBadge = withStyles((theme) => ({
 }))(Badge);
 
 export default function Navbar() {
-
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
-  const data = useSelector((state) => state.products);
+  const data = useSelector((state) => state.productsCopy);
 
 
   const { user, isAuthenticated } = useAuth0();
@@ -59,6 +61,10 @@ export default function Navbar() {
     setAnchorEl(null);
   };
 
+  const handleRefresh = () => {
+    navigate('/home')
+    dispatch(getAllProducts())
+  }
   const menuId = "primary-search-account-menu";
 
   const renderMenu = (
@@ -98,7 +104,7 @@ export default function Navbar() {
               <MenuIcon />
             </IconButton>
             {/* Logo */}
-            <IconButton color="primary" onClick={() => navigate('/home')} >
+            <IconButton color="primary" onClick={() => handleRefresh()} >
                 <Box className={classes.logoBox}>
                   <img
                     className={classes.logoImg}
