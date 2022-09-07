@@ -19,12 +19,12 @@ export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const SET_ADMIN_OPTION = "SET_ADMIN_OPTION";
 export const ADD_NOTIFICATION = "ADD_NOTIFICATION";
 export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
-export const ORDERS_FILTERS = 'ORDERS_FILTERS';
-export const CLEAR_CART = 'CLEAR_CART';
-export const REMOVE_ONE = 'REMOVE_ONE';
+export const ORDERS_FILTERS = "ORDERS_FILTERS";
+export const CLEAR_CART = "CLEAR_CART";
+export const REMOVE_ONE = "REMOVE_ONE";
 
 // const API = 'http://localhost:3001/api';//API LOCAL
-const API = 'http://localhost:3001/api'
+const API = "http://localhost:3001/api";
 
 export function getAllProducts() {
   return async function (dispatch) {
@@ -138,40 +138,44 @@ export function setAdminOption(value) {
 }
 
 export function clearCart() {
-  return { type: CLEAR_CART }
+  return { type: CLEAR_CART };
 }
 
 export function removeOne(product) {
-  return { type: REMOVE_ONE, payload: product}
+  return { type: REMOVE_ONE, payload: product };
 }
 
 export function orderCombine(filters) {
-    const {alpha,brand,category,rating,price}=filters
-    let filtersArray = []
-    if (alpha) filtersArray.push(`alpha=${alpha}`);
-    if (brand) filtersArray.push(`brand=${brand}`);
-    if (category) filtersArray.push(`category=${category}`);
-    if (rating) filtersArray.push(`rating=${rating}`);
-    if (price) filtersArray.push(`price=${price}`);
-    let order = '?'
-    for (let i=0;i<filtersArray.length;i++) {
-        if (i===0) {order = order + filtersArray[i]}
-        else {order = order + '&' + filtersArray[i]}
+  const { alpha, brand, category, rating, price } = filters;
+  let filtersArray = [];
+  if (alpha) filtersArray.push(`alpha=${alpha}`);
+  if (brand) filtersArray.push(`brand=${brand}`);
+  if (category) filtersArray.push(`category=${category}`);
+  if (rating) filtersArray.push(`rating=${rating}`);
+  if (price) filtersArray.push(`price=${price}`);
+  let order = "?";
+  for (let i = 0; i < filtersArray.length; i++) {
+    if (i === 0) {
+      order = order + filtersArray[i];
+    } else {
+      order = order + "&" + filtersArray[i];
     }
-    return async function(dispatch) {
-        try {
-            let jsonOC;
-            if (alpha||brand||category||rating||price) {
-                jsonOC = await axios.get(`${API}/products/orderCombine${order}`);
-            } else {
-                jsonOC = await axios.get(`${API}/products`); }
-            console.log(jsonOC)
-            return dispatch({
-                type: ORDERS_FILTERS,
-                payload: jsonOC.data
-            });
-        } catch(error){
-            console.error(error);
-        }
+  }
+  return async function (dispatch) {
+    try {
+      let jsonOC;
+      if (alpha || brand || category || rating || price) {
+        jsonOC = await axios.get(`${API}/products/orderCombine${order}`);
+      } else {
+        jsonOC = await axios.get(`${API}/products`);
+      }
+      console.log(jsonOC);
+      return dispatch({
+        type: ORDERS_FILTERS,
+        payload: jsonOC.data,
+      });
+    } catch (error) {
+      console.error(error);
     }
+  };
 }
