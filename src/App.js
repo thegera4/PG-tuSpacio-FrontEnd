@@ -33,6 +33,7 @@ function App() {
           <Route path="/wishlist" element={ <Wishlist /> } />
           <Route path="/cart" element={ <Cart /> } />
           <Route path="/profile" element={ <Profile /> } />
+          <Route path="/checkout/success" element={ <CheckoutSuccess /> } />
           <Route path="/checkout" element={ <Checkout /> } />
           <Route path="/orders/:id" element={ <OrderDetail /> } />
         </Routes>  
