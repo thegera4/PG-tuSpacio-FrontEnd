@@ -47,6 +47,7 @@ function setLocalFavorites(productsFav) {
 
 const initialState = {
   products: [],
+  productsCopy:[],
   currentPageHome: 1,
   productDetail: {},
   categories: [],
@@ -149,6 +150,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         products: action.payload,
+        productsCopy: action.payload
       };
     case SET_CURRENT_HOME_PAGE:
       return {

@@ -7,12 +7,14 @@ import { getDetail, getName, getAllProducts } from '../../actions/index'
 import { useNavigate } from "react-router-dom";
 
 const SearchBar = ({ placeholder, data }) => {
+
   const [filteredData, setFilteredData] = useState([])
   const [wordEntered, setWordEntered] = useState('')
   const dispatch = useDispatch()
   let navigate = useNavigate();
 
   const handleFilter = (event) => {
+    navigate('/home')
     const searchWord = event.target.value
     setWordEntered(searchWord)
     const newFilter = data.filter((value) => {
@@ -30,14 +32,12 @@ const SearchBar = ({ placeholder, data }) => {
     setWordEntered('')
   }
 
-  useEffect(() => {
-    dispatch(getAllProducts())
-  }, [dispatch, ])
   
   const handleSearch = () => {
     dispatch(getName(wordEntered))
     setFilteredData([])
     setWordEntered('')
+    
     
   }
 
