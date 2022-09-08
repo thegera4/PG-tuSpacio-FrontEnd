@@ -2,7 +2,7 @@
 import {React, useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {List, Box, Button} from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -52,10 +52,10 @@ const dispatch = useDispatch();
 
 function handlefilter(e) {
   e.preventDefault();
-  // console.log(filters)
   dispatch(orderCombine({...filters, [e.target.name]: e.target.value}));
   dispatch(setCurrentHomePage(1))
   let {alpha,category,price,brand,rating}=filters
+  // eslint-disable-next-line no-sequences
   setOrder(`filters by ${alpha,category,price,brand,rating}`)
 }
 

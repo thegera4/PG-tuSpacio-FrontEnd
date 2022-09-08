@@ -1,4 +1,5 @@
-import React from 'react'
+////////* Este componente no se usa *///////
+/*import React from 'react'
 import { CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
 import Button from '@material-ui/core/Button';
 import axios from 'axios'
@@ -67,4 +68,4 @@ const Checkout = () => {
   )
 }
 
-export default Checkout
+export default Checkout*/

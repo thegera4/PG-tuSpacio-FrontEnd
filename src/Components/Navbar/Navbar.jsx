@@ -18,7 +18,7 @@ import useStyles from './useStyles';
 import { useSelector } from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Login from '../Login/Login';
 import Logout from '../Logout/Logout';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -46,14 +46,11 @@ export default function Navbar() {
   const isMenuOpen = Boolean(anchorEl);
   const data = useSelector((state) => state.productsCopy);
 
-
   const { user, isAuthenticated } = useAuth0();
 
   const cart = useSelector((state) => state.cart);
   let mapped= cart.map(item => item.quantity)
   let total = mapped.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
-
-  if (isAuthenticated) console.log(user);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -148,14 +145,6 @@ export default function Navbar() {
                   </StyledBadge>
                 </Badge>
               </IconButton>
-
-              
-            {/* <Link to='/cart' id='link'>
-              <IconButton aria-label="cart">
-                  <ShoppingCartIcon className={classes.iconColors}/>
-              </IconButton>
-            </Link> */}
-
               <IconButton
                 edge="end"
                 aria-label="account of current user"
