@@ -1,0 +1,35 @@
+.allContainerChat {
+  width: 25rem;
+  height: 30rem;
+  position: fixed;
+  right: 3rem;
+  bottom: 21rem;
+}
+
+.containerChat {
+  display: flex;
+  justify-content: center;
+}
+
+.botonAyuda {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
+
+.botonAyuda > button {
+  position: fixed;
+  right: 2.5rem;
+  bottom: 1rem;
+  background-color: transparent;
+  border: none;
+  border-radius: 100%;
+  width: 4rem;
+  height: 5rem;
+}
+
+.botonAyuda > button > img {
+  margin-left: 0;
+  width: 7rem;
+  height: 7rem;
+}
