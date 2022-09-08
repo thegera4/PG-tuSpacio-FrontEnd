@@ -12,7 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Box from '@material-ui/core/Box';
-
+import { useAuth0 } from '@auth0/auth0-react';
 import useStyles from './useStyles';
 import { StyledTableCell, StyledTableRow } from './withStyles';
 import axios from 'axios';
@@ -21,7 +21,8 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cartProducts = useSelector((state) => state.cart)
   const classes = useStyles();
-    
+  const { user, isAuthenticated } = useAuth0();
+
   function handleDelete(e){
     dispatch(removeFromCart(e))
     alert('Do you want to delete the product?')
@@ -44,14 +45,18 @@ const Cart = () => {
   }
 
   const handleCheckout = (cartProducts) => {
+    if (isAuthenticated) {
     axios.post("http://localhost:3001/api/checkout", {
       cartProducts,
-      //userId: user.id, //esto vendria del auth
+      id: user.sub,
     }).then((res) => {
       res.data.url ? window.location.href = res.data.url : alert("Error") 
     }).catch((err) => {
       console.error(err)
     })
+    } else {
+      alert("Please login to checkout")
+    }
   }
       
     return (
