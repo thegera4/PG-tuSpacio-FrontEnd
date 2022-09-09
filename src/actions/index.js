@@ -24,7 +24,7 @@ export const CLEAR_CART = "CLEAR_CART";
 export const REMOVE_ONE = "REMOVE_ONE";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
-
+export const UPDATE_ORDER_STATUS = "UPDATE_ORDER_STATUS";
 //API LOCAL
 const API = "http://localhost:3001/api";
 
@@ -208,4 +208,18 @@ export const getOrderById = (id) => {
       console.error(error);
     }
   };
+}
+
+export function updateOrderStatus(id, status){
+  return async function (dispatch) {
+    try {
+      const json = await axios.patch(`${API}/orders/${id}`, {status});
+      return dispatch({
+        type: UPDATE_ORDER_STATUS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }

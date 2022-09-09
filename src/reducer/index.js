@@ -16,13 +16,14 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   SET_ADMIN_OPTION,
-  ADD_NOTIFICATION,
-  DELETE_NOTIFICATION,
+  //ADD_NOTIFICATION,
+  //DELETE_NOTIFICATION,
   ORDERS_FILTERS,
   CLEAR_CART,
   REMOVE_ONE,
   GET_ALL_ORDERS,
   GET_ORDER_BY_ID,
+  UPDATE_ORDER_STATUS,
 } from "../actions";
 
 /* LOCALSTORAGE FAVORITES */
@@ -208,7 +209,6 @@ function rootReducer(state = initialState, action) {
       setLocalFavorites(newState.favorites);
       return newState;
     }
-
     case ADD_TO_CART:
       let newItem = state.products.find(
         (product) => product.id === action.payload
@@ -247,7 +247,6 @@ function rootReducer(state = initialState, action) {
             ...state,
             cart: state.cart.filter((item) => item.id !== action.payload),
           };
-
     case CLEAR_CART:
       return {
         ...state,
@@ -262,6 +261,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         orderDetail: action.payload,
+      };
+    case UPDATE_ORDER_STATUS:
+      return {
+        ...state,
+        orders: state.orders
       };
     default:
       return state;

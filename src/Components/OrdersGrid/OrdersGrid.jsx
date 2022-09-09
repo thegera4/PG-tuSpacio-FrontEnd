@@ -5,7 +5,7 @@ import { Button } from '@material-ui/core';
 import PageviewIcon from '@material-ui/icons/Pageview';
 import { useDispatch, useSelector} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getAllOrders } from '../../actions';
+import { getAllOrders, updateOrderStatus } from '../../actions';
 
 export default function OrdersGrid() {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ export default function OrdersGrid() {
     width: 100,
     editable: true,
     type: 'singleSelect',
-    valueOptions: ['Pending', 'In Progress', 'Completed', 'Cancelled'],
+    valueOptions: ['processing', 'completed', 'cancelled'],
   },
   {
     field: 'customer',
@@ -109,6 +109,10 @@ export default function OrdersGrid() {
         pageSize={8}
         rowsPerPageOptions={[5]}
         disableSelectionOnClick
+        onCellEditCommit={(params) => {
+          console.log(params);
+          dispatch(updateOrderStatus(params.id, params.value));
+        }}
       />
     </div>
   );
