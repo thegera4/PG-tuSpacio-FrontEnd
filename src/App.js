@@ -1,5 +1,5 @@
 import './App.css';
-import { Container, ThemeProvider } from '@material-ui/core'
+import { Box, Container, ThemeProvider } from '@material-ui/core'
 import Navbar from './Components/Navbar/Navbar.jsx';
 import Footer from './Components/Footer/Footer.jsx';
 import Detail from './Components/Detail/Detail';
@@ -14,13 +14,18 @@ import theme from './ThemeConfig'
 import Checkout from './Components/Checkout/Checkout';
 import OrderDetail from './Components/OrderDetail/OrderDetail.jsx';
 import CreateUser from './Components/CreateUser/CreateUser.jsx';
+import LandingPage from './Components/LandingPage/LandingPage';
+import CheckoutSuccess from './Components/Checkout/CheckoutSuccess';
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth='xl' disableGutters={true} style={{ backgroundColor: '#c8e6c9' }} >
+      <Container maxWidth='xl' disableGutters={true} style={{ backgroundColor: 'f4f4f4' }} >
         <Navbar />
-        <Routes>
-          <Route path="/" exact element={ <ContainerCards /> } /> 
+        <Box pt={4}>
+          <Routes>
+          <Route path="/" element={ <LandingPage /> } /> 
+          <Route path="/home" exact element={ <ContainerCards /> } /> 
           <Route path="/:id" element={ <Detail /> } />
           <Route path="/service" element={ <DetailService /> } />
           <Route path="/createUser" element={ <CreateUser /> } />
@@ -28,9 +33,11 @@ function App() {
           <Route path="/wishlist" element={ <Wishlist /> } />
           <Route path="/cart" element={ <Cart /> } />
           <Route path="/profile" element={ <Profile /> } />
+          <Route path="/checkout/success" element={ <CheckoutSuccess /> } />
           <Route path="/checkout" element={ <Checkout /> } />
           <Route path="/orders/:id" element={ <OrderDetail /> } />
         </Routes>  
+        </Box>
         <Footer />  
       </Container>
     </ThemeProvider>
@@ -38,4 +45,3 @@ function App() {
 }
 
 export default App;
-

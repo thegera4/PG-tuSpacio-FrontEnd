@@ -1,261 +1,193 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useParams} from "react-router-dom"
-import {getDetail, addToCart, addToWishlist, removeFromWishlist, addNotification} from '../../actions/index'
+import {getDetail, addToCart, addToWishlist, removeFromWishlist} from '../../actions/index'
 import { useEffect } from 'react'
 import defaultImage from "../../assets/images/not_found.png"
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-// import { Link } from 'react-router-dom';
-import notFound from '../../assets/images/not_found.png'
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import { Link } from 'react-router-dom';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import Link from '@material-ui/core/Link';
 import ReactImageMagnify from 'react-image-magnify';
 
+
+
+
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 500,
-    margin: 'auto',
-    marginTop: 100
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-  button: {
-    margin: theme.spacing(0),
-    borderColor: '#257558',
-    color: '#257558',
-    width: '100%',
-    marginTop: 10
-  },
-  button2: {
-      margin: theme.spacing(0),
-      backgroundColor: '#257558',
-      color: '#fff',
-      width: '100%',
-      marginTop: 10
-  }
+ root: {
+   maxWidth: 500,
+   margin: 'auto',
+   marginTop: 100
+ },
+ media: {
+   height: 0,
+   paddingTop: '56.25%', // 16:9
+ },
+ expand: {
+   transform: 'rotate(0deg)',
+   marginLeft: 'auto',
+   transition: theme.transitions.create('transform', {
+     duration: theme.transitions.duration.shortest,
+   }),
+ },
+ expandOpen: {
+   transform: 'rotate(180deg)',
+ },
+ avatar: {
+   backgroundColor: red[500],
+ },
+ button: {
+   margin: theme.spacing(0),
+   borderColor: '#257558',
+   color: '#257558',
+   width: '100%',
+   marginTop: 10
+ },
+ button2: {
+     margin: theme.spacing(0),
+     backgroundColor: '#257558',
+     color: '#fff',
+     width: '100%',
+     marginTop: 10
+ }
 
 }));
 
 export default function RecipeReviewCard() {
-  const { id } = useParams()
+ const { id } = useParams()
+
+ const classes = useStyles();
+ const [expanded, setExpanded] = React.useState(false);
+
+ const handleExpandClick = () => {
+   setExpanded(!expanded);
+ };
+
+
+
+ const dispatch = useDispatch()
+ const item = useSelector((state) => state.productDetail)
+ const cart = useSelector((state) => state.cart)
+ const fav = useSelector((state) => state.favorites)
+ const [count, setCount] = useState(1)
+
+ const [color,setColor] = useState('')
+
+ const image = item.image_link
+
+
+ useEffect(() => {
+
+   dispatch(getDetail(id))   
+
+ }
+ , [dispatch])
+
  
-  const classes = useStyles();
-  // const [expanded, setExpanded] = React.useState(false);
 
-  // const handleExpandClick = () => {
-  //   setExpanded(!expanded);
-  // };
-
-
-
-  const dispatch = useDispatch()
-  const item = useSelector((state) => state.productDetail)
-  const cart = useSelector((state) => state.cart)
-  const fav = useSelector((state) => state.favorites)
-  const [count, setCount] = useState(1)
-  const image = item.image_link
- 
-  useEffect(() => {
-    dispatch(getDetail(id))   
-  } , [dispatch, id])
-
-  function handleCart(e) {
-      if(!cart.includes(e)) {
-        dispatch(addToCart(e))
-        dispatch(addNotification())
-      }
-      else {
-        alert('The product is already added to the cart')
-      }
-  }
-  function handleFavorite(e) {
-    !fav.includes(e)?
-    dispatch(addToWishlist(e)) :
-    dispatch(removeFromWishlist(e.id))
-  }
-
-  function handleIncrement(){
-    setCount(count + 1)
-  }
-
-  function handleDecrement(){
-     if(count>1){
-         setCount(count - 1)
-     }else {
-         return
+ function handleCart(e) {
+     if(!cart.includes(e)) {
+       dispatch(addToCart(e))
      }
-     
+     else {
+       alert('The product is already added to the cart')
+     }
+ }
+ function handleFavorite(e) {
+   !fav.includes(e)?
+   dispatch(addToWishlist(e)) :
+   dispatch(removeFromWishlist(e.id))
+ }
+
+  const handleColor = (e) => {
+   setColor(e)
   }
 
+  console.log(color)
 
-  return (
-    // <Card className={classes.root} >
-    //   <CardHeader
-        
-    //     title={myProduct.name}
-    //     subheader={myProduct.brand}
-    //   />
-    //   <CardMedia
-    //     className={classes.media}
-    //     image={myProduct.image_link || defaultImage}
-    //     title={myProduct.name}
-    //   />
-    //   <CardContent>
-    //     <Typography variant="body2" color="textSecondary" component="p">
-    //     {myProduct.description}
-    //     </Typography>
-    //   </CardContent>
-    //   <CardActions disableSpacing>
-    //     <IconButton aria-label="add to favorites">
-    //       <FavoriteIcon />
-    //     </IconButton>
-    //     <IconButton aria-label="sadd to cart">
-    //       <ShoppingCartIcon />
-    //     </IconButton>
-    //     <IconButton
-    //       className={clsx(classes.expand, {
-    //         [classes.expandOpen]: expanded,
-    //       })}
-    //       onClick={handleExpandClick}
-    //       aria-expanded={expanded}
-    //       aria-label="show more"
-    //     >
-    //       <ExpandMoreIcon />
-    //     </IconButton>
-    //   </CardActions>
-    //   <Collapse in={expanded} timeout="auto" unmountOnExit>
-    //     <CardContent>
-    //       <Typography paragraph>Rating: {myProduct.rating || 0 }</Typography>
-    //       <Typography paragraph>Type: {myProduct.product_type}</Typography>
-    //       <Typography paragraph>Category: {myProduct.product_category}</Typography>
-    //       <Typography paragraph>Colors: </Typography>
-    //      <div className='colors'>
-    //       {myProduct.product_colors?.slice(0, 6).map((color, index) => (
-    //           <button key={index} style={{background: color.hex_value}}></button>
-    //       ))
-    //       }
-    //      </div>
-    //     </CardContent>
-    //   </Collapse>
-    // </Card>
-    <div className='detail' key={item.id}>
-                <div className='breadcrums'>
-                <Breadcrumbs aria-label="breadcrumb">
-                  <Link color="inherit" href="/" >
-                   Products
-                  </Link>
-                  <Link color="inherit"  >
-                    {item.category}
-                  </Link>
-                  <Typography color="textPrimary">{item.name}</Typography>
-                </Breadcrumbs>
-                </div>
-                <div className='image-list'>
-                <img src={item.image_link || defaultImage} className='detail-img-small'/> 
-                </div>  
-                <div className='image-cont'>
-                {/* <img src={image} className='detail-img'/> */}
-                <ReactImageMagnify {...{
-                    smallImage: {
-                        isFluidWidth: true,
-                        src: image,
-                    },
-                    largeImage: {
-                        src: image,
-                        width: 800,
-                        height: 800,
-                    }
-                }} />
-                </div>
 
-                <div className='box'>
-                    <div className='row'>
-                        <h1>{item.name}</h1>
-                        <h3>By {item.brand}</h3>
-                        <ul className='tag'>
-                        {item.tag_list?.map((ele, index) => (
-                        <p key={index} >{ele}</p>
-                        ))}
-                        </ul>
-                        <h3>${item.price * count}</h3>
-                        
-                        <Box component="fieldset" borderColor="transparent" m={0} p={0} >
-                        <Rating name="read-only" value={item.rating} readOnly precision={0.1} size="large" zIndex={-1}/>
-                        </Box>
+ return (
+  
+   <div className='detail' key={item.id}>
+               <div className='breadcrums'>
+               <Breadcrumbs aria-label="breadcrumb">
+                 <Link to="/home" >
+                  Products
+                 </Link>
+                 <Link to='/home'>
+                   {item.category}
+                 </Link>
+                 <Typography color="textPrimary">{item.name}</Typography>
+               </Breadcrumbs>
+               </div>
+               <div className='image-list'>
+               <img src={item.image_link || defaultImage} className='detail-img-small'/> 
+               </div>  
+               <div className='image-cont'>
+               
+               <ReactImageMagnify {...{
+                   smallImage: {
+                       isFluidWidth: true,
+                       src: image,
+                   },
+                   largeImage: {
+                       src: image,
+                       width: 800,
+                       height: 800,
+                   }
+               }} />
+               </div>
 
-                        <p>{item.description}</p>
-                        <div className='colors'>
-                            <h3>Colors : </h3>
-                        {item.product_colors?.slice(0, 6).map((color, index) => (
-                        <button key={index} style={{background: color.hex_value}}></button>
-                        ))}
-                        </div>
-                        <div className='amount'>
-                        <h3>Quantity : </h3>
-                          <button className='count' onClick={() => handleDecrement(item.price)}>-</button>
-                          <span>{count}</span>
-                          <button className='count' onClick={() => handleIncrement()}>+</button>
-                        </div>
-                        <Button
-                          variant="contained"
-                          className={classes.button2}
-                          startIcon={<ShoppingCartIcon />}
-                          onClick={(e) => handleCart(item)}
-                          >
-                          ADD TO CART
-                          </Button>
-                        
-                        {/* <button className='cart' onClick={(e) => handleCart(item)}>
-                            Add to Cart
-                        </button> */}
-                        
-                        {/* <button className='fav' onClick={(e) => handleFavorite(item)}>
-                            Add to Favorites
-                        </button> */}
-                        <Button
-                                variant="outlined"
-                                className={classes.button}
-                                startIcon={<FavoriteIcon />}
-                                onClick={(e) => handleFavorite(item)}
-                            >
-                            ADD TO FAVORITES
-                            </Button>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-  );
+               <div className='box'>
+                   <div className='row'>
+                       <h1>{item.name}</h1>
+                       <h3>By {item.brand}</h3>
+                       <ul className='tag'>
+                       {item.tag_list?.map((ele, index) => (
+                       <p key={index} >{ele}</p>
+                       ))}
+                       </ul>
+                       <h3>${Math.ceil(item.price)}</h3>
+                       
+                       <Box component="fieldset" borderColor="transparent" m={0} p={0} >
+                       <Rating name="read-only" value={item.rating} readOnly precision={0.1} size="large" zIndex={-1}/>
+                       </Box>
+                       <p>{item.description}</p>
+                       <div className='colors'>
+                           <h3>Colors : </h3>
+                       {item.product_colors?.slice(0, 6).map((color, index) => (
+                       <button key={index} style={{background: color.hex_value}} onClick={() => handleColor(color.hex_value)}></button>
+                       ))}
+                       </div>
+
+                       <Button
+                         variant="contained"
+                         className={classes.button2}
+                         startIcon={<ShoppingCartIcon />}
+                         onClick={() => handleCart(item.id)}
+                         >
+                         ADD TO CART
+                         </Button>
+                       
+
+                       <Button
+                               variant="outlined"
+                               className={classes.button}
+                               startIcon={<FavoriteIcon />}
+                               onClick={(e) => handleFavorite(item)}
+                           >
+                           ADD TO FAVORITES
+                           </Button>
+                       
+                   </div>
+                   
+               </div>
+           </div>
+ );
 }

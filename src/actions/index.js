@@ -19,8 +19,12 @@ export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const SET_ADMIN_OPTION = "SET_ADMIN_OPTION";
 export const ADD_NOTIFICATION = "ADD_NOTIFICATION";
 export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
+export const ORDERS_FILTERS = "ORDERS_FILTERS";
+export const CLEAR_CART = "CLEAR_CART";
+export const REMOVE_ONE = "REMOVE_ONE";
 
 // const API = 'http://localhost:3001/api';//API LOCAL
+const API = "http://localhost:3001/api";
 
 export function getAllProducts() {
   return async function (dispatch) {
@@ -48,24 +52,6 @@ export function getAllBrands() {
   };
 }
 
-export function orderByAbc(order) {
-  return async function (dispatch) {
-    try {
-      let jsonAZ;
-      if (order)
-        jsonAZ = await axios.get(`/products/ordername/?orderby=${order}`);
-      // http://localhost:3001/api/products/ordername/?orderby=a-to-z
-      else jsonAZ = await axios.get(`/products`);
-      return dispatch({
-        type: ORDER_BY_NAME,
-        payload: jsonAZ.data,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-}
-
 export function getCategories() {
   return function (dispatch) {
     return axios
@@ -79,55 +65,6 @@ export function getCategories() {
       .catch((error) => {
         console.log(error);
       });
-  };
-}
-
-export function filterByBrand(brand) {
-  return async function (dispatch) {
-    try {
-      var jsonB;
-      if (brand) jsonB = await axios.get(`/products/brand/?brand=${brand}`);
-      else jsonB = await axios.get(`/products`);
-      return dispatch({
-        type: SEARCH_BY_BRAND,
-        payload: jsonB.data,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-}
-
-export function filterByCategory(categorie) {
-  return async function (dispatch) {
-    try {
-      let jsonC;
-      if (categorie)
-        jsonC = await axios.get(`/categorie/?categorie=${categorie}`);
-      else jsonC = await axios.get(`/products`);
-      return dispatch({
-        type: SEARCH_BY_CATEGORIE,
-        payload: jsonC.data,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-}
-
-export function orderByPrice(order) {
-  return async function (dispatch) {
-    try {
-      let jsonOP;
-      if (order) jsonOP = await axios.get(`/products/price/?orderby=${order}`);
-      else jsonOP = await axios.get(`/products`);
-      return dispatch({
-        type: ORDER_BY_PRICE,
-        payload: jsonOP.data,
-      });
-    } catch (error) {
-      console.error(error);
-    }
   };
 }
 
@@ -177,22 +114,6 @@ export function postNewProduct(payload) {
   };
 }
 
-export function OrderByRating(order) {
-  return async function (dispatch) {
-    try {
-      let jsonR;
-      if (order) jsonR = await axios.get(`/products/rating/?ratingBy=${order}`);
-      else jsonR = await axios.get(`/products`);
-      return dispatch({
-        type: ORDER_BY_RATING,
-        payload: jsonR.data,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-}
-
 export function addToWishlist(product) {
   return { type: ADD_TO_WISHLIST, payload: product };
 }
@@ -216,10 +137,45 @@ export function setAdminOption(value) {
   };
 }
 
-export function addNotification() {
-  return { type: ADD_NOTIFICATION };
+export function clearCart() {
+  return { type: CLEAR_CART };
 }
 
-export function deleteNotification() {
-  return { type: DELETE_NOTIFICATION };
+export function removeOne(product) {
+  return { type: REMOVE_ONE, payload: product };
+}
+
+export function orderCombine(filters) {
+  const { alpha, brand, category, rating, price } = filters;
+  let filtersArray = [];
+  if (alpha) filtersArray.push(`alpha=${alpha}`);
+  if (brand) filtersArray.push(`brand=${brand}`);
+  if (category) filtersArray.push(`category=${category}`);
+  if (rating) filtersArray.push(`rating=${rating}`);
+  if (price) filtersArray.push(`price=${price}`);
+  let order = "?";
+  for (let i = 0; i < filtersArray.length; i++) {
+    if (i === 0) {
+      order = order + filtersArray[i];
+    } else {
+      order = order + "&" + filtersArray[i];
+    }
+  }
+  return async function (dispatch) {
+    try {
+      let jsonOC;
+      if (alpha || brand || category || rating || price) {
+        jsonOC = await axios.get(`${API}/products/orderCombine${order}`);
+      } else {
+        jsonOC = await axios.get(`${API}/products`);
+      }
+      console.log(jsonOC);
+      return dispatch({
+        type: ORDERS_FILTERS,
+        payload: jsonOC.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 }

@@ -1,6 +1,6 @@
 const itemData = [
     {
-        img: "https://www.purpicks.com/wp-content/uploads/2018/06/Rejuva-Minerals-Multi-Purpose-Powder-Blush-_-Eye-1.jpg",
+        img: "https://shop.dior.com.ar/forever",
         title: "Multi Purpose Powder - Blush & Eye"
     },
     {

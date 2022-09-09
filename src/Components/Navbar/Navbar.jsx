@@ -24,6 +24,10 @@ import Logout from '../Logout/Logout';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Avatar } from '@material-ui/core';
 import {withStyles} from '@material-ui/core';
+import { getAllProducts } from '../../actions';
+import { useDispatch } from 'react-redux'
+import DrawerBox from '../Drawer/Drawer';
+
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -35,17 +39,18 @@ const StyledBadge = withStyles((theme) => ({
 }))(Badge);
 
 export default function Navbar() {
-
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
-  const data = useSelector((state) => state.products);
-  const notification = useSelector((state) => state.notification);
+  const data = useSelector((state) => state.productsCopy);
 
   const { user, isAuthenticated } = useAuth0();
 
-  // if (isAuthenticated) console.log(user);
+  const cart = useSelector((state) => state.cart);
+  let mapped= cart.map(item => item.quantity)
+  let total = mapped.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -55,6 +60,10 @@ export default function Navbar() {
     setAnchorEl(null);
   };
 
+  const handleRefresh = () => {
+    navigate('/home')
+    dispatch(getAllProducts())
+  }
   const menuId = "primary-search-account-menu";
 
   const renderMenu = (
@@ -73,6 +82,13 @@ export default function Navbar() {
             <MenuItem>{user.name}</MenuItem>
             <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
             <MenuItem onClick={Logout()}>Sing out</MenuItem>
+            {
+              user.name === 'TuSpacio' && <>
+                  <MenuItem onClick={() => navigate('/create')}>Create Product</MenuItem>
+                  <MenuItem onClick={() => navigate('/createUser')}>Users</MenuItem>
+                  <MenuItem onClick={() => navigate('/order/1')}>Orders</MenuItem>
+                </>
+            }
           </>
           : <MenuItem onClick={Login()}>Sing in</MenuItem>
       }
@@ -85,6 +101,7 @@ export default function Navbar() {
       <div className={classes.grow}>
         <AppBar position="static" color="inherit">
           <Toolbar>
+
             {/* Hamburguesa */}
             <IconButton
               edge="start"
@@ -94,7 +111,10 @@ export default function Navbar() {
               <MenuIcon />
             </IconButton>
             {/* Logo */}
-            <IconButton color="primary" onClick={() => navigate('/')} >
+       
+            <DrawerBox />
+            <IconButton color="primary" onClick={() => handleRefresh()} >
+
                 <Box className={classes.logoBox}>
                   <img
                     className={classes.logoImg}
@@ -118,9 +138,11 @@ export default function Navbar() {
                   <FavoriteIcon />
                 </Badge>
               </IconButton>
-              <IconButton color="primary" onClick={() => navigate('/cart')}>
+              <IconButton color="primary" onClick={() => navigate('/cart')} >
                 <Badge color="secondary" overlap="rectangular">
-                  <ShoppingCartIcon />
+                  <StyledBadge badgeContent={total} color= 'error'>
+                    <ShoppingCartIcon className={classes.iconColors}/>
+                  </StyledBadge>
                 </Badge>
               </IconButton>
               <IconButton
@@ -152,5 +174,6 @@ export default function Navbar() {
         {renderMenu}
       </div>
     </ThemeProvider>
-  );
+  )
 }
+
