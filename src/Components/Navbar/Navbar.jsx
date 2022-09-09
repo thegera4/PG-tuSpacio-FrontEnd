@@ -78,18 +78,23 @@ export default function Navbar() {
     >
       {
         isAuthenticated
-          ? <>
+          ? <div>
             <MenuItem>{user.name}</MenuItem>
-            <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
+            <MenuItem onClick={ () => 
+              user.sub === "auth0|63194dd4a66d06a2351daf15" ? 
+              navigate('/profile') : navigate('/home') }>
+                { user.sub === "auth0|63194dd4a66d06a2351daf15" ? 
+                "Dashboard" : "Profile" }
+            </MenuItem>
             <MenuItem onClick={Logout()}>Sing out</MenuItem>
             {
-              user.name === 'TuSpacio' && <>
+              user.name === 'TuSpacio' && <div>
                   <MenuItem onClick={() => navigate('/create')}>Create Product</MenuItem>
                   <MenuItem onClick={() => navigate('/createUser')}>Users</MenuItem>
                   <MenuItem onClick={() => navigate('/order/1')}>Orders</MenuItem>
-                </>
+                </div>
             }
-          </>
+          </div>
           : <MenuItem onClick={Login()}>Sing in</MenuItem>
       }
      

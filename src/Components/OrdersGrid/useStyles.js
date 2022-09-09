@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
-    },
+    }
   },
   button:{
     backgroundColor: '#ff0000',
@@ -14,13 +14,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   processing:{
-    color: '#FFAC1C'
+    color: '#FFAC1C',
+    fontWeight: 'bold'
   },
   completed:{
-    color: '#0F8C02'
+    color: '#0F8C02',
+    fontWeight: 'bold'
   },
   cancelled:{
-    color: '#DF0C0C'
+    color: '#DF0C0C',
+    fontWeight: 'bold',
   },
 }));
 
