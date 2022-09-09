@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
     
   },
   brands: {
-    marginTop: 100
+    width: '100%'
   }
 }));
 
