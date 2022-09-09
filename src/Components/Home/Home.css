@@ -1,0 +1,15 @@
+.divwsp > a {
+  position: fixed;
+  right: 0.5rem;
+  bottom: 5rem;
+  background-color: transparent;
+  border: none;
+  border-radius: 100%;
+  width: 4rem;
+  height: 4rem;
+}
+
+.divwsp > a > img {
+  margin-left: 0;
+  width: 4rem;
+}
