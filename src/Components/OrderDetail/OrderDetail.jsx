@@ -1,5 +1,5 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,15 +11,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Button } from '@material-ui/core';
 import { useParams, useNavigate } from 'react-router-dom';
 import OrderCustomerDetail from '../../Components/OrderCustomerDetail/OrderCustomerDetail.jsx';
-
-const TAX_RATE = 0.16;
-
-const useStyles = makeStyles({
-  table: {
-    maxWidth: 600,
-    margin: 'auto',
-  },
-});
+import { getOrderById } from '../../actions'
+import useStyles from './useStyles';
 
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
@@ -34,37 +27,36 @@ function createRow(desc, qty, unit) {
   return { desc, qty, unit, price };
 }
 
-function subtotal(items) {
-  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-}
-
-const rows = [
-  createRow('Lipstick Dior', 100, 1.15),
-  createRow('Blush Nyx', 10, 45.99),
-  createRow('Foundation Estee Lauder', 2, 17.99),
-];
-
-const invoiceSubtotal = subtotal(rows);
-const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-const invoiceTotal = invoiceTaxes + invoiceSubtotal;
-
 export default function OrderDetail() {
   const classes = useStyles();
   const navigate = useNavigate();
   const params = useParams();
+  const dispatch = useDispatch();
+  const order = useSelector((state) => state.orderDetail);
 
-  console.log(params)
+  useEffect(() => {
+    dispatch(getOrderById(params.id));
+  }, [dispatch, params.id]);
+
+  const rows = order.orderProducts?.map((item) => {
+    return createRow(item.description, item.quantity, item.amount_total/100);
+  });
+
   return (
     <TableContainer component={Paper}>
-    <Button onClick={() => navigate(-1)}><ArrowBackIcon />Go Back</Button>
-      <OrderCustomerDetail />
+      <Button 
+        className={classes.backBtn} 
+        onClick={() => navigate(-1)}>
+          <ArrowBackIcon />Go Back
+      </Button>
+      <OrderCustomerDetail order={order} />
       <Table className={classes.table} aria-label="spanning table">
         <TableHead>
           <TableRow>
             <TableCell align="center" colSpan={3}>
-              Details
+              Purchase Order Details
             </TableCell>
-            <TableCell align="right">Price</TableCell>
+            <TableCell align="right">$ Price</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Products</TableCell>
@@ -74,27 +66,32 @@ export default function OrderDetail() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows?.map((row) => (
             <TableRow key={row.desc}>
               <TableCell>{row.desc}</TableCell>
               <TableCell align="right">{row.qty}</TableCell>
-              <TableCell align="right">{row.unit}</TableCell>
+              <TableCell align="right">{ccyFormat(row.unit)}</TableCell>
               <TableCell align="right">{ccyFormat(row.price)}</TableCell>
             </TableRow>
           ))}
           <TableRow>
             <TableCell rowSpan={3} />
             <TableCell colSpan={2}>Subtotal</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+            <TableCell align="right">
+              {ccyFormat(order.subtotal/100)}
+            </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Tax</TableCell>
-            <TableCell align="right">{`${(TAX_RATE * 100).toFixed(0)} %`}</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
+            <TableCell colSpan={2}>Shipping</TableCell>
+            <TableCell align="right">
+              {ccyFormat((order.total - order.subtotal) / 100)}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={2}>Total</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+            <TableCell align="right">
+              {ccyFormat(order.total/100)}
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>

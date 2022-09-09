@@ -21,6 +21,8 @@ import {
   ORDERS_FILTERS,
   CLEAR_CART,
   REMOVE_ONE,
+  GET_ALL_ORDERS,
+  GET_ORDER_BY_ID,
 } from "../actions";
 
 /* LOCALSTORAGE FAVORITES */
@@ -47,6 +49,8 @@ function setLocalFavorites(productsFav) {
 
 const initialState = {
   products: [],
+  orders: [],
+  orderDetail: [],
   productsCopy:[],
   currentPageHome: 1,
   productDetail: {},
@@ -171,7 +175,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-
     case ADD_TO_WISHLIST: {
       let newState;
       if (state.favorites) {
@@ -219,14 +222,11 @@ function rootReducer(state = initialState, action) {
             ),
           }
         : { ...state, cart: [...state.cart, { ...newItem, quantity: 1 }] };
-
-  
     case REMOVE_FROM_CART:
       return {
         ...state,
         cart: state.cart.filter((el) => el.id !== action.payload),
       };
-
     case SET_ADMIN_OPTION:
       return {
         ...state,
@@ -252,6 +252,16 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         cart: [],
+      };
+    case GET_ALL_ORDERS:
+      return {
+        ...state,
+        orders: action.payload,
+      };
+    case GET_ORDER_BY_ID:
+      return {
+        ...state,
+        orderDetail: action.payload,
       };
     default:
       return state;

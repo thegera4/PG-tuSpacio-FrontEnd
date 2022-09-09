@@ -22,8 +22,10 @@ export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
 export const ORDERS_FILTERS = "ORDERS_FILTERS";
 export const CLEAR_CART = "CLEAR_CART";
 export const REMOVE_ONE = "REMOVE_ONE";
+export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
+export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 
-// const API = 'http://localhost:3001/api';//API LOCAL
+//API LOCAL
 const API = "http://localhost:3001/api";
 
 export function getAllProducts() {
@@ -173,6 +175,34 @@ export function orderCombine(filters) {
       return dispatch({
         type: ORDERS_FILTERS,
         payload: jsonOC.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export const getAllOrders = () => {
+  return async function (dispatch) {
+    try {
+      const json = await axios.get(`${API}/orders`);
+      return dispatch({
+        type: GET_ALL_ORDERS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export const getOrderById = (id) => {
+  return async function (dispatch) {
+    try {
+      const json = await axios.get(`${API}/orders/${id}`);
+      return dispatch({
+        type: GET_ORDER_BY_ID,
+        payload: json.data,
       });
     } catch (error) {
       console.error(error);
