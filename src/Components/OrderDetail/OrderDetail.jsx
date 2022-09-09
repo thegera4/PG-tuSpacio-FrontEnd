@@ -7,12 +7,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { Button } from '@material-ui/core';
-import { useParams, useNavigate } from 'react-router-dom';
-import OrderCustomerDetail from '../../Components/OrderCustomerDetail/OrderCustomerDetail.jsx';
-import { getOrderById } from '../../actions'
-import useStyles from './useStyles';
+import { useParams } from 'react-router-dom';
+import { getOrderById, cleanOrderDetail } from '../../actions'
+import { StyledTableCell, StyledTableRow, useStyles } from './useStyles.js';
+import {ThemeProvider} from '@material-ui/core';
+import theme from '../../ThemeConfig.js';
 
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
@@ -29,27 +28,69 @@ function createRow(desc, qty, unit) {
 
 export default function OrderDetail() {
   const classes = useStyles();
-  const navigate = useNavigate();
-  const params = useParams();
+  const { id } = useParams();
   const dispatch = useDispatch();
   const order = useSelector((state) => state.orderDetail);
 
   useEffect(() => {
-    dispatch(getOrderById(params.id));
-  }, [dispatch, params.id]);
+    dispatch(getOrderById(id));
+    return () => {
+      dispatch(cleanOrderDetail())
+    }
+  }, [dispatch, id]);
+
+  function createData(order, customer, email, address, date) {
+    return { order, customer, email, address, date };
+  }
+
+  const rowsHeader = [
+    createData(
+      order.number, 
+      order.userId, 
+      order.shipping?.email,
+      `${order.shipping?.address.line1}, 
+      ${order.shipping?.address.city}, 
+      ${order.shipping?.address.state}, 
+      ${order.shipping?.address.country}`,
+      order.createdAt
+      ),
+  ];
 
   const rows = order.orderProducts?.map((item) => {
     return createRow(item.description, item.quantity, item.amount_total/100);
   });
 
+  console.log(order);
   return (
     <TableContainer component={Paper}>
-      <Button 
-        className={classes.backBtn} 
-        onClick={() => navigate(-1)}>
-          <ArrowBackIcon />Go Back
-      </Button>
-      <OrderCustomerDetail order={order} />
+      {/* Header: Customer details */}
+      <ThemeProvider theme={theme}>
+          <Table className={classes.table} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Order</StyledTableCell>
+                <StyledTableCell align="center">Customer</StyledTableCell>
+                <StyledTableCell align="center">Email</StyledTableCell>
+                <StyledTableCell align="center">Address</StyledTableCell>
+                <StyledTableCell align="center">Date</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rowsHeader.map((row) => (
+                <StyledTableRow key={row.order}>
+                  <StyledTableCell component="th" scope="row">
+                    {row.order}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">{row.customer}</StyledTableCell>
+                  <StyledTableCell align="center">{row.email}</StyledTableCell>
+                  <StyledTableCell align="center">{row.address}</StyledTableCell>
+                  <StyledTableCell align="center">{row.date}</StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+      </ThemeProvider>
+      {/* Body: Purchase Order Details */}
       <Table className={classes.table} aria-label="spanning table">
         <TableHead>
           <TableRow>

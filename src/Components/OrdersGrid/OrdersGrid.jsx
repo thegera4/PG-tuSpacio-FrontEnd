@@ -6,11 +6,13 @@ import PageviewIcon from '@material-ui/icons/Pageview';
 import { useDispatch, useSelector} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getAllOrders, updateOrderStatus } from '../../actions';
+import useStyles from './useStyles';
 
 export default function OrdersGrid() {
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.orders);
   const navigate = useNavigate();
+  const classes = useStyles();
 
   useEffect(() => {
     dispatch(getAllOrders());
@@ -32,6 +34,13 @@ export default function OrdersGrid() {
     editable: true,
     type: 'singleSelect',
     valueOptions: ['processing', 'completed', 'cancelled'],
+    cellClassName: (params) =>{
+      return (
+        params.value === 'processing' ? classes.processing : 
+        params.value === 'completed' ? classes.completed : 
+        params.value === 'cancelled' ? classes.cancelled : null
+      )
+    }
   },
   {
     field: 'customer',
@@ -100,7 +109,7 @@ export default function OrdersGrid() {
   const handleView = (id) => {
     navigate(`/orders/${id}`);
   };
- 
+
   return (
     <div style={{ height: 535, width: '100%', backgroundColor: '#fff'}}>
       <DataGrid

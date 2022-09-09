@@ -24,6 +24,7 @@ import {
   GET_ALL_ORDERS,
   GET_ORDER_BY_ID,
   UPDATE_ORDER_STATUS,
+  CLEAN_ORDER_DETAIL,
 } from "../actions";
 
 /* LOCALSTORAGE FAVORITES */
@@ -267,6 +268,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         orders: state.orders
       };
+    case CLEAN_ORDER_DETAIL:
+        return {
+          ...state,
+          orderDetail: []
+        }
     default:
       return state;
   }

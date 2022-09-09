@@ -12,8 +12,16 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: '#ff3b3b'
     },
-  }
-
+  },
+  processing:{
+    color: '#FFAC1C'
+  },
+  completed:{
+    color: '#0F8C02'
+  },
+  cancelled:{
+    color: '#DF0C0C'
+  },
 }));
 
 export default useStyles;

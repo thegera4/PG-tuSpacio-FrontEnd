@@ -25,6 +25,7 @@ export const REMOVE_ONE = "REMOVE_ONE";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 export const UPDATE_ORDER_STATUS = "UPDATE_ORDER_STATUS";
+export const CLEAN_ORDER_DETAIL = "CLEAN_ORDER_DETAIL";
 //API LOCAL
 const API = "http://localhost:3001/api";
 
@@ -200,6 +201,7 @@ export const getOrderById = (id) => {
   return async function (dispatch) {
     try {
       const json = await axios.get(`${API}/orders/${id}`);
+      console.log(json.data)
       return dispatch({
         type: GET_ORDER_BY_ID,
         payload: json.data,
@@ -222,4 +224,10 @@ export function updateOrderStatus(id, status){
       console.error(error);
     }
   }
+}
+
+export const cleanOrderDetail = () => {
+  return {
+    type: CLEAN_ORDER_DETAIL,
+  };
 }
