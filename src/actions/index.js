@@ -26,6 +26,7 @@ export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 export const UPDATE_ORDER_STATUS = "UPDATE_ORDER_STATUS";
 export const CLEAN_ORDER_DETAIL = "CLEAN_ORDER_DETAIL";
+export const CREATE_CART = "CREATE_CART";
 //API LOCAL
 const API = "http://localhost:3001/api";
 
@@ -229,5 +230,19 @@ export function updateOrderStatus(id, status){
 export const cleanOrderDetail = () => {
   return {
     type: CLEAN_ORDER_DETAIL,
+  };
+}
+
+export const createCart = (cart, user) => {
+  return async function (dispatch) {
+    try {
+      const json = await axios.post(`${API}/orders`, { cart, user });
+      return dispatch({
+        type: CREATE_CART,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 }

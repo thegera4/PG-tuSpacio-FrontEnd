@@ -19,18 +19,18 @@ export default function OrdersGrid() {
   }, [dispatch]);
   
   const columns = [
-  { field: 'id', headerName: 'Order No.', width: 100,},
+  { field: 'id', headerName: 'Order No.', width: 90,},
   {
     field: 'date',
     headerName: 'Date',
-    width: 162,
+    width: 183,
     type: 'datetime',
     editable: false,
   },
   {
     field: 'status',
     headerName: 'Status',
-    width: 100,
+    width: 98,
     editable: true,
     type: 'singleSelect',
     valueOptions: ['processing', 'completed', 'cancelled'],
@@ -45,7 +45,7 @@ export default function OrdersGrid() {
   {
     field: 'customer',
     headerName: 'Customer',
-    width: 200,
+    width: 190,
     editable: false,
   },
   {
@@ -72,12 +72,13 @@ export default function OrdersGrid() {
   {
     field: 'action',
     headerName: 'Action',
-    width: 120,
+    width: 100,
     sortable: false,
     renderCell: (params) => { 
         return (
           <div className="cellAction">
             <Button
+              style={{transform: 'scale(.8)'}}
               variant="contained"
               color="primary"
               endIcon={<PageviewIcon>send</PageviewIcon>}
@@ -91,18 +92,21 @@ export default function OrdersGrid() {
   ];
 
   const rows = orders.map((order) => {
+    let orderTotal = (order.total / 100).toString().replace(',', '.');
     return {
-      id: order.number,
-      date: order.createdAt.toString().slice(0, -5).replace(/T/g, ', '),
+      id: order.number ? order.number : 'N/A',
+      date: order.updatedAt,
       status: order.status,
-      customer: order.userId.toString().slice(14),
-      address: `${order.shipping.address.line1},
-                ${order.shipping.address.city}, 
-                ${order.shipping.address.state}, 
-                ${order.shipping.address.country}`,
-      items: order.orderProducts.map(
+      customer: order.userId?.toString().slice(14),
+      address:  order.shipping?.address === null || 
+                order.shipping?.address === undefined ? 'N/A' : 
+                order.shipping?.address.line1 + ' ' +
+                order.shipping?.address.city + ' ' +
+                order.shipping?.address.state + ' ' +
+                order.shipping?.address.country,
+      items: order.orderProducts?.map(
         (product) => product.quantity).reduce((a, b) => a + b, 0),
-      total: order.total.toString().replace(/\B(?=(\d{2})+(?!\d))/g, "."),
+      total: orderTotal,
     };
   });
 
@@ -111,7 +115,7 @@ export default function OrdersGrid() {
   };
 
   return (
-    <div style={{ height: 535, width: '100%', backgroundColor: '#fff'}}>
+    <div style={{ height: 535, width: '100%', marginLeft: '0', backgroundColor: '#fff'}}>
       <DataGrid
         rows={rows}
         columns={columns}
