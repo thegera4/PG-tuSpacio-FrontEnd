@@ -11,7 +11,7 @@ function Wishlist() {
 
   return (
     <div className='contenedor-gral'>
-      {favorites.length === 0 ? (
+      {favorites?.length === 0 ? (
         <Box
           textAlign="center"
           marginBottom="20px" 
@@ -37,7 +37,7 @@ function Wishlist() {
                 <Grid 
                   container justifyContent="center" 
                   spacing={2}>
-                    {favorites.map((product, index) => {
+                    {favorites?.map((product, index) => {
                       return(
                         <WishlistCards 
                           key={index} 
