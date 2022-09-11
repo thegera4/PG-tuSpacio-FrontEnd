@@ -49,8 +49,8 @@ export default function Navbar() {
   const { user, isAuthenticated } = useAuth0();
 
   const cart = useSelector((state) => state.cart);
-  let mapped= cart.map(item => item.quantity)
-  let total = mapped.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
+  const mapped= cart?.map(item => item.quantity)
+  const total = mapped?.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);

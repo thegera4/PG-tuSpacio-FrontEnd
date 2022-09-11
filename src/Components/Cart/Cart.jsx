@@ -28,8 +28,8 @@ const Cart = () => {
     alert('Do you want to delete the product?')
   }
   
-  let mapped= cartProducts.map(item => item.quantity * Math.ceil(item.price))
-  let total = mapped.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
+  let mapped= cartProducts?.map(item => item.quantity * Math.ceil(item.price))
+  let total = mapped?.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
 
   const handleIncrement = (id) => {
     dispatch(addToCart(id))
