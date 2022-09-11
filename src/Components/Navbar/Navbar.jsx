@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -24,7 +24,7 @@ import Logout from '../Logout/Logout';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Avatar } from '@material-ui/core';
 import {withStyles} from '@material-ui/core';
-import { getAllProducts } from '../../actions';
+import { getAllProducts, postUser } from '../../actions';
 import { useDispatch } from 'react-redux'
 import DrawerBox from '../Drawer/Drawer';
 
@@ -47,6 +47,14 @@ export default function Navbar() {
   const data = useSelector((state) => state.productsCopy);
 
   const { user, isAuthenticated } = useAuth0();
+
+  // isAuthenticated && dispatch(postUser(user))
+
+  // useEffect ( () => {
+  //   console.log(user)
+  // isAuthenticated && console.log(user);
+  // isAuthenticated && dispatch(postUser(user))
+  // }, [] )
 
   const cart = useSelector((state) => state.cart);
   let mapped= cart.map(item => item.quantity)
@@ -79,14 +87,14 @@ export default function Navbar() {
       {
         isAuthenticated
           ? <>
-            <MenuItem>{user.name}</MenuItem>
+            <MenuItem onClick={() => dispatch(postUser(user))}>{user.name}</MenuItem>
             <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
             <MenuItem onClick={Logout()}>Sing out</MenuItem>
             {
               user.name === 'TuSpacio' && <>
                   <MenuItem onClick={() => navigate('/create')}>Create Product</MenuItem>
                   <MenuItem onClick={() => navigate('/createUser')}>Users</MenuItem>
-                  <MenuItem onClick={() => navigate('/order/1')}>Orders</MenuItem>
+                  <MenuItem onClick={() => navigate('/orders/1')}>Orders</MenuItem>
                 </>
             }
           </>

@@ -21,6 +21,7 @@ import {
   ORDERS_FILTERS,
   CLEAR_CART,
   REMOVE_ONE,
+  POST_USER,
 } from "../actions";
 
 /* LOCALSTORAGE FAVORITES */
@@ -57,6 +58,7 @@ const initialState = {
   cart: [],
   adminOption: 0,
   notification: 0,
+  infoUser: {}
 };
 
 function rootReducer(state = initialState, action) {
@@ -171,7 +173,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-
     case ADD_TO_WISHLIST: {
       let newState;
       if (state.favorites) {
@@ -190,7 +191,7 @@ function rootReducer(state = initialState, action) {
         };
       }
       setLocalFavorites(newState.favorites);
-      return newState;
+      return newState; 
     }
     case REMOVE_FROM_WISHLIST: {
       let newState;
@@ -205,7 +206,6 @@ function rootReducer(state = initialState, action) {
       setLocalFavorites(newState.favorites);
       return newState;
     }
-
     case ADD_TO_CART:
       let newItem = state.products.find(
         (product) => product.id === action.payload
@@ -219,14 +219,11 @@ function rootReducer(state = initialState, action) {
             ),
           }
         : { ...state, cart: [...state.cart, { ...newItem, quantity: 1 }] };
-
-  
     case REMOVE_FROM_CART:
       return {
         ...state,
         cart: state.cart.filter((el) => el.id !== action.payload),
       };
-
     case SET_ADMIN_OPTION:
       return {
         ...state,
@@ -247,11 +244,15 @@ function rootReducer(state = initialState, action) {
             ...state,
             cart: state.cart.filter((item) => item.id !== action.payload),
           };
-
     case CLEAR_CART:
       return {
         ...state,
         cart: [],
+      };
+    case POST_USER:
+      return {
+        ...state,
+        infoUser: action.payload,
       };
     default:
       return state;

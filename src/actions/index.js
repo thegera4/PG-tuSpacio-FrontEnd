@@ -22,9 +22,10 @@ export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
 export const ORDERS_FILTERS = "ORDERS_FILTERS";
 export const CLEAR_CART = "CLEAR_CART";
 export const REMOVE_ONE = "REMOVE_ONE";
+export const POST_USER = 'POST_USER';
 
 // const API = 'http://localhost:3001/api';//API LOCAL
-const API = "http://localhost:3001/api";
+const API = "http://localhost:3001/api"; 
 
 export function getAllProducts() {
   return async function (dispatch) {
@@ -178,4 +179,29 @@ export function orderCombine(filters) {
       console.error(error);
     }
   };
+}
+
+export function postUser(user) {
+  const {name, nickname, email, email_verified, picture, sub} = user;
+  const infoUser = {
+    name, 
+    nickname, 
+    email, 
+    email_verified,
+    picture, 
+    sid: sub
+  }
+  if (!name) return console.log('Login not initialized')
+  return async function (dispatch) {
+    try {
+      const newUser = await axios.post(`${API}/users`, infoUser);
+      console.log('Post users ready')
+      return dispatch({
+        type: POST_USER,
+        payload: newUser.newUser
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
