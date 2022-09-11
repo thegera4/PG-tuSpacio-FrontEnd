@@ -31,7 +31,12 @@ import {
 /* LOCALSTORAGE FAVORITES */
 function getLocalFavorites() {
   let productsFav = window.localStorage.getItem("productsFav");
-  if (productsFav) productsFav = JSON.parse(productsFav);
+  if (productsFav) {
+    productsFav = JSON.parse(productsFav);
+    console.log(productsFav);
+  } else {
+    productsFav = [];
+  }
   return productsFav;
 }
 
@@ -39,29 +44,35 @@ function setLocalFavorites(productsFav) {
   window.localStorage.setItem("productsFav", JSON.stringify(productsFav));
 }
 
-/* LOCALSTORAGE CART */
-// function getLocalCart() {
-//   let productsCart = window.localStorage.getItem("productsCart");
-//   if (productsCart) productsCart = JSON.parse(productsCart);
-//   return productsCart;
-// }
+function setLocalCart(itemsCart) {
+  window.localStorage.setItem("itemsCart", JSON.stringify(itemsCart));
+}
 
-// function setLocalCart(productsCart) {
-//   window.localStorage.setItem("productsCart", JSON.stringify(productsCart));
-// }
+/* LOCALSTORAGE CART */
+function getLocalCart() {
+  var itemsCart = window.localStorage.getItem("itemsCart");
+  if (itemsCart) {
+    itemsCart = JSON.parse(itemsCart);
+    console.log(itemsCart);
+  } else {
+    itemsCart = [];
+  }
+
+  return itemsCart;
+}
 
 const initialState = {
   products: [],
   orders: [],
   orderDetail: [],
-  productsCopy:[],
+  productsCopy: [],
   currentPageHome: 1,
   productDetail: {},
   categories: [],
   brands: [],
   search: [],
   favorites: getLocalFavorites(),
-  cart: [],
+  cart: getLocalCart(),
   adminOption: 0,
   notification: 0,
 };
@@ -157,7 +168,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         products: action.payload,
-        productsCopy: action.payload
+        productsCopy: action.payload,
       };
     case SET_CURRENT_HOME_PAGE:
       return {
@@ -211,24 +222,45 @@ function rootReducer(state = initialState, action) {
       setLocalFavorites(newState.favorites);
       return newState;
     }
-    case ADD_TO_CART:
+    case ADD_TO_CART: {
       let newItem = state.products.find(
         (product) => product.id === action.payload
       );
-      let itemCart = state.cart.find((item) => item.id === newItem.id); // busco si ya esta en el carrito y lo guardo
-      return itemCart
-        ? {
-            ...state,
-            cart: state.cart.map((i) =>
-              i.id === newItem.id ? { ...i, quantity: i.quantity + 1 } : i
-            ),
-          }
-        : { ...state, cart: [...state.cart, { ...newItem, quantity: 1 }] };
-    case REMOVE_FROM_CART:
-      return {
-        ...state,
-        cart: state.cart.filter((el) => el.id !== action.payload),
-      };
+      let itemsCart = state.cart?.find((item) => item.id === newItem.id); // busco si ya esta en el carrito y lo guardo
+
+      if (itemsCart) {
+        itemsCart = {
+          ...state,
+          cart: state.cart.map((i) =>
+            i.id === newItem.id ? { ...i, quantity: i.quantity + 1 } : i
+          ),
+        };
+      } else {
+        itemsCart = {
+          ...state,
+          cart: [...state.cart, { ...newItem, quantity: 1 }],
+        };
+      }
+
+      setLocalCart(itemsCart.cart);
+      // localStorage.setItem("itemsCart", JSON.stringify(itemsCart.cart));
+
+      return itemsCart;
+    }
+
+    case REMOVE_FROM_CART: {
+      let newState;
+      if (state.cart) {
+        newState = {
+          ...state,
+          cart: state.cart.filter((p) => p.id !== action.payload),
+        };
+      } else {
+        newState = state;
+      }
+      localStorage.setItem("itemsCart", JSON.stringify(newState.cart));
+      return newState;
+    }
     case SET_ADMIN_OPTION:
       return {
         ...state,
@@ -267,17 +299,13 @@ function rootReducer(state = initialState, action) {
     case UPDATE_ORDER_STATUS:
       return {
         ...state,
-        orders: state.orders
+        orders: state.orders,
       };
     case CLEAN_ORDER_DETAIL:
-        return {
-          ...state,
-          orderDetail: []
-        }
-    case CREATE_CART:
       return {
         ...state,
-      }
+        orderDetail: [],
+      };
     default:
       return state;
   }
