@@ -86,6 +86,12 @@ export default function Navbar() {
                 { user.sub === "auth0|63194dd4a66d06a2351daf15" ? 
                 "Dashboard" : "Profile" }
             </MenuItem>
+            <MenuItem onClick={ () => 
+              user.sub === "auth0|63194dd4a66d06a2351daf15" ? 
+              navigate('/dashboard') : navigate('/home') }>
+                { user.sub === "auth0|63194dd4a66d06a2351daf15" ? 
+                "New Dashboard" : null }
+            </MenuItem>
             <MenuItem onClick={Logout()}>Sing out</MenuItem>
             {
               user.name === 'TuSpacio' && <div>

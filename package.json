@@ -34,6 +34,7 @@
     "react-select": "^5.4.0",
     "react-simple-chatbot": "^0.6.1",
     "react-swipeable-views": "^0.14.0",
+    "recharts": "^2.1.14",
     "redux": "4.2.0",
     "redux-devtools-extension": "2.13.9",
     "redux-thunk": "2.4.1",

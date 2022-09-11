@@ -26,6 +26,7 @@ import {
   UPDATE_ORDER_STATUS,
   CLEAN_ORDER_DETAIL,
   CREATE_CART,
+  SET_DASHBOARD_ITEM,
 } from "../actions";
 
 /* LOCALSTORAGE FAVORITES */
@@ -64,6 +65,7 @@ const initialState = {
   cart: [],
   adminOption: 0,
   notification: 0,
+  dashboardItem: 'Dashboard',
 };
 
 function rootReducer(state = initialState, action) {
@@ -277,6 +279,11 @@ function rootReducer(state = initialState, action) {
     case CREATE_CART:
       return {
         ...state,
+      }
+    case SET_DASHBOARD_ITEM:
+      return {
+        ...state,
+        dashboardItem: action.payload
       }
     default:
       return state;
