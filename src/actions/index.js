@@ -27,6 +27,7 @@ export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 export const UPDATE_ORDER_STATUS = "UPDATE_ORDER_STATUS";
 export const CLEAN_ORDER_DETAIL = "CLEAN_ORDER_DETAIL";
 export const CREATE_CART = "CREATE_CART";
+export const SET_DASHBOARD_ITEM = "SET_DASHBOARD_ITEM";
 //API LOCAL
 const API = "http://localhost:3001/api";
 
@@ -244,5 +245,12 @@ export const createCart = (cart, user) => {
     } catch (error) {
       console.error(error);
     }
+  };
+}
+
+export const setDashboardItem = (item) => {
+  return {
+    type: SET_DASHBOARD_ITEM,
+    payload: item,
   };
 }
