@@ -217,7 +217,7 @@ export const getOrderById = (id) => {
 export function updateOrderStatus(id, status){
   return async function (dispatch) {
     try {
-      const json = await axios.patch(`${API}/orders/${id}`, {status});
+      const json = await axios.patch(`${API}/order/${id}`, {status});
       return dispatch({
         type: UPDATE_ORDER_STATUS,
         payload: json.data,

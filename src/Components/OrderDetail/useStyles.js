@@ -6,10 +6,11 @@ export const useStyles = makeStyles({
   table: {
     maxWidth: 800,
     margin: 'auto',
-    marginTop: 50,
   },
   backBtn: {
-    marginTop: '2.5em',
+    marginTop: '3rem',
+    marginLeft: '1.5rem',
+    fontSize: '1rem',
   },
 });
 

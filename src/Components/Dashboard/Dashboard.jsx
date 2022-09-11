@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -27,7 +27,11 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import SettingsIcon from '@material-ui/icons/Settings';
+import StoreIcon from '@material-ui/icons/Store';
 import {setDashboardItem} from '../../actions'
+import OrdersGrid from '../OrdersGrid/OrdersGrid';
+import UsersGrid from '../UsersGrid/UsersGrid';
+import ProductsGrid from '../ProductsGrid/ProductsGrid';
 
 function Copyright() {
   return (
@@ -48,6 +52,10 @@ export default function Dashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const dashboardItem = useSelector(state => state.dashboardItem);
+
+  useEffect(() => {
+    setOpen(false)
+  }, [])
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -109,11 +117,17 @@ export default function Dashboard() {
           </ListItemIcon>
           <ListItemText primary="Orders" />
         </ListItem>
-        <ListItem button onClick={() => handleSelection("Customers")}>
+        <ListItem button onClick={() => handleSelection("Users")}>
           <ListItemIcon>
             <PeopleIcon />
           </ListItemIcon>
-          <ListItemText primary="Customers" />
+          <ListItemText primary="Users" />
+        </ListItem>
+        <ListItem button onClick={() => handleSelection("Products")}>
+          <ListItemIcon>
+            <StoreIcon />
+          </ListItemIcon>
+          <ListItemText primary="Products" />
         </ListItem>
         <ListItem button onClick={() => handleSelection("Notifications")}>
           <ListItemIcon>
@@ -142,9 +156,11 @@ export default function Dashboard() {
             dashboardItem === 'Dashboard' ? 
             <MainDash /> :
             dashboardItem === 'Orders' ?
-            <h1>Orders</h1> :
-            dashboardItem === 'Customers' ?
-            <h1>Customers</h1> :
+            <OrdersGrid /> :
+            dashboardItem === 'Users' ?
+            <UsersGrid /> :
+            dashboardItem === 'Products' ?
+            <ProductsGrid /> :
             dashboardItem === 'Notifications' ?
             <h1>Notifications</h1> :
             dashboardItem === 'Reports' ?

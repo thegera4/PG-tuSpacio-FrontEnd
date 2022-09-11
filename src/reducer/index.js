@@ -300,8 +300,7 @@ function rootReducer(state = initialState, action) {
       };
     case UPDATE_ORDER_STATUS:
       return {
-        ...state,
-        orders: state.orders,
+        ...state
       };
     case CLEAN_ORDER_DETAIL:
       return {
