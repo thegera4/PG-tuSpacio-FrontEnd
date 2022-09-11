@@ -25,6 +25,7 @@ import {
   GET_ORDER_BY_ID,
   UPDATE_ORDER_STATUS,
   CLEAN_ORDER_DETAIL,
+  CREATE_CART,
 } from "../actions";
 
 /* LOCALSTORAGE FAVORITES */
