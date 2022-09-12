@@ -16,11 +16,15 @@ import OrderDetail from './Components/OrderDetail/OrderDetail.jsx';
 import CreateUser from './Components/CreateUser/CreateUser.jsx';
 import LandingPage from './Components/LandingPage/LandingPage';
 import CheckoutSuccess from './Components/Checkout/CheckoutSuccess';
+import Dashboard from './Components/Dashboard/Dashboard';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth='xl' disableGutters={true} style={{ backgroundColor: 'f4f4f4' }} >
+        <Routes>
+        <Route path="/dashboard" element={ <Dashboard /> } /> 
+        </Routes>
         <Navbar />
         <Box pt={4}>
           <Routes>
@@ -38,7 +42,7 @@ function App() {
           <Route path="/orders/:id" element={ <OrderDetail /> } />
         </Routes>  
         </Box>
-        <Footer />  
+        <Footer /> 
       </Container>
     </ThemeProvider>
   );

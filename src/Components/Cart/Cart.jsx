@@ -3,7 +3,7 @@ import './Cart.css'
 import {useDispatch, useSelector} from 'react-redux'
 import Button from '@material-ui/core/Button';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import { removeFromCart, addToCart, clearCart, removeOne} from '../../actions'
+import { removeFromCart, addToCart, clearCart, removeOne, createCart} from '../../actions'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -28,8 +28,8 @@ const Cart = () => {
     alert('Do you want to delete the product?')
   }
   
-  let mapped= cartProducts.map(item => item.quantity * Math.ceil(item.price))
-  let total = mapped.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
+  let mapped= cartProducts?.map(item => item.quantity * Math.ceil(item.price))
+  let total = mapped?.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
 
   const handleIncrement = (id) => {
     dispatch(addToCart(id))
@@ -46,15 +46,17 @@ const Cart = () => {
 
   const handleCheckout = (cartProducts) => {
     if (isAuthenticated) {
-    axios.post("http://localhost:3001/api/checkout", {
-      cartProducts,
-      id: user.sub,
-    }).then((res) => {
-      res.data.url ? window.location.href = res.data.url : alert("Error") 
-    }).catch((err) => {
-      console.error(err)
-    })
-    } else {
+      dispatch(createCart(cartProducts, user.sub))
+      axios.post("http://localhost:3001/api/checkout", {
+        cartProducts,
+        id: user.sub,
+      }).then((res) => {
+        res.data.url ? window.location.href = res.data.url : alert("Error") 
+      }).catch((err) => {
+        console.error(err)
+      })
+    }
+    else{
       alert("Please login to checkout")
     }
   }

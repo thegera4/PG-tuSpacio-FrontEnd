@@ -10,8 +10,10 @@ function Wishlist() {
   const favorites = useSelector(state => state.favorites)
 
   return (
+
     <div className='gral-container'>
       {favorites.length === 0 ? (
+
         <Box
           textAlign="center"
           marginBottom="20px" 
@@ -37,7 +39,7 @@ function Wishlist() {
                 <Grid 
                   container justifyContent="center" 
                   spacing={2}>
-                    {favorites.map((product, index) => {
+                    {favorites?.map((product, index) => {
                       return(
                         <WishlistCards 
                           key={index} 
