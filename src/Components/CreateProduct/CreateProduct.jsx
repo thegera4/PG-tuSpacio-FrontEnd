@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
 import { getCategories, postNewProduct } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoIMG from '../../assets/images/img_logo.png';
-import { Avatar, Box, Button, FormControl, FormHelperText, Grid, Input, InputAdornment, InputLabel, makeStyles, OutlinedInput, Select, Slider, TextField, Typography } from '@material-ui/core';
+import { Avatar, Box, Button, Chip, FormControl, FormHelperText, Grid, Input, 
+    InputAdornment, InputLabel, makeStyles, OutlinedInput, Select, Slider, TextField, Typography, withStyles } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
     textField: {
         width: '25ch',
     },
+    colors: {
+        // margin: theme.spacing(1),
+        width: '10px',
+    }
 }));
 
 export default function CreateProduct() {
@@ -54,9 +60,28 @@ export default function CreateProduct() {
     const [colors, setColors] = useState({
         azul: 0,
         rojo: 0,
-        verde: 0
+        verde: 0,
     });
     const [categories, setCategories] = useState([]);
+    const [addColors, setAddColors] = useState([]);
+    
+    let fColor = `#${parseInt(colors.rojo).toString(16)}${parseInt(colors.verde).toString(16)}${parseInt(colors.azul).toString(16)}`
+    
+    function handlerColors(colors) {
+        if (parseInt(colors.azul) >= 256 || parseInt(colors.verde) >= 256 || parseInt(colors.rojo) >= 256 ||
+            parseInt(colors.azul) < 0 || parseInt(colors.verde) < 0 || parseInt(colors.rojo) < 0 ) { 
+            return alert("The value of the colors must be a number between 0 and 255");
+        }
+        let hexAzul = parseInt(colors.azul).toString(16);
+        let hexRojo = parseInt(colors.rojo).toString(16);
+        let hexVerde = parseInt(colors.verde).toString(16);
+        let newColor = `#${hexRojo}${hexVerde}${hexAzul}`
+        if (addColors.includes(newColor)) return alert("Color already added");
+        setAddColors([...addColors, newColor])
+        setColors({azul: 0,rojo: 0,verde: 0});
+        // console.log(addColors)
+        // return alert("Color added successfully!")      
+    }
 
     useEffect ( () => {
         dispatch(getCategories())
@@ -162,6 +187,10 @@ export default function CreateProduct() {
                 setCategories(categories.filter(c => c !== e.target.value))
                 setErrors(validation({...input, categories: categories}))
             } 
+    }
+
+    function handlerDeleteColor(color) {
+        setAddColors(addColors.filter(c => c!==color))
     }
     
     function handleSubmit(e){
@@ -409,7 +438,7 @@ export default function CreateProduct() {
                             }
                             {
                                 errors.categories && (
-                                    <FormHelperText>{errors.categories}</FormHelperText>
+                                    <FormHelperText>{errors.categories}</FormHelperText> 
                                 )
                             }
                         </Box>
@@ -431,20 +460,37 @@ export default function CreateProduct() {
                     </Box>
                     <img src={input.image || LogoIMG} className={classes.image} alt="imagen de prueba" />  
                 </Box>
-                <Box>
+                <Box
+                    display="flex"
+                    flexWrap="wrap"
+                    alignContent="center"
+                    alignItems="center"
+                    // bgcolor="#df7c1a"
+                >
+                    <Box
+                        border={1}
+                        width="40px"
+                        height="40px"
+                        borderColor="primary.main"
+                        borderRadius="50%"
+                        bgcolor={fColor} 
+                    />
                     <Button 
                         className={clsx(classes.margin, classes.textField)}
                         variant="contained" 
                         color="primary"
-                        onClick={() => console.log()}
+                        onClick={() => handlerColors(colors)}
                     > Add color </Button>
                     <TextField
                         label=""
                         id="outlined-start-adornment"
                         value={colors.azul}
                         name="azul"
-                        onChange={(e)=> setColors({...colors, [e.target.name]: e.target.value })}
-                        className={clsx(classes.margin, classes.textField)}
+                        onChange={(e)=> {
+                            setColors({...colors, [e.target.name]: e.target.value })
+                            console.log(fColor)
+                        }}
+                        className={classes.colors}
                         InputProps={{
                             startAdornment: <InputAdornment position="start">Azul</InputAdornment>,
                             step: 1,
@@ -460,7 +506,10 @@ export default function CreateProduct() {
                         id="outlined-start-adornment"
                         value={colors.rojo}
                         name="rojo"
-                        onChange={(e)=> setColors({...colors, [e.target.name]: e.target.value })}
+                        onChange={(e)=> {
+                            setColors({...colors, [e.target.name]: e.target.value })
+                            console.log(fColor)
+                        }}
                         className={clsx(classes.margin, classes.textField)}
                         InputProps={{
                             startAdornment: <InputAdornment position="start">Rojo</InputAdornment>,
@@ -480,6 +529,7 @@ export default function CreateProduct() {
                         onChange={(e)=> {
                             let valor = e.target.value;
                             setColors({...colors, [e.target.name]: valor })
+                            console.log(fColor)
                         }}
                         className={clsx(classes.margin, classes.textField)}
                         InputProps={{
@@ -492,9 +542,46 @@ export default function CreateProduct() {
                         }}
                         variant="outlined"
                     />
-                    <Avatar className={classes.pink}>
-                        {/* <PageviewIcon /> */}
-                    </Avatar>
+                    <Box
+                        display='flex'
+                    >
+                        {
+                            addColors.length 
+                                ? addColors.map(color => {
+                                    const ColorButton = withStyles((theme) => ({
+                                        root: {
+                                          backgroundColor: `${color}`,
+                                          margin:"8px",
+                                          border:"2px",
+                                          borderColor:"primary",
+                                          width:"10px",
+                                          height:"25px",
+                                          '&:hover': {
+                                            backgroundColor: `${color}`,
+                                          },
+                                        },
+                                    }))(Button);
+                                    
+                                    return <ColorButton 
+                                            variant="contained" 
+                                            color="primary"
+                                            onClick={() => handlerDeleteColor(color)}
+                                            className={classes.margin} >
+                                        x
+                                        </ColorButton>
+                                    } 
+                                    
+                                    // <button 
+                                    //     margin="8px"
+                                    //     border="2px"
+                                    //     width="10px"
+                                    //     height="25px"
+                                    //     background-color={c}
+                                    //     >X</button>
+                                    )
+                                : <FormHelperText>No color added yet</FormHelperText>
+                        }
+                    </Box>
                 </Box>
             </Box>
         </form>
