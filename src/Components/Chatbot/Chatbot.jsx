@@ -40,7 +40,7 @@ export default function Contenido() {
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
         >
-          <div className="modal-dialog allContainerChat">
+          <div className="modal-dialog allContainerChat mx-auto d-block">
             <div className="modal-content">
               <button
                 type="button"
