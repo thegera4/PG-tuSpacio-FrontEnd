@@ -1,9 +1,6 @@
 .allContainerChat {
   width: 25rem;
   height: 30rem;
-  position: fixed;
-  right: 3rem;
-  bottom: 21rem;
 }
 
 .containerChat {
