@@ -10,13 +10,13 @@ export default function ContainerCards() {
     const [order, setOrder] = useState("")
        
     return(
-        <>
+        <div className="gral-container">
             {/*<PersistentDrawerLeft />*/}
             <Filter 
                 setOrder={setOrder} 
             />
             <Home order={order}/>
-        </>
+        </div>
     )
 };
 

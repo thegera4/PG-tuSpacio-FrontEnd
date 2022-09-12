@@ -10,7 +10,7 @@ function Wishlist() {
   const favorites = useSelector(state => state.favorites)
 
   return (
-    <div className='contenedor-gral'>
+    <div className='gral-container'>
       {favorites.length === 0 ? (
         <Box
           textAlign="center"
