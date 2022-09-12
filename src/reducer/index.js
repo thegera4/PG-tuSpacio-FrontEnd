@@ -252,7 +252,7 @@ function rootReducer(state = initialState, action) {
     case POST_USER:
       return {
         ...state,
-        infoUser: action.payload,
+        infoUser: action.payload[0],
       };
     default:
       return state;

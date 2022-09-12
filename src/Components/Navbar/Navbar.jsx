@@ -51,10 +51,8 @@ export default function Navbar() {
   // isAuthenticated && dispatch(postUser(user))
 
   // useEffect ( () => {
-  //   console.log(user)
-  // isAuthenticated && console.log(user);
-  // isAuthenticated && dispatch(postUser(user))
-  // }, [] )
+  isAuthenticated && dispatch(postUser(user))
+  // }, [dispatch] )
 
   const cart = useSelector((state) => state.cart);
   let mapped= cart.map(item => item.quantity)

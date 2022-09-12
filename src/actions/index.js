@@ -198,7 +198,7 @@ export function postUser(user) {
       console.log('Post users ready')
       return dispatch({
         type: POST_USER,
-        payload: newUser.newUser
+        payload: newUser.data
       });
     } catch (error) {
       console.error(error);
