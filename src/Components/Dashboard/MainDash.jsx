@@ -12,6 +12,8 @@ function MainDash() {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
+    <div>
+    <h4>Main Dashboard</h4>
     <Grid container spacing={3}>
         {/* Chart */}
         <Grid item xs={12} md={8} lg={9}>
@@ -32,6 +34,7 @@ function MainDash() {
           </Paper>
         </Grid>
       </Grid>
+      </div>
   )
 }
 

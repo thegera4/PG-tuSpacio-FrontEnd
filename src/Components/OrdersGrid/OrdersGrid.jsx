@@ -6,6 +6,7 @@ import PageviewIcon from '@material-ui/icons/Pageview';
 import { useDispatch, useSelector} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getAllOrders, updateOrderStatus } from '../../actions';
+import Box from '@material-ui/core/Box';
 import useStyles from './useStyles';
 
 export default function OrdersGrid() {
@@ -75,6 +76,9 @@ export default function OrdersGrid() {
     width: 100,
     sortable: false,
     renderCell: (params) => { 
+      if(params.id === 'N/A'){
+        return null
+      } else {
         return (
           <div className="cellAction">
             <Button
@@ -87,6 +91,7 @@ export default function OrdersGrid() {
             </Button>
           </div>
         );
+      }
     }
   }
   ];
@@ -115,18 +120,20 @@ export default function OrdersGrid() {
   };
 
   return (
-    <div style={{ height: 535, width: '100%', marginLeft: '0', backgroundColor: '#fff'}}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={8}
-        rowsPerPageOptions={[5]}
-        disableSelectionOnClick
-        onCellEditCommit={(params) => {
-          console.log(params);
-          dispatch(updateOrderStatus(params.id, params.value));
-        }}
-      />
-    </div>
+    <Box>
+      <h4>Orders</h4>
+      <div style={{ display: 'flex', height: 650, width: '100%', marginLeft: '0', backgroundColor: '#fff'}}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[5]}
+          disableSelectionOnClick
+          onCellEditCommit={(params) => {
+            console.log(params);
+            dispatch(updateOrderStatus(params.id, params.value));
+          }}/>
+      </div>
+    </Box>
   );
 }

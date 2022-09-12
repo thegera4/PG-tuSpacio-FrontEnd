@@ -12,10 +12,8 @@ import { getOrderById, cleanOrderDetail } from '../../actions'
 import { StyledTableCell, StyledTableRow, useStyles } from './useStyles.js';
 import {ThemeProvider} from '@material-ui/core';
 import theme from '../../ThemeConfig.js';
-
-function ccyFormat(num) {
-  return `${num.toFixed(2)}`;
-}
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import IconButton from '@material-ui/core/IconButton';
 
 function priceRow(qty, unit) {
   return qty * unit;
@@ -57,7 +55,7 @@ export default function OrderDetail() {
   ];
 
   const rows = order.orderProducts?.map((item) => {
-    return createRow(item.description, item.quantity, item.amount_total/100);
+    return createRow(item.name, item.quantity, item.price);
   });
 
   console.log(order);
@@ -65,6 +63,11 @@ export default function OrderDetail() {
     <TableContainer component={Paper}>
       {/* Header: Customer details */}
       <ThemeProvider theme={theme}>
+          <IconButton 
+            className={classes.backBtn}
+            onClick={() => window.history.back()}>
+              <ArrowBackIcon /> Go Back
+          </IconButton>
           <Table className={classes.table} aria-label="customized table">
             <TableHead>
               <TableRow>
@@ -111,27 +114,27 @@ export default function OrderDetail() {
             <TableRow key={row.desc}>
               <TableCell>{row.desc}</TableCell>
               <TableCell align="right">{row.qty}</TableCell>
-              <TableCell align="right">{ccyFormat(row.unit)}</TableCell>
-              <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+              <TableCell align="right">{row.unit}</TableCell>
+              <TableCell align="right">{row.price}</TableCell>
             </TableRow>
           ))}
           <TableRow>
             <TableCell rowSpan={3} />
             <TableCell colSpan={2}>Subtotal</TableCell>
             <TableCell align="right">
-              {ccyFormat(order.subtotal/100)}
+              {order.subtotal/100}
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={2}>Shipping</TableCell>
             <TableCell align="right">
-              {ccyFormat((order.total - order.subtotal) / 100)}
+              {(order.total - order.subtotal) / 100}
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={2}>Total</TableCell>
             <TableCell align="right">
-              {ccyFormat(order.total/100)}
+              {order.total/100}
             </TableCell>
           </TableRow>
         </TableBody>
