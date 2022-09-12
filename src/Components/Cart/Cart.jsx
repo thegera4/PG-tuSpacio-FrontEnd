@@ -62,7 +62,7 @@ const Cart = () => {
   }
       
     return (
-    < div className='contenedor-gral'>
+    < div className='gral-container'>
     { cartProducts.length === 0 ? <Box
           textAlign="center"
           marginBottom="20px" 

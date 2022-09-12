@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     '& > *': {
       marginTop: theme.spacing(12),
       marginLeft: "auto",
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
     },
   },
 }));
@@ -48,8 +48,8 @@ export default function BasicPagination(
         size="large" 
         color="primary"
         onChange = {(event,page)=>handlePageClick(page)}
-        hideNextButton={true}
-        hidePrevButton={true} />
+        hideNextButton={false}
+        hidePrevButton={false} />
         </Box>
     </div>
 
