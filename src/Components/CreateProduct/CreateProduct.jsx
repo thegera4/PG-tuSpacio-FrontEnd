@@ -23,9 +23,10 @@ const useStyles = makeStyles((theme) => ({
         display:"block",
     },
     imageBox: {
-        bgcolor: '#ffffff',
         margin: 'auto',
-        alignItems: 'center'
+    },
+    select: {
+        width: 300,
     }
 }));
 
@@ -43,24 +44,31 @@ export default function CreateProduct() {
     }, [dispatch] )
 
     const [ input, setInput ] = useState({
-        name: "",
-        description: "",
-        price: 0,
-        currency: "",
-        image: "",
-        rating: 0,
-        categories: []
+        brand: "", //*
+        name: "", //*
+        price: 0, //*
+        price_sign: "",
+        currency: "", //*
+        image_link: "", //*
+        description: "", //*
+        rating: 0, //*
+        product_type: "", //*
+        stock: 0, //* no puede ser 0
+        tag_list: "",
+        product_colors: [],
+        status: true,
+        categories: [] //*
     });
     /*
-        brand, **
-        name, **
-        price, **
-        price_sign, ** string
-        currency, **
-        image_link, **
-        description, **
-        rating, ** 0 a 5
-        product_type, **
+        brand, ** --
+        name, ** --
+        price, ** --
+        price_sign, ** string --
+        currency, ** --
+        image_link, ** --
+        description, ** --
+        rating, ** 0 a 5 --
+        product_type, ** --
         stock,  ** no puede ser menor de 0
         tag_list,
         product_colors,
@@ -70,17 +78,19 @@ export default function CreateProduct() {
     function validation(input) {
         let errors = {};
         if(!input.name || typeof input.name !== "string") {   
-            errors.name = "Please insert the name of your product"; } 
+            errors.name = "Please insert the name of your product"; }
+        if(!input.brand || typeof input.brand !== "string") {   
+            errors.brand = "Please insert the brand of your product"; }
         if(!input.description || typeof input.description !== "string") {   
             errors.description = "Please insert the description of your product"; }
-        if(!input.currency || typeof input.currency !== "string" || input.currency.length > 3) {   
-            errors.currency = "Please insert the currency of your product, just 3 letters of the country"; }
+        if(!input.price_sign || typeof input.price_sign !== "string" || input.price_sign.length > 3) {   
+            errors.price_sign = "Please insert the currency of your product, just 3 letters of the country"; }
         if (!input.categories.length) {
             errors.categories = "Please select at least one category"; }
         if (!input.price) {
             errors.price = "The price cannot be null"; } 
-        if (!input.image || typeof input.image !== "string" ) {
-            errors.image = "Please insert a valid url image"; }
+        if (!input.image_link || typeof input.image_link !== "string" ) {
+            errors.image_link = "Please insert a valid url image"; }
         return errors;
     }
 
@@ -151,9 +161,6 @@ export default function CreateProduct() {
             errors.currency || errors.image || errors.price) {
             return alert("Can't create a product. Missing data")}
         input.categories = categories;
-        input["brand"] = "Avon";
-        input["product_type"] = "prueba";
-        input["product_colors"] = ["blue"];
         dispatch(postNewProduct(input))
         alert("Product created successfully!!");
         setInput({
@@ -220,7 +227,23 @@ export default function CreateProduct() {
                             )
                         }
                     </div>
-
+                    
+                    <div key='divBrand'>
+                        <TextField
+                            id="outlined-name"
+                            label="Brand"
+                            name="brand"
+                            value={input.brand}
+                            onChange={(e) => handleChange(e)}
+                            variant="outlined"
+                        />
+                        {
+                            errors.brand && (
+                                <FormHelperText>{errors.brand}</FormHelperText>
+                            )
+                        }
+                    </div>
+                    
                     <div key='divDesc'>
                         <TextField
                             id="outlined-name"
@@ -241,14 +264,14 @@ export default function CreateProduct() {
                         <TextField
                             id="outlined-name"
                             label="Currency"
-                            name="currency"
-                            value={input.currency}
+                            name="price_sign"
+                            value={input.price_sign}
                             onChange={(e) => handleChange(e)}
                             variant="outlined"
                             />
                         {
-                            errors.currency && (
-                                <FormHelperText>{errors.currency}</FormHelperText>
+                            errors.price_sign && (
+                                <FormHelperText>{errors.price_sign}</FormHelperText>
                             )
                         }
                     </div>
@@ -257,32 +280,86 @@ export default function CreateProduct() {
                 <Box
                     bgcolor="palevioletred"
                     width='30%'
-                    boxSizing='border-box'
-                    px={4}
+                    //boxSizing='border-box'
                     justifyContent="flex-start"
                     alignItems="center"
                 >
                     <Box className={classes.range} key={`divPrice`}>
-                        <Typography id="non-linear-slider" gutterBottom>
-                            Price
-                        </Typography>
-                        <Slider
-                            value={parseInt(input.price)}
-                            min={0}
-                            step={1}
-                            // marks
-                            max={100}
-                            // scale={(x) => x}
+                        <TextField
+                            id="outlined-name"
+                            label="Price"
                             name="price"
-                            onChange={handleChangePrice}
-                            valueLabelDisplay="auto"
-                            aria-labelledby="non-linear-slider"
+                            value={input.price}
+                            onChange={(e) => handleChange(e)}
+                            variant="outlined"
                         />
                         {
                             errors.price && (
                                 <FormHelperText>{errors.price}</FormHelperText>
                             )
                         }
+                    </Box>
+                    
+                    <Box key='divImg' className={classes.imageBox}>
+                        <TextField
+                            id="outlined-name"
+                            label="Image"
+                            name="image_link"
+                            value={input.image_link}
+                            onChange={(e) => handleChange(e)}
+                            variant="outlined"
+                            />
+                        {
+                            errors.image_link && (
+                                <FormHelperText>{errors.image_link}</FormHelperText>
+                            )
+                        }
+                        <img src={input.image || LogoIMG} alt="imagen de prueba" />
+                    </Box>
+                </Box>
+                <Box
+                    position="relative"
+                    bgcolor="palevioletred"
+                    width='30%'
+                    boxSizing='border-box'
+                    px={4}
+                    justifyContent="flex-start"
+                    alignItems="center"
+                >
+                    <Box>
+                        <label className='textCreate' key='textCreate'>Select Categories</label> <br />
+                        <Box className='typeBox' key='typeBox'>
+                            <FormControl variant="filled" className={classes.formControl}>
+                                <InputLabel htmlFor="filled-age-native-simple">Select Category</InputLabel>
+                                <Select
+                                    className={classes.select}
+                                    native
+                                    onChange={(e) => handleCategories(e)}
+                                >
+                                    <option aria-label="None" value="" />
+                                {
+                                    allCategories.map( category =>
+                                    <option value={`${category.name}`}>{`${category.name}`}</option> )
+                                }
+                                </Select>
+                            </FormControl>
+                            <Box>
+                                {
+                                    categories.length 
+                                        ? categories.map( c => 
+                                            <Typography variant="body2" gutterBottom>
+                                                <FormHelperText>{`${c}`}</FormHelperText>    
+                                            </Typography>
+                                            )
+                                        : <div></div>
+                                }
+                                {
+                                    errors.categories && (
+                                        <FormHelperText>{errors.categories}</FormHelperText>
+                                    )
+                                }
+                            </Box>
+                        </Box>
                     </Box>
                     <Box className={classes.range} key={`divRating`}>
                         <Typography id="non-linear-slider" gutterBottom>
@@ -300,59 +377,7 @@ export default function CreateProduct() {
                             name="range"
                             onChange={handleChangeRating}
                         /> 
-                    </Box>
-
-                    <Box key='divImg' className={classes.imageBox}>
-                        <TextField
-                            id="outlined-name"
-                            label="Image"
-                            name="image"
-                            value={input.image}
-                            onChange={(e) => handleChange(e)}
-                            variant="outlined"
-                            />
-                        {
-                            errors.image && (
-                                <FormHelperText>{errors.image}</FormHelperText>
-                            )
-                        }
-                        <img src={input.image || LogoIMG} alt="imagen de prueba" />
-                    </Box>
-                </Box>
-                <Box
-                    position="relative"
-                    bgcolor="palevioletred"
-                    width='30%'
-                >
-                    <label className='textCreate' key='textCreate'>Select Categories</label> <br />
-                    <div className='typeBox' key='typeBox'>
-                        <FormControl variant="filled" className={classes.formControl}>
-                            <InputLabel htmlFor="filled-age-native-simple">Select Category</InputLabel>
-                            <Select
-                                native
-                                onChange={(e) => handleCategories(e)}
-                            >
-                                <option aria-label="None" value="" />
-                            {
-                                allCategories.map( category =>
-                                <option value={`${category.name}`}>{`${category.name}`}</option> )
-                            }
-                            </Select>
-                            <Typography variant="body2" gutterBottom>
-                                {
-                                    categories.length &&
-                                        categories.map( c => 
-                                            <FormHelperText>{`${c}`}</FormHelperText>    
-                                        )
-                                }
-                            </Typography>
-                        </FormControl>
-                    </div>
-                    {
-                        errors.categories && (
-                            <FormHelperText>{errors.categories}</FormHelperText>
-                        )
-                    }
+                    </Box>    
                 </Box>
             </Box>
         </form>

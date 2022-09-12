@@ -48,12 +48,8 @@ export default function Navbar() {
 
   const { user, isAuthenticated } = useAuth0();
 
-  // isAuthenticated && dispatch(postUser(user))
-
-  // useEffect ( () => {
   isAuthenticated && dispatch(postUser(user))
-  // }, [dispatch] )
-
+  
   const cart = useSelector((state) => state.cart);
   let mapped= cart.map(item => item.quantity)
   let total = mapped.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
