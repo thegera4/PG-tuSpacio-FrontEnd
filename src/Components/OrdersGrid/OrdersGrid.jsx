@@ -1,47 +1,65 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@material-ui/core';
 import PageviewIcon from '@material-ui/icons/Pageview';
+import { useDispatch, useSelector} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getAllOrders, updateOrderStatus } from '../../actions';
+import Box from '@material-ui/core/Box';
 import useStyles from './useStyles';
 
 export default function OrdersGrid() {
+  const dispatch = useDispatch();
+  const orders = useSelector((state) => state.orders);
+  const navigate = useNavigate();
   const classes = useStyles();
+
+  useEffect(() => {
+    dispatch(getAllOrders());
+  }, [dispatch]);
+  
   const columns = [
   { field: 'id', headerName: 'Order No.', width: 90,},
   {
     field: 'date',
     headerName: 'Date',
-    width: 185,
+    width: 183,
     type: 'datetime',
     editable: false,
   },
   {
     field: 'status',
     headerName: 'Status',
-    width: 100,
+    width: 98,
     editable: true,
     type: 'singleSelect',
-    valueOptions: ['Pending', 'In Progress', 'Completed', 'Cancelled'],
+    valueOptions: ['processing', 'completed', 'cancelled'],
+    cellClassName: (params) =>{
+      return (
+        params.value === 'processing' ? classes.processing : 
+        params.value === 'completed' ? classes.completed : 
+        params.value === 'cancelled' ? classes.cancelled : null
+      )
+    }
   },
   {
     field: 'customer',
     headerName: 'Customer',
-    width: 150,
+    width: 190,
     editable: false,
   },
   {
     field: 'address',
     headerName: 'Address',
-    width: 350,
+    width: 320,
     editable: false,
   },
   {
     field: 'items',
     headerName: 'Items',
     type: 'number',
-    width: 80,
+    width: 55,
     editable: false,
   },
   {
@@ -55,12 +73,16 @@ export default function OrdersGrid() {
   {
     field: 'action',
     headerName: 'Action',
-    width: 120,
+    width: 100,
     sortable: false,
-    renderCell: (params) => {
+    renderCell: (params) => { 
+      if(params.id === 'N/A'){
+        return null
+      } else {
         return (
           <div className="cellAction">
             <Button
+              style={{transform: 'scale(.8)'}}
               variant="contained"
               color="primary"
               endIcon={<PageviewIcon>send</PageviewIcon>}
@@ -69,38 +91,49 @@ export default function OrdersGrid() {
             </Button>
           </div>
         );
+      }
     }
   }
-];
-const rows = [
-  { id: "PO000001", date: '01/02/2022, 08:56:54 AM', status: 'Completed', customer: 'Jon Snow', address: '9047 Stark Walks, Lake Raymond, VT 55889-9005', items: 2, total: 1000 },
-  { id: "PO000002", date: '02/02/2022, 10:23:53 AM', status: 'Completed', customer: 'Cersei Lannister', address: '6660 Autumn Ramp, Jakubowskitown, NH 07516', items: 3, total: 1500 },
-  { id: "PO000003", date: '02/03/2022, 11:34:45 AM', status: 'Completed', customer: 'Jaime Lannister', address: '42936 Ryder Village, Luettgenhaven, LA 77290', items: 1, total: 400 },
-  { id: "PO000004", date: '02/10/2022, 12:56:54 PM', status: 'In Progress', customer: 'Arya Stark', address: '885 Murphy Lodge, Lake Isaiah, HI 25847-6165', items: 4, total: 1750 },
-  { id: "PO000005", date: '02/25/2022, 01:23:51 PM', status: 'In Progress', customer: 'Daenerys Targaryen', address: '146 Kshlerin Common, Millsberg, WA 33351', items: 3, total: 1200 },
-  { id: "PO000006", date: '03/08/2022, 03:12:23 PM', status: 'In Progress', customer: 'Melisandre', address: '534 Cleve Fall, Port Gregorio, MT 12022-7861', items: 5, total: 2200 },
-  { id: "PO000007", date: '03/12/2022, 05:45:10 PM', status: 'Pending', customer: 'Clifford Ferrara', address: '42936 Ryder Village, Luettgenhaven, LA 77290', items: 2, total: 800 },
-  { id: "PO000008", date: '04/15/2022, 08:46:15 PM', status: 'Pending', customer: 'Frances Rossini', address: '6660 Autumn Ramp, Jakubowskitown, NH 07516', items: 3, total: 1200 },
-  { id: "PO000009", date: '05/28/2022, 10:50:44 PM', status: 'Cancelled', customer: 'Harvey Roxie', address: '9047 Stark Walks, Lake Raymond, VT 55889-9005', items: 1, total: 300 },
-];
+  ];
 
-  const [data] = useState(rows);
-  const navigate = useNavigate();
+  const rows = orders.map((order) => {
+    let orderTotal = (order.total / 100).toString().replace(',', '.');
+    return {
+      id: order.number ? order.number : 'N/A',
+      date: order.updatedAt,
+      status: order.status,
+      customer: order.userId?.toString().slice(14),
+      address:  order.shipping?.address === null || 
+                order.shipping?.address === undefined ? 'N/A' : 
+                order.shipping?.address.line1 + ' ' +
+                order.shipping?.address.city + ' ' +
+                order.shipping?.address.state + ' ' +
+                order.shipping?.address.country,
+      items: order.orderProducts?.map(
+        (product) => product.quantity).reduce((a, b) => a + b, 0),
+      total: orderTotal,
+    };
+  });
 
   const handleView = (id) => {
     navigate(`/orders/${id}`);
   };
 
   return (
-    <div style={{ height: 535, width: '100%', backgroundColor: '#fff'}}>
-      <DataGrid
-        rows={data}
-        columns={columns}
-        pageSize={8}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-        disableSelectionOnClick
-      />
-    </div>
+    <Box>
+      <h4>Orders</h4>
+      <div style={{ display: 'flex', height: 650, width: '100%', marginLeft: '0', backgroundColor: '#fff'}}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[5]}
+          disableSelectionOnClick
+          onCellEditCommit={(params) => {
+            console.log(params);
+            dispatch(updateOrderStatus(params.id, params.value));
+          }}/>
+      </div>
+    </Box>
   );
 }
