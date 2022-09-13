@@ -73,12 +73,12 @@ export default function DetailService() {
                     justifyContent="space-between"
                     alignItems="flex-start"
                 >
-                    <Grid xs={12}>
+                    <Grid item xs={12}>
                         <Typography variant="h5" gutterBottom>
                             Chose how to take care of yourself...
                         </Typography>
                     </Grid>
-                    <Grid xs={3}>
+                    <Grid item xs={3}>
                         <Box
                             p={1}
                             display="flex"
@@ -99,7 +99,7 @@ export default function DetailService() {
                             />
                         </Box>
                     </Grid>
-                    <Grid xs={4}>
+                    <Grid item xs={4}>
                         <Grid
                             container
                             direction="column"
@@ -156,7 +156,7 @@ export default function DetailService() {
                                     id="time"
                                     label="Select date time"
                                     type="time"
-                                    defaultValue="hh:mm"
+                                    defaultValue="10:00"
                                     className={classes.textField}
                                     InputLabelProps={{
                                     shrink: true,
@@ -168,14 +168,14 @@ export default function DetailService() {
                             </form>
                         </Grid>
                     </Grid>
-                    <Grid xs={4}>
+                    <Grid item xs={4}>
                         <Grid
                             container
                             direction="column"
                             justifyContent="center"
                             alignItems="stretch"
                             >
-                            <Grid xs={12}>
+                            <Grid item xs={12}>
                                 <Typography variant="body1" gutterBottom>Description:</Typography>
                                 <Typography variant="body2" gutterBottom>
                                 {service 

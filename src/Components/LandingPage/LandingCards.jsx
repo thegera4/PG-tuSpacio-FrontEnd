@@ -1,9 +1,9 @@
 import React from 'react'
-import CardActions from '@material-ui/core/CardActions';
+// import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux' // useSelector
 import { Link }from 'react-router-dom'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Box from '@material-ui/core/Box';
@@ -60,7 +60,7 @@ const useStyles = makeStyles({
 const LandingCards = (props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const products = useSelector(state => state.products)
+    // const products = useSelector(state => state.products)
     let navigate = useNavigate();
     
     

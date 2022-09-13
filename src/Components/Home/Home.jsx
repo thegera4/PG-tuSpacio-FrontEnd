@@ -4,7 +4,7 @@ import HomeCards from "../../Components/HomeCards/HomeCards";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../../actions";
 import BasicPagination from "../BasicPagination/Pagination";
-import LandingPage from "../Landing/Landing";
+// import LandingPage from "../Landing/Landing";
 import { Box } from "@material-ui/core";
 import useStyles from "./useStyles";
 
@@ -17,7 +17,7 @@ export default function SpacingGrid(order) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
   const favorites = useSelector((state) => state.favorites);
-  const cart = useSelector((state) => state.cart);
+  // const cart = useSelector((state) => state.cart);
 
   const currentPage = useSelector((state) => state.currentPageHome);
   const [productsPerPage] = useState(9);
@@ -36,9 +36,9 @@ export default function SpacingGrid(order) {
   function productIsFavorite(productID) {
     return favorites?.some((favorite) => favorite.id === productID);
   }
-  function productInCart(productID) {
-    return cart?.some((product) => product.id === productID);
-  }
+  // function productInCart(productID) {
+  //   return cart?.some((product) => product.id === productID);
+  // }
 
   return (
     <>
@@ -79,7 +79,7 @@ export default function SpacingGrid(order) {
       </Grid>
 
       <div className="divwsp">
-        <a href="https://wa.me/+573027729480" target="_blank">
+        <a href="https://wa.me/+573027729480" target="_blank" rel="noreferrer">
           <img
             src="https://i.ibb.co/Th1XCXz/Dise-o-sin-t-tulo-1.png"
             alt="..."

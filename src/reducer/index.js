@@ -28,7 +28,7 @@ import {
   GET_ORDER_BY_ID,
   UPDATE_ORDER_STATUS,
   CLEAN_ORDER_DETAIL,
-  CREATE_CART,
+  // CREATE_CART, no se usa por esto lo comento
   SET_DASHBOARD_ITEM,
 } from "../actions";
 
