@@ -4,8 +4,8 @@ import { getCategories, postNewProduct } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoIMG from '../../assets/images/img_logo.png';
 import { Box, Button, FormControl, FormHelperText, Grid, 
-InputAdornment, InputLabel,makeStyles, OutlinedInput,
-Select, Slider, TextField, Typography, withStyles } from '@material-ui/core';
+InputAdornment, InputLabel,makeStyles, Select, Slider, 
+TextField, Typography, withStyles } from '@material-ui/core';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
@@ -230,7 +230,7 @@ export default function CreateProduct() {
                 direction="row"
                 justifyContent="center"
                 alignItems="flex-start"
-                bgcolor={"rgba(235, 234, 156, 0.589)"}                
+                // bgcolor={"rgba(235, 234, 156, 0.589)"}                
             >
                 <Grid item xs={12}>
                     <Grid
@@ -255,7 +255,7 @@ export default function CreateProduct() {
                 <Box
                     position="relative"
                     width='250px'
-                    bgcolor={"rgba(235, 156, 180, 0.589)"}
+                    // bgcolor={"rgba(235, 156, 180, 0.589)"}
                     direction="column"
                     justifyContent="center"
                     alignItems="center"
@@ -336,7 +336,7 @@ export default function CreateProduct() {
                 </Box>
                 
                 <Box
-                    bgcolor={"rgba(156, 177, 235, 0.589)"}
+                    // bgcolor={"rgba(156, 177, 235, 0.589)"}
                     width='250px'
                     direction="column"
                     justifyContent="center"
@@ -422,7 +422,7 @@ export default function CreateProduct() {
                     // position="relative"
                     width='250px'
                     height='250px'
-                    bgcolor={"rgba(156, 235, 162, 0.589)"}
+                    // bgcolor={"rgba(156, 235, 162, 0.589)"}
                     p={4}
                     direction="column"
                     justifyContent="center"
@@ -440,7 +440,7 @@ export default function CreateProduct() {
                 <Box
                     position="relative"
                     width='300px'
-                    bgcolor={"rgba(156, 230, 235, 0.589)"}
+                    // bgcolor={"rgba(156, 230, 235, 0.589)"}
                     boxSizing='border-box'
                     direction="column"
                     justifyContent="center"
@@ -519,7 +519,7 @@ export default function CreateProduct() {
                     alignContent="center"
                     alignItems="center"
                     py={2}
-                    bgcolor={"rgba(235, 156, 156, 0.589)"}
+                    // bgcolor={"rgba(235, 156, 156, 0.589)"}
                 >
                     <Box
                         border={1}

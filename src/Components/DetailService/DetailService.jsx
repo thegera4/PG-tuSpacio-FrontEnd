@@ -75,7 +75,7 @@ export default function DetailService() {
                 >
                     <Grid xs={12}>
                         <Typography variant="h5" gutterBottom>
-                            Elegí como cuidarte...
+                            Chose how to take care of yourself...
                         </Typography>
                     </Grid>
                     <Grid xs={3}>
