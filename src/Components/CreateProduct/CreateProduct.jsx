@@ -128,8 +128,6 @@ export default function CreateProduct() {
             errors.stock = "The price cannot be null"; }
         if (!input.image_link || typeof input.image_link !== "string" ) {
             errors.image_link = "Please insert a valid url image"; }
-        if (colors.azul >= 256  ) {
-            errors.image_link = "Please insert a valid url image"; }
         return errors;
     }
 

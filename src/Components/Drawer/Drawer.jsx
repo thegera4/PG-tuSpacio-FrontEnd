@@ -29,8 +29,9 @@ const useStyles = makeStyles({
 });
 
 
-export default function DrawerBox({setOrder}) {
+export default function DrawerBox() {
 const classes = useStyles();
+const [order, setOrder] = useState("")
 const navigate = useNavigate()
 const categories = useSelector((state) => state.categories)
 const brands = useSelector((state) => state.brands)
@@ -56,7 +57,7 @@ function handlefilter(e) {
   dispatch(setCurrentHomePage(1))
   let {alpha,category,price,brand,rating}=filters
   // eslint-disable-next-line no-sequences
-  setOrder(`filters by ${alpha,category,price,brand,rating}`)
+  // setOrder(`filters by ${alpha,category,price,brand,rating}`)
 }
 
 
