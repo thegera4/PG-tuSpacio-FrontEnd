@@ -69,13 +69,28 @@ export default function ProductsGrid() {
     }
   },
   {
+
+    field: 'review',
+    headerName: 'Review',
+    width: 120,
+
     field: 'action',
     headerName: 'Action',
     width: 200,
+
     sortable: false,
     renderCell: (params) => {
         return (
           <div className="cellAction">
+
+            <Button
+              variant="contained"
+              color="primary"
+              endIcon={<PageviewIcon>send</PageviewIcon>}
+              onClick={() => handleReview(params.row.id)}>
+                Post
+            </Button>
+
             <Link to={`/${params.id}`}>
             <Button
               variant="contained"
@@ -86,10 +101,12 @@ export default function ProductsGrid() {
                 Delete
             </Button>
             </Link>
+
           </div>
         );
     }
   },
+
   ];
 
   const rows = products?.map(product => {
@@ -102,6 +119,7 @@ export default function ProductsGrid() {
     }
   });
 
+
   const navigate = useNavigate();
 
   const handleView = (id) => {
@@ -111,6 +129,11 @@ export default function ProductsGrid() {
   const handleDelete = (id) => {
     products.filter((item) => item.id !== id);
   };
+
+  const handleReview = (id) => {
+    navigate(`/reviews/${id}`);
+  };
+
 
   return (
     <div>

@@ -21,6 +21,8 @@ import {
   ORDERS_FILTERS,
   CLEAR_CART,
   REMOVE_ONE,
+  POST_REVIEW,
+  UPDATE_RATING,
   GET_ALL_ORDERS,
   GET_ORDER_BY_ID,
   UPDATE_ORDER_STATUS,
@@ -191,6 +193,16 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+
+    case POST_REVIEW:
+      return {
+        ...state,
+      };
+    case UPDATE_RATING:
+      return {
+        ...state,
+      };
+
     case ADD_TO_WISHLIST: {
       let newState;
       if (state.favorites) {
