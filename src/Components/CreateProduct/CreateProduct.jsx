@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
 import { getCategories, postNewProduct } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoIMG from '../../assets/images/img_logo.png';
-import { Avatar, Box, Button, Chip, FormControl, FormHelperText, Grid, Input, 
-    InputAdornment, InputLabel, makeStyles, OutlinedInput, Select, Slider, TextField, Typography, withStyles } from '@material-ui/core';
+import { Box, Button, FormControl, FormHelperText, Grid, InputAdornment, InputLabel,
+    makeStyles, OutlinedInput, Select, Slider, TextField, Typography, withStyles } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,10 +33,10 @@ const useStyles = makeStyles((theme) => ({
         margin: 'auto',
     },
     select: {
-        width: 300,
+        width: 250,
     },
     image: {
-        height: "150px",
+        width: "200px",
         margin: "20px"
     },
     textField: {
@@ -55,7 +53,6 @@ export default function CreateProduct() {
     const navigate = useNavigate();
     const classes = useStyles();
     const allCategories = useSelector((state) => state.categories);
-    // const allProducts = useSelector((state) => state.products)
     const [errors, setErrors] = useState({});
     const [colors, setColors] = useState({
         azul: 0,
@@ -79,9 +76,7 @@ export default function CreateProduct() {
         if (addColors.includes(newColor)) return alert("Color already added");
         setAddColors([...addColors, newColor])
         setColors({azul: 0,rojo: 0,verde: 0});
-        // console.log(addColors)
-        // return alert("Color added successfully!")      
-    }
+    }    
 
     useEffect ( () => {
         dispatch(getCategories())
@@ -103,11 +98,7 @@ export default function CreateProduct() {
         status: true,
         categories: [] //*
     });
-    /*
-        tag_list,
-        product_colors,
-        status,
-    */
+   
     function validation(input) {
         let errors = {};
         if(!input.name || typeof input.name !== "string") {   
@@ -116,6 +107,8 @@ export default function CreateProduct() {
             errors.brand = "Please insert the brand of your product"; }
         if(!input.description || typeof input.description !== "string") {   
             errors.description = "Please insert the description of your product"; }
+        if(!input.product_type || typeof input.product_type !== "string") {   
+            errors.product_type = "Please insert the type of your product"; }
         if(!input.price_sign || typeof input.price_sign !== "string") {   
             errors.price_sign = "Please insert the price sign of your product"; }
         if(!input.currency || typeof input.currency !== "string" || input.currency.length > 3) {   
@@ -126,13 +119,15 @@ export default function CreateProduct() {
             errors.price = "The price cannot be null"; } 
         if (!input.stock) {
             errors.stock = "The price cannot be null"; }
+        if (!input.rating) {
+            errors.rating = "The rating cannot be null"; } 
         if (!input.image_link || typeof input.image_link !== "string" ) {
             errors.image_link = "Please insert a valid url image"; }
         return errors;
     }
 
     function handleChange(e) {
-        console.log(e)
+        // console.log(e)
         setInput({
             ...input,
             [e.target.name] : e.target.value
@@ -193,22 +188,31 @@ export default function CreateProduct() {
     
     function handleSubmit(e){
         // e.preventDefault();
-        if(errors.name || errors.categories || errors.description ||
-            errors.currency || errors.image || errors.price) {
+        if (errors.name || errors.categories || errors.description ||
+            errors.currency || errors.image_link || errors.price || errors.brand 
+            || errors.price_sign || errors.stock || errors.rating || errors.product_type) {
             return alert("Can't create a product. Missing data")}
         input.categories = categories;
+        input.product_colors = addColors;
         dispatch(postNewProduct(input))
         alert("Product created successfully!!");
         setInput({
-            name: "",
+            brand: "", 
+            name: "", 
+            price: 0, 
+            price_sign: "", 
+            currency: "", 
+            image_link: "", 
             description: "",
-            price: 0,
-            currency: "",
-            image: "",
-            rating: 0,
-            categories: []
+            rating: 0, 
+            product_type: "", 
+            stock: 0,
+            tag_list: "",
+            product_colors: [],
+            status: true,
+            categories: [] 
         })
-        navigate('/')
+        navigate('/') // ver a que dirección me voy a ir luego de generar un nuevo producto
     }
 
     return (
@@ -220,7 +224,9 @@ export default function CreateProduct() {
                 m={0}
                 display= "flex"
                 flexWrap= "wrap"
-                justifyContent= "space-evenly"
+                direction="row"
+                justifyContent="center"
+                alignItems="flex-start"
                 
             >
                 <Grid item xs={12}>
@@ -231,11 +237,11 @@ export default function CreateProduct() {
                         alignItems="flex-start"
                         py={1}
                     >
-                        <Button 
+                        {/* <Button 
                             variant="contained" 
                             color="primary"
                             onClick={() => navigate('/home')}
-                        > Home </Button>
+                        > Home </Button> */}
                         <Button 
                             variant="contained" 
                             color="primary" 
@@ -245,12 +251,12 @@ export default function CreateProduct() {
                 </Grid>
                 <Box
                     position="relative"
-                    width='30%'
-                    // bgcolor="palevioletred"
+                    width='250px'
                     direction="column"
                     justifyContent="center"
                     alignItems="center"
                     mt={2}
+                    marginX={3}
                 >
                     <div key='divName'>
                         <TextField
@@ -301,7 +307,7 @@ export default function CreateProduct() {
                                 <FormHelperText>{errors.stock}</FormHelperText>
                             )
                         }
-                    </div>
+                    </div> 
 
                     <div key='divDesc'>
                         <TextField
@@ -323,11 +329,12 @@ export default function CreateProduct() {
                 
                 <Box
                     // bgcolor="palevioletred"
-                    width='30%'
+                    width='250px'
                     direction="column"
                     justifyContent="center"
                     alignItems="center"
                     mt={2}
+                    marginX={3}
                 >
                     <Box className={classes.range} key={`divPrice`}>
                         <FormControl fullWidth className={classes.margin} variant="outlined">
@@ -400,14 +407,29 @@ export default function CreateProduct() {
                 </Box>
                 <Box
                     position="relative"
-                    // bgcolor="palevioletred"
-                    width='30%'
+                    width='250px'
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    p={4}
+                    marginX={3}
+                >
+                    <img src={input.image_link || LogoIMG} className={classes.image} alt="imagen de prueba" />
+                    {
+                        input.image_link && (
+                            <FormHelperText>Image preview</FormHelperText> 
+                        )
+                    }
+                </Box>
+                <Box
+                    position="relative"
+                    width='300px'
                     boxSizing='border-box'
-                    px={4}
                     direction="column"
                     justifyContent="center"
                     alignItems="center"
                     mt={2}
+                    px={2}
                 >
                     <Box className='typeBox' key='typeBox'>
                         <FormControl variant="filled" className={classes.formControl}>
@@ -441,6 +463,22 @@ export default function CreateProduct() {
                             }
                         </Box>
                     </Box>
+                    <Box key='divStock'>
+                        <TextField
+                            required
+                            id="outlined-name"
+                            label="Product Type"
+                            name="product_type"
+                            value={input.product_type}
+                            onChange={(e) => handleChange(e)}
+                            variant="outlined"
+                            />
+                        {
+                            errors.product_type && (
+                                <FormHelperText>{errors.product_type}</FormHelperText>
+                            )
+                        }
+                    </Box> 
                     <Box className={classes.rating} key={`divRating`}>
                         <InputLabel htmlFor="filled-age-native-simple">Rating</InputLabel>
                         <Slider
@@ -456,14 +494,13 @@ export default function CreateProduct() {
                             onChange={handleChangeRating}
                         /> 
                     </Box>
-                    <img src={input.image || LogoIMG} className={classes.image} alt="imagen de prueba" />  
                 </Box>
                 <Box
                     display="flex"
                     flexWrap="wrap"
                     alignContent="center"
                     alignItems="center"
-                    // bgcolor="#df7c1a"
+                    py={2}
                 >
                     <Box
                         border={1}

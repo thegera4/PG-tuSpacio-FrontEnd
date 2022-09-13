@@ -106,7 +106,7 @@ export function getName(name) {
 
 export function postNewProduct(payload) {
   return function (dispatch) {
-    const newProdResult = axios.post(`/products`, payload);
+    const newProdResult = axios.post(`${API}/products`, payload);
     dispatch({
       type: POST_PRODUCT,
       payload,
