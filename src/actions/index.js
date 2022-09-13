@@ -237,6 +237,7 @@ export function postUser(user) {
       console.error(error);
     }
  }
+}
 
 export const getAllOrders = () => {
   return async function (dispatch) {

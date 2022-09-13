@@ -99,7 +99,7 @@ button3: {
     
   },
   brands: {
-    width: '100%'
+    width: '100%',
     marginTop: 200,
     marginBottom: 200
   },

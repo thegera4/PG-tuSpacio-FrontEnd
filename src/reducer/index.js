@@ -79,7 +79,7 @@ const initialState = {
   cart: getLocalCart(),
   adminOption: 0,
   notification: 0,
-  infoUser: {}
+  infoUser: {},
   dashboardItem: 'Dashboard',
 };
 

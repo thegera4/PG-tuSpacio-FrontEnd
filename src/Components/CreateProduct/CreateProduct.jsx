@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { getCategories, postNewProduct } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoIMG from '../../assets/images/img_logo.png';
-import { Box, Button, FormControl, FormHelperText, Grid, InputAdornment, InputLabel,
-    makeStyles, OutlinedInput, Select, Slider, TextField, Typography, withStyles } from '@material-ui/core';
-
+import { Box, Button, FormControl, FormHelperText, Grid, 
+InputAdornment, InputLabel,makeStyles, OutlinedInput,
+Select, Slider, TextField, Typography, withStyles } from '@material-ui/core';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
