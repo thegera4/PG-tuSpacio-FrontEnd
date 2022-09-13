@@ -21,6 +21,7 @@ import {
   ORDERS_FILTERS,
   CLEAR_CART,
   REMOVE_ONE,
+  POST_USER,
   POST_REVIEW,
   UPDATE_RATING,
   GET_ALL_ORDERS,
@@ -78,6 +79,7 @@ const initialState = {
   cart: getLocalCart(),
   adminOption: 0,
   notification: 0,
+  infoUser: {}
   dashboardItem: 'Dashboard',
 };
 
@@ -193,7 +195,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-
     case POST_REVIEW:
       return {
         ...state,
@@ -202,7 +203,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-
     case ADD_TO_WISHLIST: {
       let newState;
       if (state.favorites) {
@@ -221,7 +221,7 @@ function rootReducer(state = initialState, action) {
         };
       }
       setLocalFavorites(newState.favorites);
-      return newState;
+      return newState; 
     }
     case REMOVE_FROM_WISHLIST: {
       let newState;
@@ -299,6 +299,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         cart: [],
+      };
+    case POST_USER:
+      return {
+        ...state,
+        infoUser: action.payload,
       };
     case GET_ALL_ORDERS:
       return {

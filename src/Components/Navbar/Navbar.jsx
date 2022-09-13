@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -24,7 +24,7 @@ import Logout from '../Logout/Logout';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Avatar } from '@material-ui/core';
 import {withStyles} from '@material-ui/core';
-import { getAllProducts } from '../../actions';
+import { getAllProducts, postUser } from '../../actions';
 import { useDispatch } from 'react-redux'
 import DrawerBox from '../Drawer/Drawer';
 
@@ -48,6 +48,8 @@ export default function Navbar() {
 
   const { user, isAuthenticated } = useAuth0();
 
+  isAuthenticated && dispatch(postUser(user))
+  
   const cart = useSelector((state) => state.cart);
   const mapped= cart?.map(item => item.quantity)
   const total = mapped?.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
@@ -79,28 +81,29 @@ export default function Navbar() {
       {
         isAuthenticated
           ? <div>
-            <MenuItem>{user.name}</MenuItem>
-            <MenuItem onClick={ () => 
-              user.sub === "auth0|63194dd4a66d06a2351daf15" ? 
-              navigate('/profile') : navigate('/home') }>
+              <MenuItem>{user.name}</MenuItem>
+              <MenuItem onClick={ () => 
+                user.sub === "auth0|63194dd4a66d06a2351daf15" 
+                   ? navigate('/profile') 
+                   : navigate('/home') } >
                 { user.sub === "auth0|63194dd4a66d06a2351daf15" ? 
-                "Dashboard" : "Profile" }
-            </MenuItem>
-            <MenuItem onClick={ () => 
-              user.sub === "auth0|63194dd4a66d06a2351daf15" ? 
-              navigate('/dashboard') : navigate('/home') }>
+                  "Dashboard" : "Profile" }
+              </MenuItem>
+              <MenuItem onClick={ () => 
+                user.sub === "auth0|63194dd4a66d06a2351daf15" ? 
+                navigate('/dashboard') : navigate('/home') }>
                 { user.sub === "auth0|63194dd4a66d06a2351daf15" ? 
                 "New Dashboard" : null }
-            </MenuItem>
-            <MenuItem onClick={Logout()}>Sing out</MenuItem>
-            {
-              user.name === 'TuSpacio' && <div>
-                  <MenuItem onClick={() => navigate('/create')}>Create Product</MenuItem>
-                  <MenuItem onClick={() => navigate('/createUser')}>Users</MenuItem>
-                  <MenuItem onClick={() => navigate('/order/1')}>Orders</MenuItem>
-                </div>
-            }
-          </div>
+              </MenuItem>
+              <MenuItem onClick={Logout()}>Sing out</MenuItem>
+              {
+                user.name === 'TuSpacio' && <div>
+                    <MenuItem onClick={() => navigate('/create')}>Create Product</MenuItem>
+                    <MenuItem onClick={() => navigate('/createUser')}>Users</MenuItem>
+                    <MenuItem onClick={() => navigate('/orders/1')}>Orders</MenuItem>
+                  </div>
+              }
+            </div>
           : <MenuItem onClick={Login()}>Sing in</MenuItem>
       }
      

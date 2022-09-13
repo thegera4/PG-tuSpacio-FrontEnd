@@ -31,6 +31,7 @@ export default function Footer() {
                     bgcolor="secondary.dark"
                     color='secondary.contrastText'
                     py={2}
+                    m={0}
                 >
                     <Grid 
                         container

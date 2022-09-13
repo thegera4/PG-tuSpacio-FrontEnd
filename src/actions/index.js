@@ -22,16 +22,16 @@ export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
 export const ORDERS_FILTERS = "ORDERS_FILTERS";
 export const CLEAR_CART = "CLEAR_CART";
 export const REMOVE_ONE = "REMOVE_ONE";
-
+export const POST_USER = 'POST_USER';
 export const POST_REVIEW = "POST_REVIEW";
 export const UPDATE_RATING = "UPDATE_RATING";
-
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 export const UPDATE_ORDER_STATUS = "UPDATE_ORDER_STATUS";
 export const CLEAN_ORDER_DETAIL = "CLEAN_ORDER_DETAIL";
 export const CREATE_CART = "CREATE_CART";
 export const SET_DASHBOARD_ITEM = "SET_DASHBOARD_ITEM";
+
 //API LOCAL
 const API = "http://localhost:3001/api";
 
@@ -114,7 +114,7 @@ export function getName(name) {
 
 export function postNewProduct(payload) {
   return function (dispatch) {
-    const newProdResult = axios.post(`/products`, payload);
+    const newProdResult = axios.post(`${API}/products`, payload);
     dispatch({
       type: POST_PRODUCT,
       payload,
@@ -213,6 +213,30 @@ export function orderCombine(filters) {
     }
   };
 }
+
+export function postUser(user) {
+  const {name, nickname, email, email_verified, picture, sub} = user;
+  const infoUser = {
+    name, 
+    nickname, 
+    email, 
+    email_verified,
+    picture, 
+    sid: sub
+  }
+  if (!name) return console.log('Login not initialized')
+  return async function (dispatch) {
+    try {
+      const newUser = await axios.post(`${API}/users`, infoUser);
+      console.log('Post users ready')
+      return dispatch({
+        type: POST_USER,
+        payload: newUser.data
+        });
+    } catch (error) {
+      console.error(error);
+    }
+ }
 
 export const getAllOrders = () => {
   return async function (dispatch) {

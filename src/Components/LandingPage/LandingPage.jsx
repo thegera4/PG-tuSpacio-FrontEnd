@@ -99,6 +99,7 @@ button3: {
     
   },
   brands: {
+    width: '100%'
     marginTop: 200,
     marginBottom: 200
   },
@@ -293,7 +294,6 @@ button3: {
     stroke: theme.palette.divider,
     strokeWidth: 1,
   },
-
 }));
 
 

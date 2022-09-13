@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     // paddingTop: 4,
    /* display: 'flex',
     flexWrap: 'wrap',
-    width: '100%',
+    width: 'auto',
     bottom: 0,
     marginTop:50*/
     // fontFamily: 'roboto' 
