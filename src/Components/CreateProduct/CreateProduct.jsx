@@ -9,18 +9,18 @@ Select, Slider, TextField, Typography, withStyles } from '@material-ui/core';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        '& .MuiTextField-root': {
+          margin: theme.spacing(1),
+          width: '25ch',
+        },
+    },
     formControl: {
         margin: theme.spacing(1),
         minWidth: 150,
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
-    },
-    root: {
-        '& .MuiTextField-root': {
-          margin: theme.spacing(1),
-          width: '25ch',
-        },
     },
     margin: {
         margin: theme.spacing(1),
@@ -262,13 +262,13 @@ export default function CreateProduct() {
                     <div key='divName'>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Name"
+                            id="outlined-helperText"
                             name="name"
+                            label="Name"
                             value={input.name}
                             onChange={(e) => handleChange(e)}
+                            variant="filled"
                             className={classes.formControl}
-                            variant="outlined"
                         />
                         {
                             errors.name && (
@@ -280,13 +280,13 @@ export default function CreateProduct() {
                     <div key='divBrand'>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Brand"
-                            name="brand"
+                            id="outlined-helperText"
+                            name="Brand"
+                            label="brand"
                             value={input.brand}
                             onChange={(e) => handleChange(e)}
+                            variant="filled"
                             className={classes.formControl}
-                            variant="outlined"
                         />
                         {
                             errors.brand && (
@@ -298,14 +298,14 @@ export default function CreateProduct() {
                     <div key='divStock'>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Stock"
-                            name="stock"
+                            id="outlined-helperText"
+                            name="Stock"
+                            label="stock"
                             value={input.stock}
                             onChange={(e) => handleChange(e)}
+                            variant="filled"
                             className={classes.formControl}
-                            variant="outlined"
-                            />
+                        />
                         {
                             errors.stock && (
                                 <FormHelperText>{errors.stock}</FormHelperText>
@@ -316,14 +316,14 @@ export default function CreateProduct() {
                     <div key='divDesc'>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Description"
-                            name="description"
+                            id="outlined-helperText"
+                            name="Description"
+                            label="description"
                             value={input.description}
                             onChange={(e) => handleChange(e)}
+                            variant="filled"
                             className={classes.formControl}
-                            variant="outlined"
-                            />
+                        />
                         {
                             errors.description && (
                                 <FormHelperText>{errors.description}</FormHelperText>
@@ -342,18 +342,18 @@ export default function CreateProduct() {
                     marginX={3}
                 >
                     <Box className={classes.range} key={`divPrice`}>
-                        <FormControl fullWidth className={classes.margin} variant="outlined">
-                            <InputLabel htmlFor="outlined-adornment-amount">Price *</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-amount"
-                                name="price"
-                                value={input.price}
-                                onChange={(e) => handleChange(e)}
-                                startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                className={classes.textField}
-                                labelWidth={50}
-                            />
-                        </FormControl>
+                        <TextField
+                            label="Price *"
+                            id="filled-start-adornment"
+                            name="price"
+                            value={input.price}
+                            onChange={(e) => handleChange(e)}
+                            className={clsx(classes.margin, classes.textField)}
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
+                            variant="filled"
+                        />
                         {
                             errors.price && (
                                 <FormHelperText>{errors.price}</FormHelperText>
@@ -363,13 +363,14 @@ export default function CreateProduct() {
                     <Box key='divPriceSign'>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Price Sign"
-                            name="price_sign"
+                            id="outlined-helperText"
+                            name="Price Sign"
+                            label="price_sign"
                             value={input.price_sign}
                             onChange={(e) => handleChange(e)}
-                            variant="outlined"
-                            />
+                            variant="filled"
+                            className={classes.formControl}
+                        />
                         {
                             errors.price_sign && (
                                 <FormHelperText>{errors.price_sign}</FormHelperText>
@@ -380,13 +381,14 @@ export default function CreateProduct() {
                     <Box key='divCurr'>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Currency"
-                            name="currency"
+                            id="outlined-helperText"
+                            name="Currency"
+                            label="currency"
                             value={input.currency}
                             onChange={(e) => handleChange(e)}
-                            variant="outlined"
-                            />
+                            variant="filled"
+                            className={classes.formControl}
+                        />
                         {
                             errors.currency && (
                                 <FormHelperText>{errors.currency}</FormHelperText>
@@ -397,13 +399,14 @@ export default function CreateProduct() {
                     <Box key='divImg' className={classes.imageBox}>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Image"
-                            name="image_link"
+                            id="outlined-helperText"
+                            name="Image"
+                            label="image_link"
                             value={input.image_link}
                             onChange={(e) => handleChange(e)}
-                            variant="outlined"
-                            />
+                            variant="filled"
+                            className={classes.formControl}
+                        />
                         {
                             errors.image_link && (
                                 <FormHelperText>{errors.image_link}</FormHelperText>
@@ -472,13 +475,14 @@ export default function CreateProduct() {
                     <Box key='divStock'>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Product Type"
-                            name="product_type"
+                            id="outlined-helperText"
+                            name="Product Type"
+                            label="product_type"
                             value={input.product_type}
                             onChange={(e) => handleChange(e)}
-                            variant="outlined"
-                            />
+                            variant="filled"
+                            className={classes.formControl}
+                        />
                         {
                             errors.product_type && (
                                 <FormHelperText>{errors.product_type}</FormHelperText>
