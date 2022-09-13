@@ -4,12 +4,16 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   boxContainer : {
     // paddingTop: 4,
-    display: 'flex',
+   /* display: 'flex',
     flexWrap: 'wrap',
     width: '100%',
     bottom: 0,
-    marginTop:50
+    marginTop:50*/
     // fontFamily: 'roboto' 
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   logoCardsBox: {
     display: 'flex',

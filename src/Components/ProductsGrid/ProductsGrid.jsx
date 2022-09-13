@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@material-ui/core';
 import PageviewIcon from '@material-ui/icons/Pageview';
@@ -19,6 +19,7 @@ export default function ProductsGrid() {
 
   useEffect(() => {
     dispatch(getAllProducts())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const columns = [
@@ -69,15 +70,14 @@ export default function ProductsGrid() {
     }
   },
   {
-
     field: 'review',
     headerName: 'Review',
     width: 120,
-
+  },
+  {
     field: 'action',
     headerName: 'Action',
     width: 200,
-
     sortable: false,
     renderCell: (params) => {
         return (
