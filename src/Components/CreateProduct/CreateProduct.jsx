@@ -37,7 +37,9 @@ const useStyles = makeStyles((theme) => ({
         width: 250,
     },
     image: {
-        width: "200px",
+        position: "absolute",
+        margin:"auto",
+        width: "150px",
         margin: "20px"
     },
     textField: {
@@ -221,14 +223,14 @@ export default function CreateProduct() {
             <Box
                 position= 'relative'
                 width= '100%'
-                pt={6}
+                py={2}
                 m={0}
                 display= "flex"
                 flexWrap= "wrap"
                 direction="row"
                 justifyContent="center"
                 alignItems="flex-start"
-                
+                bgcolor={"rgba(235, 234, 156, 0.589)"}                
             >
                 <Grid item xs={12}>
                     <Grid
@@ -253,6 +255,7 @@ export default function CreateProduct() {
                 <Box
                     position="relative"
                     width='250px'
+                    bgcolor={"rgba(235, 156, 180, 0.589)"}
                     direction="column"
                     justifyContent="center"
                     alignItems="center"
@@ -281,8 +284,8 @@ export default function CreateProduct() {
                         <TextField
                             required
                             id="outlined-helperText"
-                            name="Brand"
-                            label="brand"
+                            name="brand"
+                            label="Brand"
                             value={input.brand}
                             onChange={(e) => handleChange(e)}
                             variant="filled"
@@ -299,8 +302,8 @@ export default function CreateProduct() {
                         <TextField
                             required
                             id="outlined-helperText"
-                            name="Stock"
-                            label="stock"
+                            name="stock"
+                            label="Stock"
                             value={input.stock}
                             onChange={(e) => handleChange(e)}
                             variant="filled"
@@ -317,8 +320,8 @@ export default function CreateProduct() {
                         <TextField
                             required
                             id="outlined-helperText"
-                            name="Description"
-                            label="description"
+                            name="description"
+                            label="Description"
                             value={input.description}
                             onChange={(e) => handleChange(e)}
                             variant="filled"
@@ -333,7 +336,7 @@ export default function CreateProduct() {
                 </Box>
                 
                 <Box
-                    // bgcolor="palevioletred"
+                    bgcolor={"rgba(156, 177, 235, 0.589)"}
                     width='250px'
                     direction="column"
                     justifyContent="center"
@@ -364,8 +367,8 @@ export default function CreateProduct() {
                         <TextField
                             required
                             id="outlined-helperText"
-                            name="Price Sign"
-                            label="price_sign"
+                            name="price_sign"
+                            label="Price Sign"
                             value={input.price_sign}
                             onChange={(e) => handleChange(e)}
                             variant="filled"
@@ -382,8 +385,8 @@ export default function CreateProduct() {
                         <TextField
                             required
                             id="outlined-helperText"
-                            name="Currency"
-                            label="currency"
+                            name="currency"
+                            label="Currency"
                             value={input.currency}
                             onChange={(e) => handleChange(e)}
                             variant="filled"
@@ -400,8 +403,8 @@ export default function CreateProduct() {
                         <TextField
                             required
                             id="outlined-helperText"
-                            name="Image"
-                            label="image_link"
+                            name="image_link"
+                            label="Image URL"
                             value={input.image_link}
                             onChange={(e) => handleChange(e)}
                             variant="filled"
@@ -415,12 +418,16 @@ export default function CreateProduct() {
                     </Box>
                 </Box>
                 <Box
-                    position="relative"
+                    // display="block"
+                    // position="relative"
                     width='250px'
+                    height='250px'
+                    bgcolor={"rgba(156, 235, 162, 0.589)"}
+                    p={4}
                     direction="column"
                     justifyContent="center"
                     alignItems="center"
-                    p={4}
+                    mt={2}
                     marginX={3}
                 >
                     <img src={input.image_link || LogoIMG} className={classes.image} alt="imagen de prueba" />
@@ -433,6 +440,7 @@ export default function CreateProduct() {
                 <Box
                     position="relative"
                     width='300px'
+                    bgcolor={"rgba(156, 230, 235, 0.589)"}
                     boxSizing='border-box'
                     direction="column"
                     justifyContent="center"
@@ -476,8 +484,8 @@ export default function CreateProduct() {
                         <TextField
                             required
                             id="outlined-helperText"
-                            name="Product Type"
-                            label="product_type"
+                            name="product_type"
+                            label="Product Type"
                             value={input.product_type}
                             onChange={(e) => handleChange(e)}
                             variant="filled"
@@ -511,6 +519,7 @@ export default function CreateProduct() {
                     alignContent="center"
                     alignItems="center"
                     py={2}
+                    bgcolor={"rgba(235, 156, 156, 0.589)"}
                 >
                     <Box
                         border={1}
