@@ -8,6 +8,9 @@ import LandingPage from "../Landing/Landing";
 import { Box } from "@material-ui/core";
 import useStyles from "./useStyles";
 
+import Contenido from "../Chatbot/Chatbot";
+import "./Home.css";
+
 export default function SpacingGrid(order) {
   const [spacing, setSpacing] = React.useState(2);
   const classes = useStyles();
@@ -52,7 +55,6 @@ export default function SpacingGrid(order) {
         totalProducts={products.length}
         onChange={handleChange}
       />
-
       <Grid
         container
         direction="row"
@@ -75,6 +77,19 @@ export default function SpacingGrid(order) {
           </Box>
         </Grid>
       </Grid>
+
+      <div className="divwsp">
+        <a href="https://wa.me/+573027729480" target="_blank">
+          <img
+            src="https://i.ibb.co/Th1XCXz/Dise-o-sin-t-tulo-1.png"
+            alt="..."
+          />
+        </a>
+      </div>
+
+      <div>
+        <Contenido />
+      </div>
     </>
   );
 }

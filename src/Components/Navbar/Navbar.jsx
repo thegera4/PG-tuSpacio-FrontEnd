@@ -51,8 +51,8 @@ export default function Navbar() {
   isAuthenticated && dispatch(postUser(user))
   
   const cart = useSelector((state) => state.cart);
-  let mapped= cart.map(item => item.quantity)
-  let total = mapped.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
+  const mapped= cart?.map(item => item.quantity)
+  const total = mapped?.map(c => parseFloat(c)).reduce((a, b) => a + b, 0) ;
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -80,18 +80,30 @@ export default function Navbar() {
     >
       {
         isAuthenticated
-          ? <>
-            <MenuItem onClick={() => dispatch(postUser(user))}>{user.name}</MenuItem>
-            <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
-            <MenuItem onClick={Logout()}>Sing out</MenuItem>
-            {
-              user.name === 'TuSpacio' && <>
-                  <MenuItem onClick={() => navigate('/create')}>Create Product</MenuItem>
-                  <MenuItem onClick={() => navigate('/createUser')}>Users</MenuItem>
-                  <MenuItem onClick={() => navigate('/orders/1')}>Orders</MenuItem>
-                </>
-            }
-          </>
+          ? <div>
+              <MenuItem>{user.name}</MenuItem>
+              <MenuItem onClick={ () => 
+                user.sub === "auth0|63194dd4a66d06a2351daf15" 
+                   ? navigate('/profile') 
+                   : navigate('/home') } >
+                { user.sub === "auth0|63194dd4a66d06a2351daf15" ? 
+                  "Dashboard" : "Profile" }
+              </MenuItem>
+              <MenuItem onClick={ () => 
+                user.sub === "auth0|63194dd4a66d06a2351daf15" ? 
+                navigate('/dashboard') : navigate('/home') }>
+                { user.sub === "auth0|63194dd4a66d06a2351daf15" ? 
+                "New Dashboard" : null }
+              </MenuItem>
+              <MenuItem onClick={Logout()}>Sing out</MenuItem>
+              {
+                user.name === 'TuSpacio' && <div>
+                    <MenuItem onClick={() => navigate('/create')}>Create Product</MenuItem>
+                    <MenuItem onClick={() => navigate('/createUser')}>Users</MenuItem>
+                    <MenuItem onClick={() => navigate('/orders/1')}>Orders</MenuItem>
+                  </div>
+              }
+            </div>
           : <MenuItem onClick={Login()}>Sing in</MenuItem>
       }
      

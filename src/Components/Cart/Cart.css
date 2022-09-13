@@ -3,6 +3,8 @@
     justify-content: center;
     flex-wrap: wrap;
     margin: 50px auto;
+    min-height: 100vh;
+    height: auto;
 }
 
 .detail-img {
@@ -261,7 +263,9 @@ section .cart {
     height: 25px;
 }
 
-.contenedor-gral {
-    min-height: 40vh;
+
+
+.gral-container {
+    min-height: 100vh;
     height: auto;
 }

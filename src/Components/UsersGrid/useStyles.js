@@ -14,8 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   btnAdd:{
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(3),
     marginLeft: '45%',
     backgroundColor: '#257558',
     color: '#ffffff',

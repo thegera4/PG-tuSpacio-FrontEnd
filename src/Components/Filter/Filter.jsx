@@ -73,7 +73,7 @@ export default function Filter({setOrder}) {
             position= 'fixed'
             top= {60}
             left= {0}
-            zIndex= {800}
+            zIndex= {700}
             width="100%"
         >
             <Grid

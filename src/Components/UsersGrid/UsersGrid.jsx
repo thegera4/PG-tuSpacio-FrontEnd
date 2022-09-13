@@ -70,6 +70,15 @@ const rows = [
   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44, email: 'ffrr@got.com' },
   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36, email: 'fross@got.com' },
   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65, email: 'rharv@got.com' },
+  { id: 10, lastName: 'Snow', firstName: 'Jon', age: 35, email: 'jsnow@got.com'},
+  { id: 11, lastName: 'Lannister', firstName: 'Cersei', age: 42, email: 'clani@got.com' },
+  { id: 12, lastName: 'Lannister', firstName: 'Jaime', age: 45, email: 'jlani@got.com' },
+  { id: 13, lastName: 'Stark', firstName: 'Arya', age: 16, email: 'astark@got.com' },
+  { id: 14, lastName: 'Targaryen', firstName: 'Daenerys', age: null, email: 'dracarys@got.com' },
+  { id: 15, lastName: 'Melisandre', firstName: null, age: 150, email: 'liss@got.com' },
+  { id: 16, lastName: 'Clifford', firstName: 'Ferrara', age: 44, email: 'ffrr@got.com' },
+  { id: 17, lastName: 'Frances', firstName: 'Rossini', age: 36, email: 'fross@got.com' },
+  { id: 18, lastName: 'Roxie', firstName: 'Harvey', age: 65, email: 'rharv@got.com' },
 ];
 
   const [data, setData] = useState(rows);
@@ -78,22 +87,24 @@ const rows = [
     setData(data.filter((item) => item.id !== id));
   };
   return (
-    <div style={{ height: 535, width: '100%', backgroundColor: '#fff'}}>
+    <div>
+      <h4>Users</h4>
       <Button
-        variant="contained"
-        className={classes.btnAdd}
-        startIcon={<PersonAddIcon />}
-        onClick={() => navigate('/createUser')}>
-          Add New User
-      </Button>
-      <DataGrid
-        rows={data}
-        columns={columns}
-        pageSize={8}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-        disableSelectionOnClick
-      />
+          variant="contained"
+          className={classes.btnAdd}
+          startIcon={<PersonAddIcon />}
+          onClick={() => navigate('/createUser')}>
+            Add New User
+        </Button>
+      <div style={{ height: 631, width: '100%', backgroundColor: '#fff'}}>
+        <DataGrid
+          rows={data}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[5]}
+          disableSelectionOnClick
+        />
+      </div>
     </div>
   );
 }

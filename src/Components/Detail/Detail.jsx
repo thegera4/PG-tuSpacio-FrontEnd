@@ -4,9 +4,7 @@ import {useParams} from "react-router-dom"
 import {getDetail, addToCart, addToWishlist, removeFromWishlist} from '../../actions/index'
 import { useEffect } from 'react'
 import defaultImage from "../../assets/images/not_found.png"
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { Link } from 'react-router-dom';
@@ -15,61 +13,17 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import ReactImageMagnify from 'react-image-magnify';
+import useStyles from './useStyles'
 
-
-
-
-const useStyles = makeStyles((theme) => ({
- root: {
-   maxWidth: 500,
-   margin: 'auto',
-   marginTop: 100
- },
- media: {
-   height: 0,
-   paddingTop: '56.25%', // 16:9
- },
- expand: {
-   transform: 'rotate(0deg)',
-   marginLeft: 'auto',
-   transition: theme.transitions.create('transform', {
-     duration: theme.transitions.duration.shortest,
-   }),
- },
- expandOpen: {
-   transform: 'rotate(180deg)',
- },
- avatar: {
-   backgroundColor: red[500],
- },
- button: {
-   margin: theme.spacing(0),
-   borderColor: '#257558',
-   color: '#257558',
-   width: '100%',
-   marginTop: 10
- },
- button2: {
-     margin: theme.spacing(0),
-     backgroundColor: '#257558',
-     color: '#fff',
-     width: '100%',
-     marginTop: 10
- }
-
-}));
 
 export default function RecipeReviewCard() {
  const { id } = useParams()
-
  const classes = useStyles();
  const [expanded, setExpanded] = React.useState(false);
 
  const handleExpandClick = () => {
    setExpanded(!expanded);
  };
-
-
 
  const dispatch = useDispatch()
  const item = useSelector((state) => state.productDetail)
@@ -81,15 +35,9 @@ export default function RecipeReviewCard() {
 
  const image = item.image_link
 
-
  useEffect(() => {
-
    dispatch(getDetail(id))   
-
- }
- , [dispatch])
-
- 
+ }, [dispatch])
 
  function handleCart(e) {
      if(!cart.includes(e)) {
@@ -99,6 +47,7 @@ export default function RecipeReviewCard() {
        alert('The product is already added to the cart')
      }
  }
+
  function handleFavorite(e) {
    !fav.includes(e)?
    dispatch(addToWishlist(e)) :
@@ -108,9 +57,6 @@ export default function RecipeReviewCard() {
   const handleColor = (e) => {
    setColor(e)
   }
-
-  console.log(color)
-
 
  return (
   
