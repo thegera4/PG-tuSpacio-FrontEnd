@@ -38,18 +38,6 @@ export default function Filter({setOrder}) {
         "rating": ""
     })
 
-    /*
-    nuevos filtros
-    todos los datos se pasan por query
-    
-    alpha ==> asc o desc
-    category ==> nombre de la categoria
-    price ==> asc o desc
-    brand ==> nombre de la marca
-    rating ==> asc o desc
-    
-    */ 
-
     const dispatch = useDispatch();
     
     useEffect ( () => {

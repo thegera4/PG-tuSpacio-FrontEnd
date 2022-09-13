@@ -100,8 +100,8 @@ button3: {
   },
   brands: {
     width: '100%',
-    marginTop: 200,
-    marginBottom: 200
+    marginTop: 50,
+    marginBottom: 50
   },
   paper: {
     height: 140,

@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
         width: '25ch',
     },
     colors: {
-        // margin: theme.spacing(1),
+        margin: theme.spacing(1),
         width: '10px',
     }
 }));
@@ -267,6 +267,7 @@ export default function CreateProduct() {
                             name="name"
                             value={input.name}
                             onChange={(e) => handleChange(e)}
+                            className={classes.formControl}
                             variant="outlined"
                         />
                         {
@@ -284,6 +285,7 @@ export default function CreateProduct() {
                             name="brand"
                             value={input.brand}
                             onChange={(e) => handleChange(e)}
+                            className={classes.formControl}
                             variant="outlined"
                         />
                         {
@@ -301,6 +303,7 @@ export default function CreateProduct() {
                             name="stock"
                             value={input.stock}
                             onChange={(e) => handleChange(e)}
+                            className={classes.formControl}
                             variant="outlined"
                             />
                         {
@@ -318,6 +321,7 @@ export default function CreateProduct() {
                             name="description"
                             value={input.description}
                             onChange={(e) => handleChange(e)}
+                            className={classes.formControl}
                             variant="outlined"
                             />
                         {
@@ -346,6 +350,7 @@ export default function CreateProduct() {
                                 value={input.price}
                                 onChange={(e) => handleChange(e)}
                                 startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                                className={classes.textField}
                                 labelWidth={50}
                             />
                         </FormControl>
@@ -526,7 +531,7 @@ export default function CreateProduct() {
                             setColors({...colors, [e.target.name]: e.target.value })
                             console.log(fColor)
                         }}
-                        className={classes.colors}
+                        className={clsx(classes.margin, classes.textField)}
                         InputProps={{
                             startAdornment: <InputAdornment position="start">Azul</InputAdornment>,
                             step: 1,
@@ -605,15 +610,7 @@ export default function CreateProduct() {
                                             className={classes.margin} >
                                         x
                                         </ColorButton>
-                                    } 
-                                    
-                                    // <button 
-                                    //     margin="8px"
-                                    //     border="2px"
-                                    //     width="10px"
-                                    //     height="25px"
-                                    //     background-color={c}
-                                    //     >X</button>
+                                    }
                                     )
                                 : <FormHelperText>No color added yet</FormHelperText>
                         }

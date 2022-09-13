@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     marginTop:50*/
     // fontFamily: 'roboto' 
-    position: 'fixed',
+    position: 'relative',
     bottom: 0,
     left: 0,
     right: 0,
