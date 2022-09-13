@@ -22,6 +22,8 @@ export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
 export const ORDERS_FILTERS = "ORDERS_FILTERS";
 export const CLEAR_CART = "CLEAR_CART";
 export const REMOVE_ONE = "REMOVE_ONE";
+export const POST_REVIEW = "POST_REVIEW";
+export const UPDATE_RATING = "UPDATE_RATING";
 
 // const API = 'http://localhost:3001/api';//API LOCAL
 const API = "http://localhost:3001/api";
@@ -111,6 +113,31 @@ export function postNewProduct(payload) {
       payload,
     });
     return newProdResult;
+  };
+}
+
+export function postReview(payload) {
+  return function (dispatch) {
+    const newReviewResult = axios.post(`/products/reviews`, payload);
+    dispatch({
+      type: POST_REVIEW,
+      payload,
+    });
+    return newReviewResult;
+  }
+}
+
+export function updateRating(id) {
+  return async function (dispatch) {
+    try {
+      var json = await axios.get(`/products/reviews/productId/${id}`);
+      return dispatch({
+        type: UPDATE_RATING,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 

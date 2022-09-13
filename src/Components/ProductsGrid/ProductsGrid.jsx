@@ -71,7 +71,27 @@ export default function ProductsGrid() {
           </div>
         );
     }
-  }
+  },
+  {
+    field: 'review',
+    headerName: 'Review',
+    width: 120,
+    sortable: false,
+    renderCell: (params) => {
+        return (
+          <div className="cellAction">
+            <Button
+              variant="contained"
+              color="primary"
+              endIcon={<PageviewIcon>send</PageviewIcon>}
+              onClick={() => handleReview(params.row.id)}>
+                Post
+            </Button>
+          </div>
+        );
+    }
+  },
+
 ];
 const rows = [
   { id: "PO000001", date: '01/02/2022, 08:56:54 AM', status: 'Completed', customer: 'Jon Snow', address: '9047 Stark Walks, Lake Raymond, VT 55889-9005', items: 2, total: 1000 },
@@ -91,6 +111,11 @@ const rows = [
   const handleView = (id) => {
     navigate(`/orders/${id}`);
   };
+
+  const handleReview = (id) => {
+    navigate(`/reviews/${id}`);
+  };
+
 
   return (
     <div style={{ height: 535, width: '100%', backgroundColor: '#fff'}}>

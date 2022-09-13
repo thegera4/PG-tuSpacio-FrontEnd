@@ -16,6 +16,7 @@ import OrderDetail from './Components/OrderDetail/OrderDetail.jsx';
 import CreateUser from './Components/CreateUser/CreateUser.jsx';
 import LandingPage from './Components/LandingPage/LandingPage';
 import CheckoutSuccess from './Components/Checkout/CheckoutSuccess';
+import PostReview from './Components/PostReview/PostReview';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/checkout/success" element={ <CheckoutSuccess /> } />
           <Route path="/checkout" element={ <Checkout /> } />
           <Route path="/orders/:id" element={ <OrderDetail /> } />
+          <Route path="/reviews/:id" element={ <PostReview/> } />
         </Routes>  
         </Box>
         <Footer />  
