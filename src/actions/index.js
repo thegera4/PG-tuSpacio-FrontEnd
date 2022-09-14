@@ -32,6 +32,7 @@ export const CLEAN_ORDER_DETAIL = "CLEAN_ORDER_DETAIL";
 export const CREATE_CART = "CREATE_CART";
 export const SET_DASHBOARD_ITEM = "SET_DASHBOARD_ITEM";
 export const CREATE_USER = "CREATE_USER";
+export const SET_GLOBAL_STATE = "SET_GLOBAL_STATE";
 
 //API LOCAL
 const API = "http://localhost:3001/api";
@@ -324,4 +325,10 @@ export const createUser = (payload) => {
       console.error(error);
     }
   };
+}
+
+export function setGlobalEstate () {
+  return {
+  type: SET_GLOBAL_STATE,
+  }
 }

@@ -4,12 +4,14 @@ import { flexbox } from '@mui/system';
 const useStyles = makeStyles({
   root: {
     width: 300,
-    height: 350,
+    height: 360,
     border: '1px solid #eceeed',
     margin: 20
   },
   media: {
-    height: 300,
+    height: 200,
+    width: 200,
+    marginLeft: 50
   },
   content: {
     minHeight: 100,

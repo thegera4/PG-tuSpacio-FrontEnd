@@ -31,6 +31,7 @@ import {
   CREATE_CART,
   SET_DASHBOARD_ITEM,
   CREATE_USER,
+  SET_GLOBAL_STATE,
 } from "../actions";
 
 /* LOCALSTORAGE FAVORITES */
@@ -333,6 +334,11 @@ function rootReducer(state = initialState, action) {
     case CREATE_USER:
       return {
         ...state,
+      }
+     case SET_GLOBAL_STATE:
+      return {
+        ...state,
+        productDetail: '',
       }
     default:
       return state;
