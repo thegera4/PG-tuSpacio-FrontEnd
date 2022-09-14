@@ -73,7 +73,7 @@
   
 .colors {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start; /* decia start */ 
     align-items: center;
 }  
 
@@ -108,7 +108,7 @@
 
 .image-list{
     display: flex;
-    justify-content: start;
+    justify-content: flex-start; /* decia start */ 
 }
 
 .select {

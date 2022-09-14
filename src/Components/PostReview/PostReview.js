@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {useParams} from "react-router-dom";
-import { getDetail,  postReview, updateRating } from '../../actions';
+import { useParams } from "react-router-dom";
+import { getDetail, postReview, updateRating } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, FormControl, FormHelperText, Grid, InputLabel, makeStyles, Select, TextField, Typography } from '@material-ui/core';
+import { Box, Button, FormHelperText, Grid, makeStyles, 
+    TextField, Typography } from '@material-ui/core'; // Select - InputLabel - FormControl se saco por que no se usaba
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import defaultImage from "../../assets/images/not_found.png";
 import Rating from '@material-ui/lab/Rating';
-
-
-
-
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -18,18 +16,16 @@ const useStyles = makeStyles((theme) => ({
     },
     formControl: {
         margin: theme.spacing(1),
-        minWidth: "150ch" ,
-       
+        minWidth: "150ch",
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
     },
     root: {
         '& .MuiTextField-root': {
-          margin: theme.spacing(1),
-          width: '75ch',
-         
-        },
+            margin: theme.spacing(1),
+            width: '75ch',
+         },
     },
     item: {
         display:'flex',
@@ -64,10 +60,10 @@ export default function PostReview() {
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
-        dispatch(getDetail(id))   
-      }, [dispatch])
+        dispatch(getDetail(id))
+    }, [dispatch])
 
-    const [ input, setInput ] = useState({
+    const [input, setInput] = useState({
         title: "",
         text: "",
         score: 0,
@@ -76,41 +72,45 @@ export default function PostReview() {
 
     function validation(input) {
         let errors = {};
-        if(!input.title || typeof input.title !== "string") {   
-            errors.title = "Please insert the title of your review"; } 
-        if(!input.text || typeof input.text !== "string") {   
-            errors.text = "Please insert the text of your review"; }
-        if(!input.score || typeof input.score !== "number") {   
-            errors.score = "Please insert the score of your review"; }
+        if (!input.title || typeof input.title !== "string") {
+            errors.title = "Please insert the title of your review";
+        }
+        if (!input.text || typeof input.text !== "string") {
+            errors.text = "Please insert the text of your review";
+        }
+        if (!input.score || typeof input.score !== "number") {
+            errors.score = "Please insert the score of your review";
+        }
         return errors;
     }
 
     function handleChange(e) {
         setInput({
             ...input,
-            [e.target.name] : e.target.value
+            [e.target.name]: e.target.value
         })
         setErrors(validation({
             ...input,
-            [e.target.name] : e.target.value,
+            [e.target.name]: e.target.value,
         }))
     }
 
     const handleChangeScore = (event, newValue) => {
         setInput({
             ...input,
-            score : newValue
+            score: newValue
         })
         setErrors(validation({
             ...input,
-            score : newValue,
+            score: newValue,
         }))
     };
 
-    function handleSubmit(e){
+    function handleSubmit(e) {
         e.preventDefault();
-        if(errors.title || errors.text ) {
-            return alert("Can't post a Review. Missing data")}
+        if (errors.title || errors.text) {
+            return alert("Can't post a Review. Missing data")
+        }
 
         dispatch(postReview(input))
         dispatch(updateRating(id))
@@ -126,12 +126,12 @@ export default function PostReview() {
     return (
         <div className={classes.container}>
         <form className={classes.root} noValidate autoComplete="off">
-            
+
             <Box
-                display= 'flex'
-                flexWrap= 'wrap'
-                position= 'relative'
-                width= '100%'
+                display='flex'
+                flexWrap='wrap'
+                position='relative'
+                width='100%'
                 py={2}
                
             >
@@ -143,13 +143,11 @@ export default function PostReview() {
                     
                 >
                     <Box
-                        display= 'flex'
-                        flexWrap= 'wrap'
-                        position= 'relative'
-                        width= '100%'
+                        display='flex'
+                        flexWrap='wrap'
+                        position='relative'
+                        width='100%'
                         py={2}
-                        
-                        
                     >
                         
                     </Box>
@@ -158,30 +156,28 @@ export default function PostReview() {
                     <div className={classes.item}>
                     <h4>You are Reviewing:</h4>
                     <Typography color="textPrimary">{item.name}</Typography>
-                    <img src={item.image_link || defaultImage} width='250px' height='250px' className={classes.image}/> 
+                    <img src={item.image_link || defaultImage} alt="imagen detalle" width='250px' height='250px' className={classes.image}/> 
                     </div>
                         
 
                     <div className={classes.data}>
 
                     <div className={classes.review}>
-                    <Grid item xs={4}>
+                      <Grid item xs={4}>
                         <div className='range' key={`divRating`}>
-                        <div>
-                        <Box component="fieldset" mb={3} borderColor="transparent">
-                        <Typography component="legend">Score</Typography>
-                        <Rating
-                        name="simple-controlled"
-                        value={input.score}
-                        onChange={handleChangeScore}
-                        />
-                        </Box>
+                          <div>
+                            <Box component="fieldset" mb={3} borderColor="transparent">
+                              <Typography component="legend">Score</Typography>
+                              <Rating
+                                name="simple-controlled"
+                                value={input.score}
+                                onChange={handleChangeScore}
+                              />
+                            </Box>
+                          </div>
                         </div>
-                        </div>
-                    </Grid>
+                      </Grid>
                     </div>
-
-
 
 
                         <div key='divName'>
@@ -220,7 +216,6 @@ export default function PostReview() {
                                 )
                             }
                         </div>
-
                         <Button 
                             className={classes.button}
                             variant="contained" 
@@ -230,14 +225,9 @@ export default function PostReview() {
                         </Button>
 
                     </div>
-
-
-                    
                     </Grid>
                 </Box>
         </form>
         </div>
-         
     )
 }
-                        

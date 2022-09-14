@@ -13,11 +13,10 @@ import Favorite from '@material-ui/icons/Favorite';
 import NotFavorite from '@material-ui/icons/FavoriteBorder';
 import Box from '@material-ui/core/Box';
 import { addToWishlist, removeFromWishlist, addToCart} from '../../actions';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+// import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import CardMedia from '@material-ui/core/CardMedia';
 import Placeholder from '../../assets/images/placeholder_home.png';
 import Rating from '@material-ui/lab/Rating';
-
 
 export default function HomeCards(props) {
   const classes = useStyles();

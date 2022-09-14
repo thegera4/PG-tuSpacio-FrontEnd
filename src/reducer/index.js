@@ -28,10 +28,13 @@ import {
   GET_ORDER_BY_ID,
   UPDATE_ORDER_STATUS,
   CLEAN_ORDER_DETAIL,
-  CREATE_CART,
+  // CREATE_CART, no se usa por esto lo comento
   SET_DASHBOARD_ITEM,
   CREATE_USER,
   SET_GLOBAL_STATE,
+  GET_ALL_USERS,
+  DELETE_USER,
+
 } from "../actions";
 
 /* LOCALSTORAGE FAVORITES */
@@ -83,6 +86,7 @@ const initialState = {
   notification: 0,
   infoUser: {},
   dashboardItem: 'Dashboard',
+  users: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -223,7 +227,7 @@ function rootReducer(state = initialState, action) {
         };
       }
       setLocalFavorites(newState.favorites);
-      return newState; 
+      return newState;
     }
     case REMOVE_FROM_WISHLIST: {
       let newState;
@@ -263,7 +267,6 @@ function rootReducer(state = initialState, action) {
 
       return itemsCart;
     }
-
     case REMOVE_FROM_CART: {
       let newState;
       if (state.cart) {
@@ -286,17 +289,17 @@ function rootReducer(state = initialState, action) {
       let itemToRemove = state.cart.find((ele) => ele.id === action.payload);
       return itemToRemove.quantity > 1
         ? {
-            ...state,
-            cart: state.cart.map((item) =>
-              item.id === action.payload
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-            ),
-          }
+          ...state,
+          cart: state.cart.map((item) =>
+            item.id === action.payload
+              ? { ...item, quantity: item.quantity - 1 }
+              : item
+          ),
+        }
         : {
-            ...state,
-            cart: state.cart.filter((item) => item.id !== action.payload),
-          };
+          ...state,
+          cart: state.cart.filter((item) => item.id !== action.payload),
+        };
     case CLEAR_CART:
       return {
         ...state,
@@ -324,7 +327,7 @@ function rootReducer(state = initialState, action) {
     case CLEAN_ORDER_DETAIL:
       return {
         ...state,
-         orderDetail: [],
+        orderDetail: [],
       };
     case SET_DASHBOARD_ITEM:
       return {
@@ -335,10 +338,21 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       }
-     case SET_GLOBAL_STATE:
+
+    case SET_GLOBAL_STATE:
       return {
         ...state,
         productDetail: '',
+      }
+    case GET_ALL_USERS:
+      return {
+        ...state,
+        users: action.payload
+      }
+    case DELETE_USER:
+      return {
+        ...state,
+
       }
     default:
       return state;
