@@ -35,6 +35,8 @@ export default function RecipeReviewCard() {
 
  const image = item.image_link
 
+ 
+
  useEffect(() => {
    dispatch(getDetail(id))   
  }, [dispatch])
@@ -66,9 +68,9 @@ export default function RecipeReviewCard() {
                  <Link to="/home" >
                   Products
                  </Link>
-                 <Link to='/home'>
-                   {item.category}
-                 </Link>
+                
+                   
+                   <Typography color="textPrimary">{item.categories?.map(e => e.name)}</Typography>
                  <Typography color="textPrimary">{item.name}</Typography>
                </Breadcrumbs>
                </div>
