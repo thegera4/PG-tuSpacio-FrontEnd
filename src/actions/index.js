@@ -53,14 +53,19 @@ export function getAllProducts() {
 export function getAllBrands() {
   return async function (dispatch) {
     try {
+      var json = await axios.get(`/products/brand`);
       return dispatch({
         type: GET_ALL_BRANDS,
+        payload: json.data,
       });
     } catch (error) {
       console.error(error);
     }
   };
 }
+
+
+
 
 export function getCategories() {
   return function (dispatch) {
