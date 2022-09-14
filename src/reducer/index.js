@@ -28,10 +28,13 @@ import {
   GET_ORDER_BY_ID,
   UPDATE_ORDER_STATUS,
   CLEAN_ORDER_DETAIL,
-  CREATE_CART,
+  //CREATE_CART,
   SET_DASHBOARD_ITEM,
   CREATE_USER,
   SET_GLOBAL_STATE,
+  GET_ALL_USERS,
+  DELETE_USER,
+
 } from "../actions";
 
 /* LOCALSTORAGE FAVORITES */
@@ -83,6 +86,7 @@ const initialState = {
   notification: 0,
   infoUser: {},
   dashboardItem: 'Dashboard',
+  users: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -263,7 +267,6 @@ function rootReducer(state = initialState, action) {
 
       return itemsCart;
     }
-
     case REMOVE_FROM_CART: {
       let newState;
       if (state.cart) {
@@ -335,10 +338,21 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       }
+
      case SET_GLOBAL_STATE:
       return {
         ...state,
         productDetail: '',
+
+    case GET_ALL_USERS:
+      return {
+        ...state,
+        users: action.payload
+      }
+    case DELETE_USER:
+      return {
+        ...state,
+
       }
     default:
       return state;
