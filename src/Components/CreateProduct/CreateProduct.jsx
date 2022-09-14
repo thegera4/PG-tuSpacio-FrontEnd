@@ -7,51 +7,7 @@ import { Box, Button, FormControl, FormHelperText, Grid,
 InputAdornment, InputLabel, OutlinedInput, Select, Slider, 
 TextField, Typography, withStyles } from '@material-ui/core';
 import clsx from 'clsx';
-<<<<<<< HEAD
 import useStyles from './useStyles';
-=======
-
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 150,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
-    root: {
-        '& .MuiTextField-root': {
-          margin: theme.spacing(1),
-          width: '25ch',
-        },
-    },
-    margin: {
-        margin: theme.spacing(1),
-        width: '216px'
-    },
-    rating: {
-        display:"block",
-        marginTop: "10px"
-    },
-    imageBox: {
-        margin: 'auto',
-    },
-    select: {
-        width: 250,
-    },
-    image: {
-        width: "200px",
-        margin: "20px"
-    },
-    textField: {
-        width: '25ch',
-    },
-    colors: {
-        margin: theme.spacing(1),
-        width: '10px',
-    }
-}));
->>>>>>> 73f5e36ce79f95295d781d95ac3e0d49b072db90
 
 export default function CreateProduct() {
     const dispatch = useDispatch();
