@@ -5,8 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import LogoIMG from '../../assets/images/img_logo.png';
 import { Box, Button, FormControl, FormHelperText, Grid, 
 InputAdornment, InputLabel,makeStyles, Select, Slider, 
-TextField, Typography, withStyles } from '@material-ui/core';
+Snackbar, TextField, Typography, withStyles } from '@material-ui/core';
 import clsx from 'clsx';
+// import { Alert } from '@material-ui/lab';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
     },
     image: {
         position: "absolute",
-        margin:"auto",
         width: "150px",
         margin: "20px"
     },
@@ -79,7 +84,19 @@ export default function CreateProduct() {
         if (addColors.includes(newColor)) return alert("Color already added");
         setAddColors([...addColors, newColor])
         setColors({azul: 0,rojo: 0,verde: 0});
-    }    
+    } 
+    
+    const [open, setOpen] = React.useState(false);
+
+    // const handleClick = () => {
+    //     setOpen(true);
+    // };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') { return; }
+        // console.log('entre aqui?')
+        setOpen(false);
+    };
 
     useEffect ( () => {
         dispatch(getCategories())
@@ -101,7 +118,12 @@ export default function CreateProduct() {
         status: true,
         categories: [] //*
     });
-   
+    
+    function handleClick() { 
+        setOpen(true);
+        console.log(`entre y cambie open a ${open}`)
+    };
+
     function validation(input) {
         let errors = {};
         if(!input.name || typeof input.name !== "string") {   
@@ -142,17 +164,17 @@ export default function CreateProduct() {
         }))
     }
 
-    const handleChangePrice = (event, newValue) => {
-        setInput({
-            ...input,
-            price : newValue
-        })
-        setErrors(validation({
-            ...input,
-            price : newValue,
-            categories: categories
-        }))
-    };
+    // const handleChangePrice = (event, newValue) => {
+    //     setInput({
+    //         ...input,
+    //         price : newValue
+    //     })
+    //     setErrors(validation({
+    //         ...input,
+    //         price : newValue,
+    //         categories: categories
+    //     }))
+    // };
 
     const handleChangeRating = (event, newValue) => {
         setInput({
@@ -194,11 +216,20 @@ export default function CreateProduct() {
         if (errors.name || errors.categories || errors.description ||
             errors.currency || errors.image_link || errors.price || errors.brand 
             || errors.price_sign || errors.stock || errors.rating || errors.product_type) {
-            return alert("Can't create a product. Missing data")}
+            return alert("Can't create a product. Missing data")
+            // <>
+            // { handleClick() }
+            // <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            //     <Alert onClose={handleClose} severity="error">
+            //         Can't create a product. Missing data
+            //     </Alert>
+            // </Snackbar> 
+            // </> 
+        }
+        
         input.categories = categories;
         input.product_colors = addColors;
         dispatch(postNewProduct(input))
-        alert("Product created successfully!!");
         setInput({
             brand: "", 
             name: "", 
@@ -215,7 +246,8 @@ export default function CreateProduct() {
             status: true,
             categories: [] 
         })
-        navigate('/') // ver a que dirección me voy a ir luego de generar un nuevo producto
+        return <Alert severity="success">Product created successfully!!</Alert>
+        // navigate('/') // ver a que dirección me voy a ir luego de generar un nuevo producto
     }
 
     return (

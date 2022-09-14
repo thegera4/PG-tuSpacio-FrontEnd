@@ -19,17 +19,17 @@ import useStyles from './useStyles'
 export default function RecipeReviewCard() {
  const { id } = useParams()
  const classes = useStyles();
- const [expanded, setExpanded] = React.useState(false);
+//  const [expanded, setExpanded] = React.useState(false);
 
- const handleExpandClick = () => {
-   setExpanded(!expanded);
- };
+//  const handleExpandClick = () => {
+//    setExpanded(!expanded);
+//  };
 
  const dispatch = useDispatch()
  const item = useSelector((state) => state.productDetail)
  const cart = useSelector((state) => state.cart)
  const fav = useSelector((state) => state.favorites)
- const [count, setCount] = useState(1)
+//  const [count, setCount] = useState(1)
 
  const [color,setColor] = useState('')
 
@@ -73,7 +73,7 @@ export default function RecipeReviewCard() {
                </Breadcrumbs>
                </div>
                <div className='image-list'>
-               <img src={item.image_link || defaultImage} className='detail-img-small'/> 
+               <img src={item.image_link || defaultImage} alt="list" className='detail-img-small'/> 
                </div>  
                <div className='image-cont'>
                

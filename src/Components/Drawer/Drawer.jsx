@@ -1,4 +1,3 @@
-
 import {React, useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { useNavigate } from "react-router-dom";
@@ -28,10 +27,9 @@ const useStyles = makeStyles({
   },
 });
 
-
 export default function DrawerBox() {
 const classes = useStyles();
-const [order, setOrder] = useState("")
+// const [order, setOrder] = useState("")
 const navigate = useNavigate()
 const categories = useSelector((state) => state.categories)
 const brands = useSelector((state) => state.brands)
@@ -55,7 +53,7 @@ function handlefilter(e) {
   e.preventDefault();
   dispatch(orderCombine({...filters, [e.target.name]: e.target.value}));
   dispatch(setCurrentHomePage(1))
-  let {alpha,category,price,brand,rating}=filters
+  // let {alpha,category,price,brand,rating}=filters
   // eslint-disable-next-line no-sequences
   // setOrder(`filters by ${alpha,category,price,brand,rating}`)
 }
