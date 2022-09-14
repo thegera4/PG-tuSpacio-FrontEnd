@@ -305,3 +305,42 @@ section .cart {
       transform: rotate(1turn);
     }
   }
+
+  .errors {
+    color: crimson;
+    font-size: 20px;
+    justify-content: center;
+    font-weight: bold;
+  }
+
+  .byn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    height: 400px;
+    border-radius: 10px;
+    z-index: 5;
+    background-color:white;
+    border: 1px solid #d3d2d2;
+    padding: 40px;
+    -webkit-filter: grayscale(1); /* Webkit */
+    filter: gray; /* IE6-9 */
+    filter: grayscale(1); /* W3C */
+  }
+
+  .byn-small {
+    max-width: 100px;
+    height: 100px;
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 20px;
+    border: 1px solid #d3d2d2;
+    padding: 20px;
+    -webkit-filter: grayscale(1); /* Webkit */
+    filter: gray; /* IE6-9 */
+    filter: grayscale(1); /* W3C */
+  
+}
