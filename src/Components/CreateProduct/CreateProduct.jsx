@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+
 export default function CreateProduct() {
     const dispatch = useDispatch();
     const navigate = useNavigate();

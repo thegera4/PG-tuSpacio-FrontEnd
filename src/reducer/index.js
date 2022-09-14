@@ -30,6 +30,9 @@ import {
   CLEAN_ORDER_DETAIL,
   // CREATE_CART, no se usa por esto lo comento
   SET_DASHBOARD_ITEM,
+  CREATE_USER,
+  GET_ALL_USERS,
+  DELETE_USER,
 } from "../actions";
 
 /* LOCALSTORAGE FAVORITES */
@@ -81,6 +84,7 @@ const initialState = {
   notification: 0,
   infoUser: {},
   dashboardItem: 'Dashboard',
+  users: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -93,52 +97,52 @@ function rootReducer(state = initialState, action) {
     case GET_ALL_BRANDS:
       // const allBrands = state.products.map((p) => p.brand);  // mapea todos las brands
       // const brands = [...new Set(allBrands)]; // elimina las repetidas
-      const brands = [
-        "dior",
-        "moov",
-        "anna sui",
-        "l'oreal",
-        "misa",
-        "salon perfect",
-        "orly",
-        "wet n wild",
-        "maybelline",
-        "pacifica",
-        "china glaze",
-        "essie",
-        "revlon",
-        "sante",
-        "pure anada",
-        "butter london",
-        "suncoat",
-        "sinful colours",
-        "mineral fusion",
-        "covergirl",
-        "piggy paint",
-        "nyx",
-        "benefit",
-        "smashbox",
-        "zorah",
-        "physicians formula",
-        "almay",
-        "marcelle",
-        "e.l.f.",
-        "dr. hauschka",
-        "fenty",
-        "clinique",
-        "cargo cosmetics",
-        "dalish",
-        "burt's bees",
-        "milani",
-        "colourpop",
-        "annabelle",
-        "deciem",
-        "stila",
-        "mistura",
-      ];
+      // const brands = [
+      //   "dior",
+      //   "moov",
+      //   "anna sui",
+      //   "l'oreal",
+      //   "misa",
+      //   "salon perfect",
+      //   "orly",
+      //   "wet n wild",
+      //   "maybelline",
+      //   "pacifica",
+      //   "china glaze",
+      //   "essie",
+      //   "revlon",
+      //   "sante",
+      //   "pure anada",
+      //   "butter london",
+      //   "suncoat",
+      //   "sinful colours",
+      //   "mineral fusion",
+      //   "covergirl",
+      //   "piggy paint",
+      //   "nyx",
+      //   "benefit",
+      //   "smashbox",
+      //   "zorah",
+      //   "physicians formula",
+      //   "almay",
+      //   "marcelle",
+      //   "e.l.f.",
+      //   "dr. hauschka",
+      //   "fenty",
+      //   "clinique",
+      //   "cargo cosmetics",
+      //   "dalish",
+      //   "burt's bees",
+      //   "milani",
+      //   "colourpop",
+      //   "annabelle",
+      //   "deciem",
+      //   "stila",
+      //   "mistura",
+      // ];
       return {
         ...state,
-        brands: brands,
+        brands: action.payload,
       };
     case ORDERS_FILTERS:
       return {
@@ -261,7 +265,6 @@ function rootReducer(state = initialState, action) {
 
       return itemsCart;
     }
-
     case REMOVE_FROM_CART: {
       let newState;
       if (state.cart) {
@@ -303,7 +306,7 @@ function rootReducer(state = initialState, action) {
     case POST_USER:
       return {
         ...state,
-        infoUser: action.payload,
+        //infoUser: action.payload,
       };
     case GET_ALL_ORDERS:
       return {
@@ -328,6 +331,19 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         dashboardItem: action.payload
+      }
+    case CREATE_USER:
+      return {
+        ...state,
+      }
+    case GET_ALL_USERS:
+      return {
+        ...state,
+        users: action.payload
+      }
+    case DELETE_USER:
+      return {
+        ...state,
       }
     default:
       return state;

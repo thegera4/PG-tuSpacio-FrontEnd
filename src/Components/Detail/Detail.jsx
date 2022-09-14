@@ -35,6 +35,8 @@ export default function RecipeReviewCard() {
 
  const image = item.image_link
 
+ 
+
  useEffect(() => {
    dispatch(getDetail(id))   
  }, [dispatch])
@@ -66,18 +68,18 @@ export default function RecipeReviewCard() {
                  <Link to="/home" >
                   Products
                  </Link>
-                 <Link to='/home'>
-                   {item.category}
-                 </Link>
+                
+                   
+                   <Typography color="textPrimary">{item.categories?.map(e => e.name)}</Typography>
                  <Typography color="textPrimary">{item.name}</Typography>
                </Breadcrumbs>
                </div>
                <div className='image-list'>
                <img src={item.image_link || defaultImage} alt="list" className='detail-img-small'/> 
                </div>  
-               <div className='image-cont'>
                
-               <ReactImageMagnify {...{
+               
+               {/* <ReactImageMagnify {...{
                    smallImage: {
                        isFluidWidth: true,
                        src: image,
@@ -87,8 +89,11 @@ export default function RecipeReviewCard() {
                        width: 800,
                        height: 800,
                    }
-               }} />
-               </div>
+               }} /> */}
+
+               
+               <img src={item.image_link || defaultImage} className='image-cont'/> 
+         
 
                <div className='box'>
                    <div className='row'>

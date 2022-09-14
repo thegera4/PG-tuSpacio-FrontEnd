@@ -9,19 +9,17 @@ const useStyles = makeStyles((theme) => ({
   container:{
     marginTop: 150,
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-
+    marginLeft: '20vw',
+    marginRight: '20vw',
   },
   avatar:{
     marginRight: 100,
-    marginLeft: 100,
+    alignItems: 'center',
     display: 'flex',
     flexDirection: 'column',
     '& img':{
-      width: '300px',
-      height: '300px',
+      width: '250px',
+      height: '250px',
       borderRadius: '50%',
       objectFit: 'cover',
     },
@@ -40,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
   secondColumn:{
     display: 'flex',
     flexDirection: 'column',
-    marginTop: 150,
     '& > *':{
       marginBottom: 30,
     }
@@ -48,6 +45,16 @@ const useStyles = makeStyles((theme) => ({
   upload:{
     marginTop: 20,
   },
+  url:{
+    marginTop: 50,
+    width: 400,
+  },
+  createBtn: {
+    position: 'relative',
+    width: 200,
+    top: 250,
+    right: 250,
+  }
 }));
 
 export default useStyles;

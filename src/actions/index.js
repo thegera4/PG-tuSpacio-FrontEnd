@@ -31,6 +31,9 @@ export const UPDATE_ORDER_STATUS = "UPDATE_ORDER_STATUS";
 export const CLEAN_ORDER_DETAIL = "CLEAN_ORDER_DETAIL";
 export const CREATE_CART = "CREATE_CART";
 export const SET_DASHBOARD_ITEM = "SET_DASHBOARD_ITEM";
+export const CREATE_USER = "CREATE_USER";
+export const GET_ALL_USERS = "GET_ALL_USERS";
+export const DELETE_USER = "DELETE_USER";
 
 //API LOCAL
 const API = "http://localhost:3001/api";
@@ -52,8 +55,10 @@ export function getAllProducts() {
 export function getAllBrands() {
   return async function (dispatch) {
     try {
+      var json = await axios.get(`/products/brand`);
       return dispatch({
         type: GET_ALL_BRANDS,
+        payload: json.data,
       });
     } catch (error) {
       console.error(error);
@@ -215,20 +220,17 @@ export function orderCombine(filters) {
 }
 
 export function postUser(user) {
-  const {name, nickname, email, email_verified, picture, sub} = user;
   const infoUser = {
-    name, 
-    nickname, 
-    email, 
-    email_verified,
-    picture, 
-    sid: sub
+    name: user.name, 
+    nickname: user.nickname, 
+    email: user.email, 
+    email_verified: user.email_verified,
+    picture: user.picture, 
+    sid: user.sub
   }
-  if (!name) return console.log('Login not initialized')
   return async function (dispatch) {
     try {
       const newUser = await axios.post(`${API}/users`, infoUser);
-      console.log('Post users ready')
       return dispatch({
         type: POST_USER,
         payload: newUser.data
@@ -306,5 +308,47 @@ export const setDashboardItem = (item) => {
   return {
     type: SET_DASHBOARD_ITEM,
     payload: item,
+  };
+}
+
+export const createUser = (payload) => {
+  return async function (dispatch) {
+    try {
+      const json = await axios.post(`${API}/users`, payload);
+      return dispatch({
+        type: CREATE_USER,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export const getAllUsers = () => {
+  return async function (dispatch) {
+    try {
+      const json = await axios.get(`${API}/users`);
+      return dispatch({
+        type: GET_ALL_USERS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export const deleteUser = (id) => {
+  return async function (dispatch) {
+    try {
+      const json = await axios.delete(`${API}/users/${id}`);
+      return dispatch({
+        type: DELETE_USER,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 }
