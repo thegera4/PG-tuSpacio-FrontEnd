@@ -75,9 +75,9 @@ export default function RecipeReviewCard() {
                <div className='image-list'>
                <img src={item.image_link || defaultImage} className='detail-img-small'/> 
                </div>  
-               <div className='image-cont'>
                
-               <ReactImageMagnify {...{
+               
+               {/* <ReactImageMagnify {...{
                    smallImage: {
                        isFluidWidth: true,
                        src: image,
@@ -87,8 +87,11 @@ export default function RecipeReviewCard() {
                        width: 800,
                        height: 800,
                    }
-               }} />
-               </div>
+               }} /> */}
+
+               
+               <img src={item.image_link || defaultImage} className='image-cont'/> 
+         
 
                <div className='box'>
                    <div className='row'>

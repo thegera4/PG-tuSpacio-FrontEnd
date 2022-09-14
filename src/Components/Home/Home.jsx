@@ -23,7 +23,8 @@ export default function SpacingGrid(order) {
   const [productsPerPage] = useState(9);
   const LAST_PRODUCT = currentPage * productsPerPage;
   const FIRST_PRODUCT = LAST_PRODUCT - productsPerPage;
-  const RENDERED_PRODUCTS = products.slice(FIRST_PRODUCT, LAST_PRODUCT);
+  const STOCKFILTERED = products.filter(product => product.stock > 0)
+  const RENDERED_PRODUCTS = STOCKFILTERED.slice(FIRST_PRODUCT, LAST_PRODUCT);
 
   useEffect(() => {
     dispatch(getAllProducts());

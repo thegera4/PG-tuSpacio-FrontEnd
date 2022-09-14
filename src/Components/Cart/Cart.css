@@ -27,6 +27,7 @@
     border-radius: 5px;
     margin-right: 20px;
     border: 1px solid #d3d2d2;
+    padding: 20px;
   
 }
 
@@ -243,7 +244,8 @@ section .cart {
     border-radius: 10px;
     z-index: 5;
     background-color:white;
-    border: 1px solid #d3d2d2
+    border: 1px solid #d3d2d2;
+    padding: 40px;
 }
 
 
@@ -269,3 +271,4 @@ section .cart {
     min-height: 100vh;
     height: auto;
 }
+
