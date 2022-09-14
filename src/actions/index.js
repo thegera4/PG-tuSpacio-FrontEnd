@@ -332,6 +332,7 @@ export function setGlobalEstate () {
   return {
   type: SET_GLOBAL_STATE,
   }
+}
 
 export const getAllUsers = () => {
   return async function (dispatch) {

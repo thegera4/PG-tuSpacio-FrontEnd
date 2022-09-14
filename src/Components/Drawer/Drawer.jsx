@@ -10,7 +10,7 @@ import Select from '@material-ui/core/Select';
 import {SwipeableDrawer} from '@material-ui/core';
 import {FormControl} from '@material-ui/core';
 import {InputLabel} from '@material-ui/core';
-import { getAllBrands, getCategories, setCurrentHomePage, orderCombine } from '../../actions/index';
+import { getAllBrands, getCategories, setCurrentHomePage, orderCombine, getAllProducts } from '../../actions/index';
 
 
 const useStyles = makeStyles({

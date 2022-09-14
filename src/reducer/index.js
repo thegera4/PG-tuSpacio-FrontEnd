@@ -227,7 +227,7 @@ function rootReducer(state = initialState, action) {
         };
       }
       setLocalFavorites(newState.favorites);
-      return newState; 
+      return newState;
     }
     case REMOVE_FROM_WISHLIST: {
       let newState;
@@ -289,17 +289,17 @@ function rootReducer(state = initialState, action) {
       let itemToRemove = state.cart.find((ele) => ele.id === action.payload);
       return itemToRemove.quantity > 1
         ? {
-            ...state,
-            cart: state.cart.map((item) =>
-              item.id === action.payload
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-            ),
-          }
+          ...state,
+          cart: state.cart.map((item) =>
+            item.id === action.payload
+              ? { ...item, quantity: item.quantity - 1 }
+              : item
+          ),
+        }
         : {
-            ...state,
-            cart: state.cart.filter((item) => item.id !== action.payload),
-          };
+          ...state,
+          cart: state.cart.filter((item) => item.id !== action.payload),
+        };
     case CLEAR_CART:
       return {
         ...state,
@@ -327,7 +327,7 @@ function rootReducer(state = initialState, action) {
     case CLEAN_ORDER_DETAIL:
       return {
         ...state,
-         orderDetail: [],
+        orderDetail: [],
       };
     case SET_DASHBOARD_ITEM:
       return {
@@ -339,11 +339,11 @@ function rootReducer(state = initialState, action) {
         ...state,
       }
 
-     case SET_GLOBAL_STATE:
+    case SET_GLOBAL_STATE:
       return {
         ...state,
         productDetail: '',
-
+      }
     case GET_ALL_USERS:
       return {
         ...state,
