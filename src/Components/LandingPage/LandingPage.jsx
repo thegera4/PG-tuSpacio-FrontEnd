@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
-import {Paper} from '@material-ui/core';
+// import {Paper} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+// import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { Link } from 'react-router-dom';
 import brands from '../../assets/images/brands.jpg'
-import LogoIMG from '../../assets/images/img_logo.png';
+// import LogoIMG from '../../assets/images/img_logo.png';
 import { useDispatch, useSelector } from 'react-redux'
 import { Box } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -19,9 +19,9 @@ import LandingCards from './LandingCards';
 import { getAllProducts } from "../../actions";
 import ButtonBase from '@material-ui/core/ButtonBase';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import IconButton from '@mui/material/IconButton';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Collapse from '@material-ui/core/Collapse';
+// import IconButton from '@mui/material/IconButton';
+// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// import Collapse from '@material-ui/core/Collapse';
 
 
 
@@ -106,6 +106,7 @@ button3: {
   paper: {
     height: 140,
     width: 100,
+    margin: theme.spacing(1),
   },
 
   descripContain: {
@@ -282,9 +283,6 @@ button3: {
     color: "#257558",
     fontSize: '4rem',
   },
-  paper: {
-    margin: theme.spacing(1),
-  },
   svg: {
     width: 100,
     height: 100,
@@ -363,13 +361,13 @@ export default function Containe() {
   const RENDERED_PRODUCTS = products.slice(155,163);
   const [checked,setChecked] = useState(false)
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+  // const handleNext = () => {
+  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  // };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+  // const handleBack = () => {
+  //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  // };
 
   const handleStepChange = (step) => {
     setActiveStep(step);

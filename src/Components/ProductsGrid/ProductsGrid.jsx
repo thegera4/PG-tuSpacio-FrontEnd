@@ -126,9 +126,9 @@ export default function ProductsGrid() {
     navigate(`/${id}`);
   };
 
-  const handleDelete = (id) => {
-    products.filter((item) => item.id !== id);
-  };
+  // const handleDelete = (id) => {
+  //   products.filter((item) => item.id !== id);
+  // };S
 
   const handleReview = (id) => {
     navigate(`/reviews/${id}`);

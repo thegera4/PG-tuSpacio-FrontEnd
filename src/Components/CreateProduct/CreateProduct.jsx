@@ -4,10 +4,58 @@ import { getCategories, postNewProduct } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoIMG from '../../assets/images/img_logo.png';
 import { Box, Button, FormControl, FormHelperText, Grid, 
-InputAdornment, InputLabel, OutlinedInput, Select, Slider, 
-TextField, Typography, withStyles } from '@material-ui/core';
+InputAdornment, InputLabel,makeStyles, Select, Slider, 
+Snackbar, TextField, Typography, withStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import useStyles from './useStyles';
+// import { Alert } from '@material-ui/lab';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        '& .MuiTextField-root': {
+          margin: theme.spacing(1),
+          width: '25ch',
+        },
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 150,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
+    margin: {
+        margin: theme.spacing(1),
+        width: '216px'
+    },
+    rating: {
+        display:"block",
+        marginTop: "10px"
+    },
+    imageBox: {
+        margin: 'auto',
+    },
+    select: {
+        width: 250,
+    },
+    image: {
+        position: "absolute",
+        width: "150px",
+        margin: "20px"
+    },
+    textField: {
+        width: '25ch',
+    },
+    colors: {
+        margin: theme.spacing(1),
+        width: '10px',
+    }
+}));
+
 
 export default function CreateProduct() {
     const dispatch = useDispatch();
@@ -37,7 +85,19 @@ export default function CreateProduct() {
         if (addColors.includes(newColor)) return alert("Color already added");
         setAddColors([...addColors, newColor])
         setColors({azul: 0,rojo: 0,verde: 0});
-    }    
+    } 
+    
+    const [open, setOpen] = React.useState(false);
+
+    // const handleClick = () => {
+    //     setOpen(true);
+    // };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') { return; }
+        // console.log('entre aqui?')
+        setOpen(false);
+    };
 
     useEffect ( () => {
         dispatch(getCategories())
@@ -59,7 +119,12 @@ export default function CreateProduct() {
         status: true,
         categories: [] //*
     });
-   
+    
+    function handleClick() { 
+        setOpen(true);
+        console.log(`entre y cambie open a ${open}`)
+    };
+
     function validation(input) {
         let errors = {};
         if(!input.name || typeof input.name !== "string") {   
@@ -100,17 +165,17 @@ export default function CreateProduct() {
         }))
     }
 
-    const handleChangePrice = (event, newValue) => {
-        setInput({
-            ...input,
-            price : newValue
-        })
-        setErrors(validation({
-            ...input,
-            price : newValue,
-            categories: categories
-        }))
-    };
+    // const handleChangePrice = (event, newValue) => {
+    //     setInput({
+    //         ...input,
+    //         price : newValue
+    //     })
+    //     setErrors(validation({
+    //         ...input,
+    //         price : newValue,
+    //         categories: categories
+    //     }))
+    // };
 
     const handleChangeRating = (event, newValue) => {
         setInput({
@@ -152,11 +217,20 @@ export default function CreateProduct() {
         if (errors.name || errors.categories || errors.description ||
             errors.currency || errors.image_link || errors.price || errors.brand 
             || errors.price_sign || errors.stock || errors.rating || errors.product_type) {
-            return alert("Can't create a product. Missing data")}
+            return alert("Can't create a product. Missing data")
+            // <>
+            // { handleClick() }
+            // <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            //     <Alert onClose={handleClose} severity="error">
+            //         Can't create a product. Missing data
+            //     </Alert>
+            // </Snackbar> 
+            // </> 
+        }
+        
         input.categories = categories;
         input.product_colors = addColors;
         dispatch(postNewProduct(input))
-        alert("Product created successfully!!");
         setInput({
             brand: "", 
             name: "", 
@@ -173,7 +247,8 @@ export default function CreateProduct() {
             status: true,
             categories: [] 
         })
-        navigate('/') // ver a que dirección me voy a ir luego de generar un nuevo producto
+        return <Alert severity="success">Product created successfully!!</Alert>
+        // navigate('/') // ver a que dirección me voy a ir luego de generar un nuevo producto
     }
 
     return (
@@ -181,14 +256,14 @@ export default function CreateProduct() {
             <Box
                 position= 'relative'
                 width= '100%'
-                pt={6}
+                py={2}
                 m={0}
                 display= "flex"
                 flexWrap= "wrap"
                 direction="row"
                 justifyContent="center"
                 alignItems="flex-start"
-                
+                // bgcolor={"rgba(235, 234, 156, 0.589)"}                
             >
                 <Grid item xs={12}>
                     <Grid
@@ -213,6 +288,7 @@ export default function CreateProduct() {
                 <Box
                     position="relative"
                     width='250px'
+                    // bgcolor={"rgba(235, 156, 180, 0.589)"}
                     direction="column"
                     justifyContent="center"
                     alignItems="center"
@@ -222,13 +298,13 @@ export default function CreateProduct() {
                     <div key='divName'>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Name"
+                            id="outlined-helperText"
                             name="name"
+                            label="Name"
                             value={input.name}
                             onChange={(e) => handleChange(e)}
+                            variant="filled"
                             className={classes.formControl}
-                            variant="outlined"
                         />
                         {
                             errors.name && (
@@ -240,13 +316,13 @@ export default function CreateProduct() {
                     <div key='divBrand'>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Brand"
+                            id="outlined-helperText"
                             name="brand"
+                            label="Brand"
                             value={input.brand}
                             onChange={(e) => handleChange(e)}
+                            variant="filled"
                             className={classes.formControl}
-                            variant="outlined"
                         />
                         {
                             errors.brand && (
@@ -258,14 +334,14 @@ export default function CreateProduct() {
                     <div key='divStock'>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Stock"
+                            id="outlined-helperText"
                             name="stock"
+                            label="Stock"
                             value={input.stock}
                             onChange={(e) => handleChange(e)}
+                            variant="filled"
                             className={classes.formControl}
-                            variant="outlined"
-                            />
+                        />
                         {
                             errors.stock && (
                                 <FormHelperText>{errors.stock}</FormHelperText>
@@ -276,14 +352,14 @@ export default function CreateProduct() {
                     <div key='divDesc'>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Description"
+                            id="outlined-helperText"
                             name="description"
+                            label="Description"
                             value={input.description}
                             onChange={(e) => handleChange(e)}
+                            variant="filled"
                             className={classes.formControl}
-                            variant="outlined"
-                            />
+                        />
                         {
                             errors.description && (
                                 <FormHelperText>{errors.description}</FormHelperText>
@@ -293,7 +369,7 @@ export default function CreateProduct() {
                 </Box>
                 
                 <Box
-                    // bgcolor="palevioletred"
+                    // bgcolor={"rgba(156, 177, 235, 0.589)"}
                     width='250px'
                     direction="column"
                     justifyContent="center"
@@ -302,18 +378,18 @@ export default function CreateProduct() {
                     marginX={3}
                 >
                     <Box className={classes.range} key={`divPrice`}>
-                        <FormControl fullWidth className={classes.margin} variant="outlined">
-                            <InputLabel htmlFor="outlined-adornment-amount">Price *</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-amount"
-                                name="price"
-                                value={input.price}
-                                onChange={(e) => handleChange(e)}
-                                startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                className={classes.textField}
-                                labelWidth={50}
-                            />
-                        </FormControl>
+                        <TextField
+                            label="Price *"
+                            id="filled-start-adornment"
+                            name="price"
+                            value={input.price}
+                            onChange={(e) => handleChange(e)}
+                            className={clsx(classes.margin, classes.textField)}
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
+                            variant="filled"
+                        />
                         {
                             errors.price && (
                                 <FormHelperText>{errors.price}</FormHelperText>
@@ -323,13 +399,14 @@ export default function CreateProduct() {
                     <Box key='divPriceSign'>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Price Sign"
+                            id="outlined-helperText"
                             name="price_sign"
+                            label="Price Sign"
                             value={input.price_sign}
                             onChange={(e) => handleChange(e)}
-                            variant="outlined"
-                            />
+                            variant="filled"
+                            className={classes.formControl}
+                        />
                         {
                             errors.price_sign && (
                                 <FormHelperText>{errors.price_sign}</FormHelperText>
@@ -340,13 +417,14 @@ export default function CreateProduct() {
                     <Box key='divCurr'>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Currency"
+                            id="outlined-helperText"
                             name="currency"
+                            label="Currency"
                             value={input.currency}
                             onChange={(e) => handleChange(e)}
-                            variant="outlined"
-                            />
+                            variant="filled"
+                            className={classes.formControl}
+                        />
                         {
                             errors.currency && (
                                 <FormHelperText>{errors.currency}</FormHelperText>
@@ -357,13 +435,14 @@ export default function CreateProduct() {
                     <Box key='divImg' className={classes.imageBox}>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Image"
+                            id="outlined-helperText"
                             name="image_link"
+                            label="Image URL"
                             value={input.image_link}
                             onChange={(e) => handleChange(e)}
-                            variant="outlined"
-                            />
+                            variant="filled"
+                            className={classes.formControl}
+                        />
                         {
                             errors.image_link && (
                                 <FormHelperText>{errors.image_link}</FormHelperText>
@@ -372,12 +451,16 @@ export default function CreateProduct() {
                     </Box>
                 </Box>
                 <Box
-                    position="relative"
+                    // display="block"
+                    // position="relative"
                     width='250px'
+                    height='250px'
+                    // bgcolor={"rgba(156, 235, 162, 0.589)"}
+                    p={4}
                     direction="column"
                     justifyContent="center"
                     alignItems="center"
-                    p={4}
+                    mt={2}
                     marginX={3}
                 >
                     <img src={input.image_link || LogoIMG} className={classes.image} alt="imagen de prueba" />
@@ -390,6 +473,7 @@ export default function CreateProduct() {
                 <Box
                     position="relative"
                     width='300px'
+                    // bgcolor={"rgba(156, 230, 235, 0.589)"}
                     boxSizing='border-box'
                     direction="column"
                     justifyContent="center"
@@ -432,13 +516,14 @@ export default function CreateProduct() {
                     <Box key='divStock'>
                         <TextField
                             required
-                            id="outlined-name"
-                            label="Product Type"
+                            id="outlined-helperText"
                             name="product_type"
+                            label="Product Type"
                             value={input.product_type}
                             onChange={(e) => handleChange(e)}
-                            variant="outlined"
-                            />
+                            variant="filled"
+                            className={classes.formControl}
+                        />
                         {
                             errors.product_type && (
                                 <FormHelperText>{errors.product_type}</FormHelperText>
@@ -467,6 +552,7 @@ export default function CreateProduct() {
                     alignContent="center"
                     alignItems="center"
                     py={2}
+                    // bgcolor={"rgba(235, 156, 156, 0.589)"}
                 >
                     <Box
                         border={1}

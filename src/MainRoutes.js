@@ -1,5 +1,6 @@
 import './App.css';
-import { Box, ThemeProvider } from '@material-ui/core'
+import React from 'react';
+import { Box } from '@material-ui/core'  // ThemeProvider
 import Navbar from './Components/Navbar/Navbar.jsx';
 import Footer from './Components/Footer/Footer.jsx';
 import Detail from './Components/Detail/Detail';
@@ -10,7 +11,7 @@ import CreateProduct from './Components/CreateProduct/CreateProduct';
 import Wishlist from './Components/Wishlist/Wishlist'
 import Cart from './Components/Cart/Cart'
 import Profile from './Components/Profile/Profile';
-import theme from './ThemeConfig'
+// import theme from './ThemeConfig'
 import Checkout from './Components/Checkout/Checkout';
 import OrderDetail from './Components/OrderDetail/OrderDetail.jsx';
 import CreateUser from './Components/CreateUser/CreateUser.jsx';
@@ -20,7 +21,8 @@ import PostReview from './Components/PostReview/PostReview';
 
 function MainRoutes() {
   return (
-    <ThemeProvider theme={theme}>
+    <Box>  
+      {/*<ThemeProvider theme={theme}>*/}
       <Navbar />
       <Box
         pt={8}
@@ -42,7 +44,8 @@ function MainRoutes() {
         </Routes>  
       </Box>
       <Footer />
-    </ThemeProvider>
+      {/* </ThemeProvider> */} 
+    </Box>    
   );
 }
 

@@ -5,7 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { Box, Button, Grid, Hidden } from '@material-ui/core';
-import { getAllBrands, getCategories, setCurrentHomePage, orderCombine } from '../../actions';
+import { getAllBrands, getCategories, setCurrentHomePage, orderCombine, getAllProducts } from '../../actions';
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -47,11 +47,21 @@ export default function Filter({setOrder}) {
     
     function handlefilter(e) {
         e.preventDefault();
-        // console.log(filters)
         dispatch(orderCombine({...filters, [e.target.name]: e.target.value}));
         dispatch(setCurrentHomePage(1))
         let {alpha,category,price,brand,rating}=filters
-        setOrder(`filters by ${alpha,category,price,brand,rating}`)
+        setOrder(`filters by ${alpha},${category},${price},${brand},${rating}`)
+    }
+
+    function limpiandoFiltros () {
+        dispatch(getAllProducts());
+        setFilters({
+            "alpha": "",
+            "category": "",
+            "price": "",
+            "brand": "",
+            "rating": "" 
+        })
     }
 
     return (
@@ -78,6 +88,7 @@ export default function Filter({setOrder}) {
                         <Select
                             native
                             name="brand"
+                            value={filters.brand}
                             onChange={ (e) => {
                                 setFilters({...filters, "brand": e.target.value});
                                 handlefilter(e)
@@ -97,6 +108,7 @@ export default function Filter({setOrder}) {
                         <InputLabel>Categories</InputLabel>
                         <Select
                             native
+                            value={filters.category}
                             name="category"
                             onChange={(e) => {
                                 setFilters({...filters, "category": e.target.value});
@@ -117,6 +129,7 @@ export default function Filter({setOrder}) {
                         <InputLabel>Sort by Name</InputLabel>
                         <Select
                             native
+                            value={filters.alpha}
                             name="alpha"
                             onChange={(e) => {
                                 setFilters({...filters, "alpha": e.target.value});
@@ -135,6 +148,7 @@ export default function Filter({setOrder}) {
                         <InputLabel>Order by Price</InputLabel>
                         <Select
                             native
+                            value={filters.price}
                             name="price"
                             onChange={(e) => {
                                 setFilters({...filters, "price": e.target.value});
@@ -153,6 +167,7 @@ export default function Filter({setOrder}) {
                         <InputLabel>Order by Rating</InputLabel>
                         <Select
                             native
+                            value={filters.rating}
                             name="rating"
                             onChange={(e) => {
                                 setFilters({...filters, "rating": e.target.value});
@@ -166,7 +181,7 @@ export default function Filter({setOrder}) {
                     </FormControl>
                     
                         <Button 
-                            onClick={() => console.log("Limpiando filtros")}
+                            onClick={() => limpiandoFiltros()}
                             color="secondary"
                             size="small"
                             className={classes.margin2}
@@ -180,7 +195,7 @@ export default function Filter({setOrder}) {
                     <Button 
                         onClick={() => navigate('/service')}
                         variant="contained" 
-                        color="secondary"
+                        // color="secondary"
                         className={classes.margin}
                     >
                         Beuthy Services
