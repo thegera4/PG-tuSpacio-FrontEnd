@@ -6,6 +6,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './useStyles';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 
 export default function UsersGrid() {
   const classes = useStyles();
@@ -40,9 +42,9 @@ export default function UsersGrid() {
     editable: false,
   },
   {
-    field: 'action',
-    headerName: 'Action',
-    width: 200,
+    field: 'delete',
+    headerName: 'Delete',
+    width: 150,
     sortable: false,
     renderCell: (params) => {
         return (
@@ -50,11 +52,36 @@ export default function UsersGrid() {
             <Button
               variant="contained"
               color=""
-              className={classes.button}
+              className={classes.deleteBtn}
               startIcon={<DeleteIcon />}
-              onClick={() => handleDelete(params.row.id)}>
+              onClick={() => {
+                handleDelete(params.row.id)
+                notifyUserDeleted()}}>
                 Delete
             </Button>
+            <ToastContainer />
+          </div>
+        );
+    }
+  },
+   {
+    field: 'password',
+    headerName: 'Password',
+    width: 150,
+    sortable: false,
+    renderCell: (params) => {
+        return (
+          <div className="cellAction">
+            <Button
+              variant="contained"
+              color=""
+              className={classes.resetBtn}
+              startIcon={<RotateLeftIcon />}
+              onClick={() => {
+                notifyUserChangePass()}}>
+                Reset
+            </Button>
+            <ToastContainer />
           </div>
         );
     }
@@ -86,6 +113,29 @@ const rows = [
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
   };
+
+  const notifyUserDeleted = () => 
+  toast.success('User was deleted!', {
+    position: "bottom-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+  });
+
+  const notifyUserChangePass = () => 
+  toast.info('Password reset was sent!', {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+  });
+
   return (
     <div>
       <h4>Users</h4>

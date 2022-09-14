@@ -30,6 +30,7 @@ import {
   CLEAN_ORDER_DETAIL,
   CREATE_CART,
   SET_DASHBOARD_ITEM,
+  CREATE_USER,
 } from "../actions";
 
 /* LOCALSTORAGE FAVORITES */
@@ -303,7 +304,7 @@ function rootReducer(state = initialState, action) {
     case POST_USER:
       return {
         ...state,
-        infoUser: action.payload,
+        //infoUser: action.payload,
       };
     case GET_ALL_ORDERS:
       return {
@@ -328,6 +329,10 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         dashboardItem: action.payload
+      }
+    case CREATE_USER:
+      return {
+        ...state,
       }
     default:
       return state;

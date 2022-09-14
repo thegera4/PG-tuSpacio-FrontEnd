@@ -4,50 +4,10 @@ import { getCategories, postNewProduct } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoIMG from '../../assets/images/img_logo.png';
 import { Box, Button, FormControl, FormHelperText, Grid, 
-InputAdornment, InputLabel,makeStyles, OutlinedInput,
-Select, Slider, TextField, Typography, withStyles } from '@material-ui/core';
+InputAdornment, InputLabel, OutlinedInput, Select, Slider, 
+TextField, Typography, withStyles } from '@material-ui/core';
 import clsx from 'clsx';
-
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 150,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
-    root: {
-        '& .MuiTextField-root': {
-          margin: theme.spacing(1),
-          width: '25ch',
-        },
-    },
-    margin: {
-        margin: theme.spacing(1),
-        width: '216px'
-    },
-    rating: {
-        display:"block",
-        marginTop: "10px"
-    },
-    imageBox: {
-        margin: 'auto',
-    },
-    select: {
-        width: 250,
-    },
-    image: {
-        width: "200px",
-        margin: "20px"
-    },
-    textField: {
-        width: '25ch',
-    },
-    colors: {
-        // margin: theme.spacing(1),
-        width: '10px',
-    }
-}));
+import useStyles from './useStyles';
 
 export default function CreateProduct() {
     const dispatch = useDispatch();
