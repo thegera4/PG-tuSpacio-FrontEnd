@@ -1,5 +1,5 @@
 import './App.css';
-import { ThemeProvider } from '@material-ui/core'
+import { Box, ThemeProvider } from '@material-ui/core'
 import Navbar from './Components/Navbar/Navbar.jsx';
 import Footer from './Components/Footer/Footer.jsx';
 import Detail from './Components/Detail/Detail';
@@ -22,21 +22,25 @@ function MainRoutes() {
   return (
     <ThemeProvider theme={theme}>
       <Navbar />
-      <Routes >
-        <Route path="/" element={ <LandingPage /> } /> 
-        <Route path="/home" exact element={ <ContainerCards /> } /> 
-        <Route path="/:id" exact element={ <Detail /> } />
-        <Route path="/service" element={ <DetailService /> } />
-        <Route path="/createUser" element={ <CreateUser /> } />
-        <Route path="/create" element={ <CreateProduct /> } />
-        <Route path="/wishlist" element={ <Wishlist /> } />
-        <Route path="/cart" element={ <Cart /> } />
-        <Route path="/profile" element={ <Profile /> } />
-        <Route path="/checkout/success" element={ <CheckoutSuccess /> } />
-        <Route path="/checkout" element={ <Checkout /> } />
-        <Route path="/orders/:id" element={ <OrderDetail /> } />
-        <Route path="/reviews/:id" element={ <PostReview/> } />
-      </Routes>  
+      <Box
+        pt={8}
+      >
+        <Routes >
+          <Route path="/" element={ <LandingPage /> } /> 
+          <Route path="/home" exact element={ <ContainerCards /> } /> 
+          <Route path="/:id" exact element={ <Detail /> } />
+          <Route path="/service" element={ <DetailService /> } />
+          <Route path="/createUser" element={ <CreateUser /> } />
+          <Route path="/create" element={ <CreateProduct /> } />
+          <Route path="/wishlist" element={ <Wishlist /> } />
+          <Route path="/cart" element={ <Cart /> } />
+          <Route path="/profile" element={ <Profile /> } />
+          <Route path="/checkout/success" element={ <CheckoutSuccess /> } />
+          <Route path="/checkout" element={ <Checkout /> } />
+          <Route path="/orders/:id" element={ <OrderDetail /> } />
+          <Route path="/reviews/:id" element={ <PostReview/> } />
+        </Routes>  
+      </Box>
       <Footer />
     </ThemeProvider>
   );

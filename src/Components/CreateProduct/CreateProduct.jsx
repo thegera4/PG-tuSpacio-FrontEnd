@@ -7,7 +7,51 @@ import { Box, Button, FormControl, FormHelperText, Grid,
 InputAdornment, InputLabel, OutlinedInput, Select, Slider, 
 TextField, Typography, withStyles } from '@material-ui/core';
 import clsx from 'clsx';
+<<<<<<< HEAD
 import useStyles from './useStyles';
+=======
+
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 150,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
+    root: {
+        '& .MuiTextField-root': {
+          margin: theme.spacing(1),
+          width: '25ch',
+        },
+    },
+    margin: {
+        margin: theme.spacing(1),
+        width: '216px'
+    },
+    rating: {
+        display:"block",
+        marginTop: "10px"
+    },
+    imageBox: {
+        margin: 'auto',
+    },
+    select: {
+        width: 250,
+    },
+    image: {
+        width: "200px",
+        margin: "20px"
+    },
+    textField: {
+        width: '25ch',
+    },
+    colors: {
+        margin: theme.spacing(1),
+        width: '10px',
+    }
+}));
+>>>>>>> 73f5e36ce79f95295d781d95ac3e0d49b072db90
 
 export default function CreateProduct() {
     const dispatch = useDispatch();
@@ -227,6 +271,7 @@ export default function CreateProduct() {
                             name="name"
                             value={input.name}
                             onChange={(e) => handleChange(e)}
+                            className={classes.formControl}
                             variant="outlined"
                         />
                         {
@@ -244,6 +289,7 @@ export default function CreateProduct() {
                             name="brand"
                             value={input.brand}
                             onChange={(e) => handleChange(e)}
+                            className={classes.formControl}
                             variant="outlined"
                         />
                         {
@@ -261,6 +307,7 @@ export default function CreateProduct() {
                             name="stock"
                             value={input.stock}
                             onChange={(e) => handleChange(e)}
+                            className={classes.formControl}
                             variant="outlined"
                             />
                         {
@@ -278,6 +325,7 @@ export default function CreateProduct() {
                             name="description"
                             value={input.description}
                             onChange={(e) => handleChange(e)}
+                            className={classes.formControl}
                             variant="outlined"
                             />
                         {
@@ -306,6 +354,7 @@ export default function CreateProduct() {
                                 value={input.price}
                                 onChange={(e) => handleChange(e)}
                                 startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                                className={classes.textField}
                                 labelWidth={50}
                             />
                         </FormControl>
@@ -486,7 +535,7 @@ export default function CreateProduct() {
                             setColors({...colors, [e.target.name]: e.target.value })
                             console.log(fColor)
                         }}
-                        className={classes.colors}
+                        className={clsx(classes.margin, classes.textField)}
                         InputProps={{
                             startAdornment: <InputAdornment position="start">Azul</InputAdornment>,
                             step: 1,
@@ -565,15 +614,7 @@ export default function CreateProduct() {
                                             className={classes.margin} >
                                         x
                                         </ColorButton>
-                                    } 
-                                    
-                                    // <button 
-                                    //     margin="8px"
-                                    //     border="2px"
-                                    //     width="10px"
-                                    //     height="25px"
-                                    //     background-color={c}
-                                    //     >X</button>
+                                    }
                                     )
                                 : <FormHelperText>No color added yet</FormHelperText>
                         }
