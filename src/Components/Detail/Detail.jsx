@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useParams} from "react-router-dom"
-import {getDetail, addToCart, addToWishlist, removeFromWishlist} from '../../actions/index'
+import {getDetail, addToCart, addToWishlist, removeFromWishlist, setGlobalEstate} from '../../actions/index'
 import { useEffect } from 'react'
 import defaultImage from "../../assets/images/not_found.png"
 import Typography from '@material-ui/core/Typography';
@@ -38,6 +38,7 @@ export default function RecipeReviewCard() {
  
 
  useEffect(() => {
+   dispatch(setGlobalEstate())
    dispatch(getDetail(id))   
  }, [dispatch])
 
@@ -61,8 +62,11 @@ export default function RecipeReviewCard() {
   }
 
  return (
-  
-   <div className='detail' key={item.id}>
+            <div>
+
+              {item ?
+
+              <div className='detail' key={item.id}>
                <div className='breadcrums'>
                <Breadcrumbs aria-label="breadcrumb">
                  <Link to="/home" >
@@ -139,6 +143,8 @@ export default function RecipeReviewCard() {
                    </div>
                    
                </div>
+           </div> : <div className="loading loading--full-height"></div> 
+           }
            </div>
  );
 }

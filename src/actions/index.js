@@ -32,8 +32,10 @@ export const CLEAN_ORDER_DETAIL = "CLEAN_ORDER_DETAIL";
 export const CREATE_CART = "CREATE_CART";
 export const SET_DASHBOARD_ITEM = "SET_DASHBOARD_ITEM";
 export const CREATE_USER = "CREATE_USER";
+export const SET_GLOBAL_STATE = "SET_GLOBAL_STATE";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const DELETE_USER = "DELETE_USER";
+
 
 //API LOCAL
 const API = "http://localhost:3001/api";
@@ -325,6 +327,12 @@ export const createUser = (payload) => {
   };
 }
 
+
+export function setGlobalEstate () {
+  return {
+  type: SET_GLOBAL_STATE,
+  }
+
 export const getAllUsers = () => {
   return async function (dispatch) {
     try {
@@ -351,4 +359,5 @@ export const deleteUser = (id) => {
       console.error(error);
     }
   };
+
 }
