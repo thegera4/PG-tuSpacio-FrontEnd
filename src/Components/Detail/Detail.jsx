@@ -79,7 +79,7 @@ export default function RecipeReviewCard() {
                </Breadcrumbs>
                </div>
                <div className='image-list'>
-               <img src={item.image_link || defaultImage} className='detail-img-small'/> 
+               <img src={item.image_link || defaultImage} className={`${item.stock} ${item.stock === 0 ? 'byn-small' : 'detail-img-small'}`}/> 
                </div>  
                
                
@@ -96,7 +96,7 @@ export default function RecipeReviewCard() {
                }} /> */}
 
                
-               <img src={item.image_link || defaultImage} className='image-cont'/> 
+               <img src={item.image_link || defaultImage} className={`${item.stock} ${item.stock === 0 ? 'byn' : 'image-cont'}`}/>  
          
 
                <div className='box'>
@@ -113,14 +113,17 @@ export default function RecipeReviewCard() {
                        <Box component="fieldset" borderColor="transparent" m={0} p={0} >
                        <Rating name="read-only" value={item.rating} readOnly precision={0.1} size="large" zIndex={-1}/>
                        </Box>
+                       {item.stock < 4 && item.stock > 0 ? (<p className="errors">Buy now! last {item.stock} available</p>) : null}
                        <p>{item.description}</p>
                        <div className='colors'>
-                           <h3>Colors : </h3>
-                       {item.product_colors?.slice(0, 6).map((color, index) => (
-                       <button key={index} style={{background: color.hex_value}} onClick={() => handleColor(color.hex_value)}></button>
-                       ))}
+                        {item.stock > 0 ? <h3>Colors : </h3> : null}
+          
+                       {item.stock > 0 ?
+                       item.product_colors?.slice(0, 6).map((color, index) => (
+                       <button key={index} style={{background: color.hex_value}} onClick={() => handleColor(color.hex_value)}></button> 
+                       )) : null }
                        </div>
-
+                        {item.stock > 0 ? 
                        <Button
                          variant="contained"
                          className={classes.button2}
@@ -129,6 +132,16 @@ export default function RecipeReviewCard() {
                          >
                          ADD TO CART
                          </Button>
+                        :
+                         <Button
+                         variant="contained"
+                         className={classes.button2}
+                         startIcon={<ShoppingCartIcon />}
+                         disabled='true'
+                         >
+                         out of stock
+                         </Button>
+                        }
                        
 
                        <Button
