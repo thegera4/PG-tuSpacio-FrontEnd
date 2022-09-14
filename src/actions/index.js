@@ -32,6 +32,8 @@ export const CLEAN_ORDER_DETAIL = "CLEAN_ORDER_DETAIL";
 export const CREATE_CART = "CREATE_CART";
 export const SET_DASHBOARD_ITEM = "SET_DASHBOARD_ITEM";
 export const CREATE_USER = "CREATE_USER";
+export const GET_ALL_USERS = "GET_ALL_USERS";
+export const DELETE_USER = "DELETE_USER";
 
 //API LOCAL
 const API = "http://localhost:3001/api";
@@ -63,9 +65,6 @@ export function getAllBrands() {
     }
   };
 }
-
-
-
 
 export function getCategories() {
   return function (dispatch) {
@@ -318,6 +317,34 @@ export const createUser = (payload) => {
       const json = await axios.post(`${API}/users`, payload);
       return dispatch({
         type: CREATE_USER,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export const getAllUsers = () => {
+  return async function (dispatch) {
+    try {
+      const json = await axios.get(`${API}/users`);
+      return dispatch({
+        type: GET_ALL_USERS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export const deleteUser = (id) => {
+  return async function (dispatch) {
+    try {
+      const json = await axios.delete(`${API}/users/${id}`);
+      return dispatch({
+        type: DELETE_USER,
         payload: json.data,
       });
     } catch (error) {

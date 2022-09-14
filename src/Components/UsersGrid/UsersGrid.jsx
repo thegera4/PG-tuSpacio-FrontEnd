@@ -1,61 +1,74 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './useStyles';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import { useNavigate } from 'react-router-dom';
+//import PersonAddIcon from '@material-ui/icons/PersonAdd';
+//import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import axios from 'axios';
+import { getAllUsers, deleteUser } from '../../actions';
 
 export default function UsersGrid() {
   const classes = useStyles();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.users);
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
+  
+  //actualizar render cuando se elimina un usuario
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch, users]);
 
   const columns = [
-  { field: 'id', headerName: 'ID', width: 90,},
-  {
-    field: 'firstName',
-    headerName: 'First name',
-    width: 150,
-    editable: true,
+  { field: 'id', headerName: 'ID', width: 40,},
+    {
+    field: 'sid',
+    headerName: 'SID',
+    type: 'image',
+    width: 300,
+    editable: false,
   },
   {
-    field: 'lastName',
-    headerName: 'Last name',
+    field: 'nickname',
+    headerName: 'Nickname',
     width: 150,
-    editable: true,
+    editable: false,
   },
   {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 110,
-    editable: true,
+    field: 'name',
+    headerName: 'Name',
+    width: 200,
+    editable: false,
   },
   {
     field: 'email',
     headerName: 'E-mail',
     type: 'email',
-    width: 160,
+    width: 200,
     editable: false,
   },
   {
     field: 'delete',
     headerName: 'Delete',
-    width: 150,
+    width: 140,
     sortable: false,
     renderCell: (params) => {
         return (
           <div className="cellAction">
             <Button
               variant="contained"
-              color=""
               className={classes.deleteBtn}
               startIcon={<DeleteIcon />}
               onClick={() => {
-                handleDelete(params.row.id)
+                dispatch(deleteUser(params.row.id))
                 notifyUserDeleted()}}>
                 Delete
             </Button>
@@ -78,7 +91,7 @@ export default function UsersGrid() {
               className={classes.resetBtn}
               startIcon={<RotateLeftIcon />}
               onClick={() => {
-                notifyUserChangePass()}}>
+                axios.post('http://localhost:3001/api/users/reset')}}>
                 Reset
             </Button>
             <ToastContainer />
@@ -86,37 +99,24 @@ export default function UsersGrid() {
         );
     }
   },
-];
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35, email: 'jsnow@got.com'},
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42, email: 'clani@got.com' },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45, email: 'jlani@got.com' },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16, email: 'astark@got.com' },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null, email: 'dracarys@got.com' },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150, email: 'liss@got.com' },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44, email: 'ffrr@got.com' },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36, email: 'fross@got.com' },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65, email: 'rharv@got.com' },
-  { id: 10, lastName: 'Snow', firstName: 'Jon', age: 35, email: 'jsnow@got.com'},
-  { id: 11, lastName: 'Lannister', firstName: 'Cersei', age: 42, email: 'clani@got.com' },
-  { id: 12, lastName: 'Lannister', firstName: 'Jaime', age: 45, email: 'jlani@got.com' },
-  { id: 13, lastName: 'Stark', firstName: 'Arya', age: 16, email: 'astark@got.com' },
-  { id: 14, lastName: 'Targaryen', firstName: 'Daenerys', age: null, email: 'dracarys@got.com' },
-  { id: 15, lastName: 'Melisandre', firstName: null, age: 150, email: 'liss@got.com' },
-  { id: 16, lastName: 'Clifford', firstName: 'Ferrara', age: 44, email: 'ffrr@got.com' },
-  { id: 17, lastName: 'Frances', firstName: 'Rossini', age: 36, email: 'fross@got.com' },
-  { id: 18, lastName: 'Roxie', firstName: 'Harvey', age: 65, email: 'rharv@got.com' },
-];
+  ];
 
-  const [data, setData] = useState(rows);
+  const ActiveUsers = users.filter((user) => user.status === true);
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-  };
+  const rows = ActiveUsers.map((user) => {
+      return {
+        id: user.id,
+        sid: user.sid? user.sid : 'No SID',
+        nickname: user.nickname,
+        name: user.name,
+        age: user.age,
+        email: user.email,
+      };
+  });
 
   const notifyUserDeleted = () => 
   toast.success('User was deleted!', {
-    position: "bottom-right",
+    position: "top-left",
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
@@ -125,7 +125,7 @@ const rows = [
     progress: undefined,
   });
 
-  const notifyUserChangePass = () => 
+  /*const notifyUserChangePass = () => 
   toast.info('Password reset was sent!', {
     position: "top-right",
     autoClose: 3000,
@@ -134,21 +134,23 @@ const rows = [
     pauseOnHover: false,
     draggable: true,
     progress: undefined,
-  });
+  });*/
+
+  console.log(ActiveUsers)
 
   return (
     <div>
       <h4>Users</h4>
-      <Button
+      {/*<Button
           variant="contained"
           className={classes.btnAdd}
           startIcon={<PersonAddIcon />}
           onClick={() => navigate('/createUser')}>
             Add New User
-        </Button>
+        </Button>*/}
       <div style={{ height: 631, width: '100%', backgroundColor: '#fff'}}>
         <DataGrid
-          rows={data}
+          rows={rows}
           columns={columns}
           pageSize={10}
           rowsPerPageOptions={[5]}
