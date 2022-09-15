@@ -18,6 +18,7 @@ import { StyledTableCell, StyledTableRow } from './withStyles';
 import axios from 'axios';
  
 const Cart = () => {
+  const API = "https://tuspacio.herokuapp.com/api" || "http://localhost:3001/api";
   const dispatch = useDispatch();
   const cartProducts = useSelector((state) => state.cart)
   const classes = useStyles();
@@ -47,7 +48,7 @@ const Cart = () => {
   const handleCheckout = (cartProducts) => {
     if (isAuthenticated) {
       dispatch(createCart(cartProducts, user.sub))
-      axios.post("http://localhost:3001/api/checkout", {
+      axios.post(`${API}/checkout`, {
         cartProducts,
         id: user.sub,
       }).then((res) => {

@@ -37,13 +37,13 @@ export const GET_ALL_USERS = "GET_ALL_USERS";
 export const DELETE_USER = "DELETE_USER";
 
 
-//API LOCAL
-const API = "http://localhost:3001/api";
+//API
+const API = "https://tuspacio.herokuapp.com/api" || "http://localhost:3001/api";
 
 export function getAllProducts() {
   return async function (dispatch) {
     try {
-      var json = await axios.get(`/products`);
+      var json = await axios.get(`${API}/products`);
       return dispatch({
         type: GET_ALL_PRODUCTS,
         payload: json.data,
@@ -57,7 +57,7 @@ export function getAllProducts() {
 export function getAllBrands() {
   return async function (dispatch) {
     try {
-      var json = await axios.get(`/products/brand`);
+      var json = await axios.get(`${API}/products/brand`);
       return dispatch({
         type: GET_ALL_BRANDS,
         payload: json.data,
@@ -71,7 +71,7 @@ export function getAllBrands() {
 export function getCategories() {
   return function (dispatch) {
     return axios
-      .get(`/categories`) // http://localhost:3001/api/categories
+      .get(`${API}/categories`)
       .then((c) => {
         dispatch({
           type: GET_CATEGORIES,
@@ -94,7 +94,7 @@ export function setCurrentHomePage(page) {
 export function getDetail(id) {
   return async function (dispatch) {
     try {
-      var json = await axios.get(`/product/${id}`);
+      var json = await axios.get(`${API}/product/${id}`);
       return dispatch({
         type: GET_DETAIL,
         payload: json.data,
@@ -108,7 +108,7 @@ export function getDetail(id) {
 export function getName(name) {
   return async function (dispatch) {
     try {
-      var json = await axios.get("/products/search/?name=" + name);
+      var json = await axios.get(`${API}/products/search/?name=${name}`);
       return dispatch({
         type: GET_NAME,
         payload: json.data,
@@ -132,7 +132,7 @@ export function postNewProduct(payload) {
 
 export function postReview(payload) {
   return function (dispatch) {
-    const newReviewResult = axios.post(`/products/reviews`, payload);
+    const newReviewResult = axios.post(`${API}/products/reviews`, payload);
     dispatch({
       type: POST_REVIEW,
       payload,
@@ -144,7 +144,7 @@ export function postReview(payload) {
 export function updateRating(id) {
   return async function (dispatch) {
     try {
-      var json = await axios.get(`/products/reviews/productId/${id}`);
+      var json = await axios.get(`${API}/products/reviews/productId/${id}`);
       return dispatch({
         type: UPDATE_RATING,
         payload: json.data,
@@ -326,7 +326,6 @@ export const createUser = (payload) => {
     }
   };
 }
-
 
 export function setGlobalEstate () {
   return {
