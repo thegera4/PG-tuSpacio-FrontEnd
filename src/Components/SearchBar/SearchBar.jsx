@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react' // useEffect lo borre por que no se usaba
 import './SearchBar.css'
 import SearchIcon from '@material-ui/icons/Search';
-import CloseIcon from '@material-ui/icons/Close';
+// import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch } from 'react-redux'
-import { getDetail, getName, getAllProducts } from '../../actions/index'
+import { getDetail, getName } from '../../actions/index' // getAllProducts lo borre por que no se usaba
 import { useNavigate } from "react-router-dom";
 
 const SearchBar = ({ placeholder, data }) => {
@@ -61,7 +61,7 @@ const SearchBar = ({ placeholder, data }) => {
                 { filteredData.slice(0, 6).map((value, key) => {
                   return (
                     <a 
-                      href='#' 
+                      
                       className='dataItem' onClick={ () => {
                       dispatch(getDetail(value.id))
                       navigate(`/${value.id}`)

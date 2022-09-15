@@ -13,7 +13,10 @@ import Favorite from '@material-ui/icons/Favorite';
 import NotFavorite from '@material-ui/icons/FavoriteBorder';
 import Box from '@material-ui/core/Box';
 import { addToWishlist, removeFromWishlist, addToCart} from '../../actions';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+// import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import CardMedia from '@material-ui/core/CardMedia';
+import Placeholder from '../../assets/images/placeholder_home.png';
+import Rating from '@material-ui/lab/Rating';
 
 export default function HomeCards(props) {
   const classes = useStyles();
@@ -57,9 +60,19 @@ export default function HomeCards(props) {
           </CardActions>   
         </Box>
         <Link to={`/${props.products.id}`}>
+        <CardMedia
+          className={classes.media}
+          image={props.products.image_link?
+            props.products.image_link:
+            Placeholder} />
+          
+        
+        {/* <Link to={`/${props.products.id}`}>
           <img className='card-image' src={props.products.image_link} alt="" />
-         </Link>
+         </Link> */}
+        </Link>
           <CardContent className={classes.content}>
+          <div className={classes.tipo}>
             <Typography component="div">
               <Box 
                 textAlign="left"  
@@ -68,17 +81,27 @@ export default function HomeCards(props) {
               {props.products.name}
               </Box>
             </Typography>
-            <Typography component="div" >
+            <Typography component="div" className={classes.price}   >
             <Box
             display="flex"
             alignItems="center"
             fontWeight="fontWeightBold" 
             fontSize={15}> 
-              <AttachMoneyIcon 
-                fontSize="small"  />  
                 ${Math.ceil(props.products.price)}
             </Box>
             </Typography>  
+            </div>
+            {/* <Typography component="div">
+              <Box 
+                textAlign="left"  
+                fontWeight="fontWeightBold" 
+                fontSize={13} >
+              {props.products.brand?.toUpperCase()}
+              </Box>
+            </Typography> */}
+            <Box component="fieldset" borderColor="transparent" m={0} p={0} >
+            <Rating name="read-only" value={props.products.rating} readOnly precision={0.1} size="small" zIndex={-1}/>
+            </Box>
         </CardContent>
       </Card>
     }

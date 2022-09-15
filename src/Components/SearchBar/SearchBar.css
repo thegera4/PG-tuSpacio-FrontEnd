@@ -3,6 +3,7 @@
   display: flex;
 }
 
+
 .search input {
   background-color: rgba(221, 219, 219, 0.507);
   border: 0;
@@ -11,8 +12,9 @@
   border-bottom-right-radius: 0px;
   font-size: 18px;
   padding: 15px;
-  height: 10px;
+  height: 40px;
   width: 300px;
+  
 }
 
 .searchIcon {
@@ -41,7 +43,7 @@ input:focus {
   overflow: hidden;
   overflow-y: auto;
   display: block;
-  z-index: 5;
+  
 }
 
 .dataResult::-webkit-scrollbar {

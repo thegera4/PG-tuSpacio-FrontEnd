@@ -12,3 +12,10 @@ code {
     monospace;
 }
 
+body::-webkit-scrollbar {
+  width: 15px;             
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #257558; 
+  border-radius: 20px;       
+}

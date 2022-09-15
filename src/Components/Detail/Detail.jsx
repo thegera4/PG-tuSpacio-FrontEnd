@@ -1,12 +1,10 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useParams} from "react-router-dom"
-import {getDetail, addToCart, addToWishlist, removeFromWishlist} from '../../actions/index'
+import {getDetail, addToCart, addToWishlist, removeFromWishlist, setGlobalEstate} from '../../actions/index'
 import { useEffect } from 'react'
 import defaultImage from "../../assets/images/not_found.png"
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { Link } from 'react-router-dom';
@@ -15,81 +13,34 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import ReactImageMagnify from 'react-image-magnify';
+import useStyles from './useStyles'
 
-
-
-
-const useStyles = makeStyles((theme) => ({
- root: {
-   maxWidth: 500,
-   margin: 'auto',
-   marginTop: 100
- },
- media: {
-   height: 0,
-   paddingTop: '56.25%', // 16:9
- },
- expand: {
-   transform: 'rotate(0deg)',
-   marginLeft: 'auto',
-   transition: theme.transitions.create('transform', {
-     duration: theme.transitions.duration.shortest,
-   }),
- },
- expandOpen: {
-   transform: 'rotate(180deg)',
- },
- avatar: {
-   backgroundColor: red[500],
- },
- button: {
-   margin: theme.spacing(0),
-   borderColor: '#257558',
-   color: '#257558',
-   width: '100%',
-   marginTop: 10
- },
- button2: {
-     margin: theme.spacing(0),
-     backgroundColor: '#257558',
-     color: '#fff',
-     width: '100%',
-     marginTop: 10
- }
-
-}));
 
 export default function RecipeReviewCard() {
  const { id } = useParams()
-
  const classes = useStyles();
- const [expanded, setExpanded] = React.useState(false);
+//  const [expanded, setExpanded] = React.useState(false);
 
- const handleExpandClick = () => {
-   setExpanded(!expanded);
- };
-
-
+//  const handleExpandClick = () => {
+//    setExpanded(!expanded);
+//  };
 
  const dispatch = useDispatch()
  const item = useSelector((state) => state.productDetail)
  const cart = useSelector((state) => state.cart)
  const fav = useSelector((state) => state.favorites)
- const [count, setCount] = useState(1)
+//  const [count, setCount] = useState(1)
 
  const [color,setColor] = useState('')
 
  const image = item.image_link
 
+ 
 
  useEffect(() => {
-
+   dispatch(setGlobalEstate())
    dispatch(getDetail(id))   
-
- }
- , [dispatch])
-
- 
+ }, [dispatch])
 
  function handleCart(e) {
      if(!cart.includes(e)) {
@@ -99,6 +50,7 @@ export default function RecipeReviewCard() {
        alert('The product is already added to the cart')
      }
  }
+
  function handleFavorite(e) {
    !fav.includes(e)?
    dispatch(addToWishlist(e)) :
@@ -109,29 +61,32 @@ export default function RecipeReviewCard() {
    setColor(e)
   }
 
-  console.log(color)
-
-
  return (
-  
-   <div className='detail' key={item.id}>
+            <div>
+
+              {item ?
+
+              <div className='detail' key={item.id}>
                <div className='breadcrums'>
                <Breadcrumbs aria-label="breadcrumb">
                  <Link to="/home" >
                   Products
                  </Link>
-                 <Link to='/home'>
-                   {item.category}
-                 </Link>
+                
+                   
+                   <Typography color="textPrimary">{item.categories?.map(e => e.name)}</Typography>
                  <Typography color="textPrimary">{item.name}</Typography>
                </Breadcrumbs>
                </div>
                <div className='image-list'>
-               <img src={item.image_link || defaultImage} className='detail-img-small'/> 
+
+               <img src={item.image_link || defaultImage} className={`${item.stock} ${item.stock === 0 ? 'byn-small' : 'detail-img-small'}`}/> 
+
+
                </div>  
-               <div className='image-cont'>
                
-               <ReactImageMagnify {...{
+               
+               {/* <ReactImageMagnify {...{
                    smallImage: {
                        isFluidWidth: true,
                        src: image,
@@ -141,8 +96,11 @@ export default function RecipeReviewCard() {
                        width: 800,
                        height: 800,
                    }
-               }} />
-               </div>
+               }} /> */}
+
+               
+               <img src={item.image_link || defaultImage} className={`${item.stock} ${item.stock === 0 ? 'byn' : 'image-cont'}`}/>  
+         
 
                <div className='box'>
                    <div className='row'>
@@ -158,14 +116,17 @@ export default function RecipeReviewCard() {
                        <Box component="fieldset" borderColor="transparent" m={0} p={0} >
                        <Rating name="read-only" value={item.rating} readOnly precision={0.1} size="large" zIndex={-1}/>
                        </Box>
+                       {item.stock < 4 && item.stock > 0 ? (<p className="errors">Buy now! last {item.stock} available</p>) : null}
                        <p>{item.description}</p>
                        <div className='colors'>
-                           <h3>Colors : </h3>
-                       {item.product_colors?.slice(0, 6).map((color, index) => (
-                       <button key={index} style={{background: color.hex_value}} onClick={() => handleColor(color.hex_value)}></button>
-                       ))}
+                        {item.stock > 0 ? <h3>Colors : </h3> : null}
+          
+                       {item.stock > 0 ?
+                       item.product_colors?.slice(0, 6).map((color, index) => (
+                       <button key={index} style={{background: color.hex_value}} onClick={() => handleColor(color.hex_value)}></button> 
+                       )) : null }
                        </div>
-
+                        {item.stock > 0 ? 
                        <Button
                          variant="contained"
                          className={classes.button2}
@@ -174,6 +135,16 @@ export default function RecipeReviewCard() {
                          >
                          ADD TO CART
                          </Button>
+                        :
+                         <Button
+                         variant="contained"
+                         className={classes.button2}
+                         startIcon={<ShoppingCartIcon />}
+                         disabled='true'
+                         >
+                         out of stock
+                         </Button>
+                        }
                        
 
                        <Button
@@ -188,6 +159,8 @@ export default function RecipeReviewCard() {
                    </div>
                    
                </div>
+           </div> : <div className="loading loading--full-height"></div> 
+           }
            </div>
  );
 }

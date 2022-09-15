@@ -22,14 +22,28 @@ export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
 export const ORDERS_FILTERS = "ORDERS_FILTERS";
 export const CLEAR_CART = "CLEAR_CART";
 export const REMOVE_ONE = "REMOVE_ONE";
+export const POST_USER = 'POST_USER';
+export const POST_REVIEW = "POST_REVIEW";
+export const UPDATE_RATING = "UPDATE_RATING";
+export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
+export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
+export const UPDATE_ORDER_STATUS = "UPDATE_ORDER_STATUS";
+export const CLEAN_ORDER_DETAIL = "CLEAN_ORDER_DETAIL";
+export const CREATE_CART = "CREATE_CART";
+export const SET_DASHBOARD_ITEM = "SET_DASHBOARD_ITEM";
+export const CREATE_USER = "CREATE_USER";
+export const SET_GLOBAL_STATE = "SET_GLOBAL_STATE";
+export const GET_ALL_USERS = "GET_ALL_USERS";
+export const DELETE_USER = "DELETE_USER";
 
-// const API = 'http://localhost:3001/api';//API LOCAL
-const API = "http://localhost:3001/api";
+
+//API
+const API = "https://tuspacio.herokuapp.com/api" || "http://localhost:3001/api";
 
 export function getAllProducts() {
   return async function (dispatch) {
     try {
-      var json = await axios.get(`/products`);
+      var json = await axios.get(`${API}/products`);
       return dispatch({
         type: GET_ALL_PRODUCTS,
         payload: json.data,
@@ -43,8 +57,10 @@ export function getAllProducts() {
 export function getAllBrands() {
   return async function (dispatch) {
     try {
+      var json = await axios.get(`${API}/products/brand`);
       return dispatch({
         type: GET_ALL_BRANDS,
+        payload: json.data,
       });
     } catch (error) {
       console.error(error);
@@ -55,7 +71,7 @@ export function getAllBrands() {
 export function getCategories() {
   return function (dispatch) {
     return axios
-      .get(`/categories`) // http://localhost:3001/api/categories
+      .get(`${API}/categories`)
       .then((c) => {
         dispatch({
           type: GET_CATEGORIES,
@@ -78,7 +94,7 @@ export function setCurrentHomePage(page) {
 export function getDetail(id) {
   return async function (dispatch) {
     try {
-      var json = await axios.get(`/product/${id}`);
+      var json = await axios.get(`${API}/product/${id}`);
       return dispatch({
         type: GET_DETAIL,
         payload: json.data,
@@ -92,7 +108,7 @@ export function getDetail(id) {
 export function getName(name) {
   return async function (dispatch) {
     try {
-      var json = await axios.get("/products/search/?name=" + name);
+      var json = await axios.get(`${API}/products/search/?name=${name}`);
       return dispatch({
         type: GET_NAME,
         payload: json.data,
@@ -105,12 +121,37 @@ export function getName(name) {
 
 export function postNewProduct(payload) {
   return function (dispatch) {
-    const newProdResult = axios.post(`/products`, payload);
+    const newProdResult = axios.post(`${API}/products`, payload);
     dispatch({
       type: POST_PRODUCT,
       payload,
     });
     return newProdResult;
+  };
+}
+
+export function postReview(payload) {
+  return function (dispatch) {
+    const newReviewResult = axios.post(`${API}/products/reviews`, payload);
+    dispatch({
+      type: POST_REVIEW,
+      payload,
+    });
+    return newReviewResult;
+  }
+}
+
+export function updateRating(id) {
+  return async function (dispatch) {
+    try {
+      var json = await axios.get(`${API}/products/reviews/productId/${id}`);
+      return dispatch({
+        type: UPDATE_RATING,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 
@@ -178,4 +219,145 @@ export function orderCombine(filters) {
       console.error(error);
     }
   };
+}
+
+export function postUser(user) {
+  const infoUser = {
+    name: user.name, 
+    nickname: user.nickname, 
+    email: user.email, 
+    email_verified: user.email_verified,
+    picture: user.picture, 
+    sid: user.sub
+  }
+  return async function (dispatch) {
+    try {
+      const newUser = await axios.post(`${API}/users`, infoUser);
+      return dispatch({
+        type: POST_USER,
+        payload: newUser.data
+        });
+    } catch (error) {
+      console.error(error);
+    }
+ }
+}
+
+export const getAllOrders = () => {
+  return async function (dispatch) {
+    try {
+      const json = await axios.get(`${API}/orders`);
+      return dispatch({
+        type: GET_ALL_ORDERS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export const getOrderById = (id) => {
+  return async function (dispatch) {
+    try {
+      const json = await axios.get(`${API}/orders/${id}`);
+      console.log(json.data)
+      return dispatch({
+        type: GET_ORDER_BY_ID,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export function updateOrderStatus(id, status){
+  return async function (dispatch) {
+    try {
+      const json = await axios.patch(`${API}/order/${id}`, {status});
+      return dispatch({
+        type: UPDATE_ORDER_STATUS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
+
+export const cleanOrderDetail = () => {
+  return {
+    type: CLEAN_ORDER_DETAIL,
+  };
+}
+
+export const createCart = (cart, user) => {
+  return async function (dispatch) {
+    try {
+      const json = await axios.post(`${API}/orders`, { cart, user });
+      return dispatch({
+        type: CREATE_CART,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export const setDashboardItem = (item) => {
+  return {
+    type: SET_DASHBOARD_ITEM,
+    payload: item,
+  };
+}
+
+export const createUser = (payload) => {
+  return async function (dispatch) {
+    try {
+      const json = await axios.post(`${API}/users`, payload);
+      return dispatch({
+        type: CREATE_USER,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export function setGlobalEstate () {
+  return {
+  type: SET_GLOBAL_STATE,
+  }
+}
+
+export const getAllUsers = () => {
+  return async function (dispatch) {
+    try {
+      const json = await axios.get(`${API}/users`);
+      return dispatch({
+        type: GET_ALL_USERS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export const deleteUser = (id) => {
+  return async function (dispatch) {
+    try {
+      const json = await axios.delete(`${API}/users/${id}`);
+      return dispatch({
+        type: DELETE_USER,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 }

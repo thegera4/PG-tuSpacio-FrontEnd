@@ -4,7 +4,7 @@ import HomeCards from "../../Components/HomeCards/HomeCards";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../../actions";
 import BasicPagination from "../BasicPagination/Pagination";
-import LandingPage from "../Landing/Landing";
+// import LandingPage from "../Landing/Landing";
 import { Box } from "@material-ui/core";
 import useStyles from "./useStyles";
 
@@ -17,13 +17,14 @@ export default function SpacingGrid(order) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
   const favorites = useSelector((state) => state.favorites);
-  const cart = useSelector((state) => state.cart);
+  // const cart = useSelector((state) => state.cart);
 
   const currentPage = useSelector((state) => state.currentPageHome);
   const [productsPerPage] = useState(9);
   const LAST_PRODUCT = currentPage * productsPerPage;
   const FIRST_PRODUCT = LAST_PRODUCT - productsPerPage;
-  const RENDERED_PRODUCTS = products.slice(FIRST_PRODUCT, LAST_PRODUCT);
+  const STOCKFILTERED = products.filter(product => product.stock > 0)
+  const RENDERED_PRODUCTS = STOCKFILTERED.slice(FIRST_PRODUCT, LAST_PRODUCT);
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -36,9 +37,9 @@ export default function SpacingGrid(order) {
   function productIsFavorite(productID) {
     return favorites?.some((favorite) => favorite.id === productID);
   }
-  function productInCart(productID) {
-    return cart?.some((product) => product.id === productID);
-  }
+  // function productInCart(productID) {
+  //   return cart?.some((product) => product.id === productID);
+  // }
 
   return (
     <>
@@ -64,7 +65,8 @@ export default function SpacingGrid(order) {
         <Grid item xs={10}>
           <Box mb={4}>
             <Grid container justifyContent="center" spacing={spacing}>
-              {RENDERED_PRODUCTS?.map((product, index) => (
+            {RENDERED_PRODUCTS.length === 0 ? <div className="load load--full-height"></div> :
+              RENDERED_PRODUCTS?.map((product, index) => (
                 <Grid key={index} item>
                   <HomeCards
                     className={classes.paper}
@@ -79,7 +81,7 @@ export default function SpacingGrid(order) {
       </Grid>
 
       <div className="divwsp">
-        <a href="https://wa.me/+573027729480" target="_blank">
+        <a href="https://wa.me/+573027729480" target="_blank" rel="noreferrer">
           <img
             src="https://i.ibb.co/Th1XCXz/Dise-o-sin-t-tulo-1.png"
             alt="..."

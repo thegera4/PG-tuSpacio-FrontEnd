@@ -1,4 +1,3 @@
-
 import {React, useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { useNavigate } from "react-router-dom";
@@ -11,7 +10,7 @@ import Select from '@material-ui/core/Select';
 import {SwipeableDrawer} from '@material-ui/core';
 import {FormControl} from '@material-ui/core';
 import {InputLabel} from '@material-ui/core';
-import { getAllBrands, getCategories, setCurrentHomePage, orderCombine } from '../../actions/index';
+import { getAllBrands, getCategories, setCurrentHomePage, orderCombine, getAllProducts } from '../../actions/index';
 
 
 const useStyles = makeStyles({
@@ -28,8 +27,7 @@ const useStyles = makeStyles({
   },
 });
 
-
-export default function DrawerBox({setOrder}) {
+export default function DrawerBox() {
 const classes = useStyles();
 const navigate = useNavigate()
 const categories = useSelector((state) => state.categories)
@@ -54,11 +52,18 @@ function handlefilter(e) {
   e.preventDefault();
   dispatch(orderCombine({...filters, [e.target.name]: e.target.value}));
   dispatch(setCurrentHomePage(1))
-  let {alpha,category,price,brand,rating}=filters
-  // eslint-disable-next-line no-sequences
-  setOrder(`filters by ${alpha,category,price,brand,rating}`)
 }
 
+function limpiandoFiltros () {
+  dispatch(getAllProducts());
+  setFilters({
+      "alpha": "",
+      "category": "",
+      "price": "",
+      "brand": "",
+      "rating": "" 
+  })
+}
 
   return(
     <div>
@@ -89,6 +94,7 @@ function handlefilter(e) {
                 <Select
                     native
                     name="brand"
+                    value={filters.brand}
                     onChange={ (e) => {
                         setFilters({...filters, "brand": e.target.value});
                         handlefilter(e)
@@ -106,6 +112,7 @@ function handlefilter(e) {
                   <InputLabel>Categories</InputLabel>
                   <Select
                       native
+                      value={filters.category}
                       name="category"
                       onChange={(e) => {
                           setFilters({...filters, "category": e.target.value});
@@ -124,6 +131,7 @@ function handlefilter(e) {
                   <InputLabel>Sort by Name</InputLabel>
                   <Select
                       native
+                      value={filters.alpha}
                       name="alpha"
                       onChange={(e) => {
                           setFilters({...filters, "alpha": e.target.value});
@@ -141,6 +149,7 @@ function handlefilter(e) {
                   <InputLabel>Order by Price</InputLabel>
                   <Select
                       native
+                      value={filters.price}
                       name="price"
                       onChange={(e) => {
                           setFilters({...filters, "price": e.target.value});
@@ -157,6 +166,7 @@ function handlefilter(e) {
                   <InputLabel>Order by Rating</InputLabel>
                   <Select
                       native
+                      value={filters.rating}
                       name="rating"
                       onChange={(e) => {
                           setFilters({...filters, "rating": e.target.value});
@@ -170,7 +180,7 @@ function handlefilter(e) {
               </FormControl>
                 <Divider variant='fullWidth' />
               <Button 
-                  onClick={() => console.log("Limpiando filtros")}
+                  onClick={() => limpiandoFiltros()}
                   color="secondary"
                   fullWidth='true'
                   size="small"

@@ -6,16 +6,22 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
   },
-  button:{
+  deleteBtn:{
     backgroundColor: '#ff0000',
     color: '#ffffff',
     '&:hover': {
       backgroundColor: '#ff4d4d'
     },
   },
+  resetBtn:{
+    backgroundColor: '#606060',
+    color: '#ffffff',
+    '&:hover': {
+      backgroundColor: '#37af84'
+    },
+  },
   btnAdd:{
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(3),
     marginLeft: '45%',
     backgroundColor: '#257558',
     color: '#ffffff',
